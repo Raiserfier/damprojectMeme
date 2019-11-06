@@ -12,17 +12,9 @@ def upload_img(request):
             classification = request.POST.get("classification")
             tags = request.POST.get("tags")
             img = request.POST.get("img")
-            print(email, classification, tags)
-            # try:
             user = User.objects.get(email=email)
-            print(img)
             Image.objects.create(classification=classification, tags=tags, img=img, owner=user)
-            # img = Image(classification=classification, tags=tags, img=img, owner=user)
-            # img.save()
-            print("hdewjkhdek")
             return HttpResponse("SUCCESS")
-            # except:
-            # return HttpResponse("找不到该用户")
         else:
             return HttpResponse("不是POST")
     except:
@@ -53,9 +45,6 @@ def login(request):
 
             if user.password == password:
                 response = {}
-                # response.set_signed_cookie("login", 'yes', salt="DAM", max_age=60 * 60 * 12)
-                # response.set_signed_cookie("username", user.username, salt="DAM", max_age=60 * 60 * 12)
-                # response.set_signed_cookie("email address", email, salt="DAM", max_age=60 * 60 * 12)
                 response['msg'] = 'SUCCESS'
                 response['username'] = user.username
                 return JsonResponse(response)
@@ -113,6 +102,7 @@ def get_images(request):
         return HttpResponse('Not received')
 
 
+#获取单张图片对应的全部信息 包括喜欢状态 另，用户有可能没有喜欢自己上传的图片
 def get_all_info(image, email):
     print("xxx")
     if email == "99":
@@ -123,16 +113,14 @@ def get_all_info(image, email):
             'img': image.img,
             'classification': image.classification,
             'tags': image.tags,
-            'state' : state
+            'state': state
         }
     else:
         user = User.objects.get(email=email)
-        # print(type(user.like_images))
         if str(image.id) in user.like_images:
             state = True
         else:
             state = False
-        # print("ttt")
         return {
             'id': image.id,
             'img': image.img,
@@ -172,6 +160,7 @@ def get_by_classification(request):
         return HttpResponse("暂无图片")
 
 
+#从全部图片中每一类别获取一张图片
 def get_classification():
     classfication_list = []
     images = Image.objects.all()
@@ -181,18 +170,17 @@ def get_classification():
     return classfication_list
 
 
+#获取某一类别的指定数目的图片
 def get_number_image(classification, number):
     images = Image.objects.all()
     certain_classification = []
-    # print("ok")
     for image in images:
-        # print(image.classification, classification, type(number), len(certain_classification))
         if image.classification == classification and len(certain_classification) < int(number):
-            # print(image)
             certain_classification.append(image)
     return certain_classification
 
 
+#从用户上传的图片中每一类别获取一张图片
 def get_user_classification(email):
     classfication_list = []
     print("x", email)
@@ -204,26 +192,19 @@ def get_user_classification(email):
     return classfication_list
 
 
+#按照类别获取用户喜欢的图片
 def get_like_image(classification, email):
     user = User.objects.get(email=email)
     images = Image.objects.all()
     certain_classification = []
     for image in images:
-        print(image.id)
-        if image.classification == classification and image.id in user.like_images:
-            certain_classification.append(image)
+        imgid = '#' + str(image.id) + '#'
+        if image.classification == classification and imgid in user.like_images:
+            certain_classification.append(get_all_info(image, email))
     return certain_classification
 
 
-def get_certain_image(classification):
-    images = Image.objects.all()
-    certain_classification = []
-    for image in images:
-        if image.classification == classification:
-            certain_classification.append(image)
-    return certain_classification
-
-
+#获取用户上传的某一类别图片
 def get_user_upload(classification, email):
     user = User.objects.get(email=email)
     images = Image.objects.all()
@@ -233,6 +214,8 @@ def get_user_upload(classification, email):
             certain_classification.append(image)
     return certain_classification
 
+
+#按照给定类别查找所有图片
 def get_classification_images(classification, email):
     images = Image.objects.all()
     certain_classification = []
@@ -241,11 +224,11 @@ def get_classification_images(classification, email):
             certain_classification.append(get_all_info(image, email))
     return certain_classification
 
+
+#获取用户喜欢的图片
 def get_user_liked_image(email):
     user = User.objects.get(email=email)
-    #print(user)
     images = Image.objects.all()
-    #print(images)
     like_image = []
     for image in images:
         imgid = '#' + str(image.id) + '#'
@@ -255,6 +238,7 @@ def get_user_liked_image(email):
     return like_image
 
 
+#全站搜索 同时搜索标签和类别
 def get_key_search(key, email):
     images = Image.objects.all()
     data = []
@@ -263,10 +247,7 @@ def get_key_search(key, email):
             data.append(get_all_info(image, email))
             continue
         if image.classification == key or key in image.tags:
-            print(key)
             data.append(get_all_info(image, email))
-        print("done")
-    print(data)
     return data
 
 
@@ -277,29 +258,26 @@ def get_user_image(request):
         email = request.POST.get('email', default='')
         email_user = request.POST.get('email_user')
         key = request.POST.get('key', default='all')
-        print(type)
+        #print(type)
+        #全站搜索 同时搜索标签和类别
         if type == '0':
             data = get_key_search(key, email_user)
-            print(data)
             return HttpResponse(json.dumps(data))
+        #用户收藏图片
         elif type == '1':
-            print("1ok")
             data = get_user_liked_image(email_user)
-            print(data)
             return HttpResponse(json.dumps(data))
+        #用户上传图片
         elif type == '2':
             images = Image.objects.all()
             user = User.objects.get(email=email_user)
             for image in images:
                 if image.owner == user:
-                    print("x")
                     data.append(get_all_info(image, email_user))
-                #print(data)
             return HttpResponse(json.dumps(data))
+        #搜索某类别图片
         elif type == '3':
-            print("3ok")
             data = get_classification_images(key, email_user)
-           # data.append({key: images})
             return HttpResponse(json.dumps(data))
         else:
             return HttpResponse('No data')
@@ -307,7 +285,6 @@ def get_user_image(request):
         return HttpResponse('Not received')
 
 
-#search by tag 不知道穿上来的字符串是什么样的
 
 
 # Create your views here.
