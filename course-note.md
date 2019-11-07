@@ -18,7 +18,7 @@ https://github.com/hongxin/DAMCourse-2019/blob/master/pdf/dam2019-hw05.pdf
 
 - 中文；总共>10页A4纸/>5k字（每个人的part>1k字）
 - 插入的图片用网络图片不保存本地
-- 段落中要能够对于相关知识点概念清楚，有叙述，有表达，独立成段，避免单纯从课件复制条条杠杠。
+- 段落中要能够对于相关知识点概念清楚，有叙述，有表达，独立成段，避免单纯从课件复制
 
 课件
 https://github.com/hongxin/DAMCourse-2019/blob/master/pdf/dam2019-02.pdf
