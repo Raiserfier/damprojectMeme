@@ -8,18 +8,18 @@
           <section v-for="count in cate_num">
             <div class="Cat">
             <div>
-              <h2 class="Titleeeee" @click="tocate(classname[count-1])">{{classname[count-1]}}</h2>
+              <h2 class="Titleeeee" @click="tocate(classname[count-1])" :style="{'padding-top':(count-1)*340+'px'}">{{classname[count-1][0]}}</h2>
             </div>
             <div class="Line">
-              <div v-for="img in imgList[count-1]"
+              <div v-for="(img, index) in imgList[count-1]"
                  class="v-waterfall-item"
-                 :style="{top:90+'px',left:img.left+30+'px',width:250+'px',height:250+'px','padding-right':10+'px'}">
+                 :style="{top:140+ (count-1)*400+ 'px',left:30+(index)*300+'px',width:250+'px',height:250+'px','padding-right':10+'px'}">
               <div class="icons"> <!-- 三个icon按钮 -->
                 <ul @mouseout="leaveul($event)" @mouseover="enterul($event)"
                     :style="{top:imgheight-395+'px',right:3+'%'}">
-                  <li><p @click="clickCollect($event)" class="icon style2 fa-star" v-bind:class="{ Collected:img.state }"><span class="label">Collect</span></p>
+                  <li><p @click="fav_click($event)" class="icon style2 fa-star" v-bind:class="{ Collected:img.state }"><span class="label">Collect</span></p>
                   </li>
-                  <li><p @click="clickLike($event)" class="icon style2 fa-thumbs-up" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p>
+                  <li><p @click="thumb_click($event)" class="icon style2 fa-thumbs-up" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p>
                   </li>
                   <li><a class="icon style2 fa-info" data-poptrox="iframe,1200x800" href="index.html"><span class="label">ForMore</span></a>
                   </li>
@@ -41,42 +41,6 @@
           </div>
           </section>
         </div>
-
-
-<!--        <div>-->
-<!--          <div :style="{'padding-top': 340+'px'}">-->
-<!--            <router-link to="/chrome" class="Titleeeee">食物</router-link>-->
-<!--          </div>-->
-<!--          <div v-for="img in ShowList"-->
-<!--               class="v-waterfall-item"-->
-<!--               :style="{top:520+'px',left:img.left+30+'px',width:250+'px',height:250+'px','padding-right':10+'px','z-index': 0}">-->
-<!--            &lt;!&ndash;            <router-link to="/chrome" class="Titleeeee">食物</router-link>&ndash;&gt;-->
-<!--            <div class="icons"> &lt;!&ndash; 三个icon按钮 &ndash;&gt;-->
-<!--              <ul @mouseout="leaveul($event)" @mouseover="enterul($event)"-->
-<!--                  :style="{top:imgheight-395+'px',right:3+'%'}">-->
-<!--                <li><p @click="clickCollect($event)" class="icon style2 fa-star"><span class="label">Collect</span></p>-->
-<!--                </li>-->
-<!--                <li><p @click="clickLike($event)" class="icon style2 fa-thumbs-up"><span class="label">Like</span></p>-->
-<!--                </li>-->
-<!--                <li><a class="icon style2 fa-info" data-poptrox="iframe,1200x800" href="index.html"><span class="label">ForMore</span></a>-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--            </div>-->
-<!--            <div class="labels">&lt;!&ndash; labels链接 &ndash;&gt;-->
-<!--              <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"-->
-<!--                  class="KSVul">-->
-<!--                <a href="#">#AAA</a>-->
-<!--                <a href="#">#AAA</a>-->
-<!--                <a href="#">#AAA</a>-->
-<!--              </ul>-->
-<!--            </div>-->
-<!--            <div class="Img-Iput">-->
-<!--              <div class="img_inputBox" @mouseenter="enterpic($event)" @mouseleave="leavepic($event)">-->
-<!--                <img :src="img.src" alt="" class="img-inputer">-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
       </div>
 
     </section>
@@ -94,6 +58,7 @@
                 my_id: '',
                 imgheight: 400,
                 classname: [],
+                pic_no: 1,
             }
         },
         created() {
@@ -176,7 +141,7 @@
                             //     list[j].left = 300 * i;
                             //     console.log(list[j]);
                             // }
-                        console.log('classname : '+(this.classname[i]))
+                        console.log('classname : '+(this.classname[i][0]))
                         console.log('imgs' +this.imgList[i])
                         }
                     }

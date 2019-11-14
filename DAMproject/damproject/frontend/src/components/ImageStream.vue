@@ -85,17 +85,31 @@
             this.calculationWidth();
         },
         methods:{
+            // scrollEvent(){
+            //     let pageHeight = $('body').height(),
+            //         scrollTop = $(window).scrollTop(),
+            //         winHeight = $(window).height(),
+            //         thresold = pageHeight - scrollTop - winHeight;
+            //     if (thresold > -100 && thresold <= 20) {
+            //     }
+            //     if (document.body.scrollTop+ document.body.clientHeight>= document.body.scrollHeight-this.threshold) {
+            //         console.log('end');
+            //         this.threshold = -100;
+            //         this.load_more();
+            //     }
+            // },
             scrollEvent(){
-                let pageHeight = $('body').height(),
+                let pageHeight = $(document).height(),
                     scrollTop = $(window).scrollTop(),
                     winHeight = $(window).height(),
                     thresold = pageHeight - scrollTop - winHeight;
-                if (thresold > -100 && thresold <= 20) {
-                }
-                if (document.body.scrollTop+ document.body.clientHeight>= document.body.scrollHeight-this.threshold) {
+
+                if (thresold <= 10) {
                     console.log('end');
-                    this.threshold = -100;
-                    this.load_more();
+                    if(this.last){
+                        this.load_more();
+                        this.imgPreloading();
+                    }
                 }
             },
             //一次加载10张图片
