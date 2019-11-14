@@ -2,7 +2,7 @@
   <div class="top-nav">
     <!-- Header -->
     <header id="header" class="hello">
-      <router-link to="/" class="logo"><strong>Binary</strong> by TEMPLATED</router-link>
+      <router-link to="/" class="logo"><strong>MEEEEME</strong></router-link>
       <nav>
         <div class="fnwVXu"><!-- 导航栏 -->
           <ul>
@@ -24,20 +24,24 @@
             <!--            <li class="topBar" >-->
             <!--              <router-link to="/people" class="fnxsKA">人物</router-link>-->
             <!--            </li>-->
+
             <!--            * 测试-->
+<!--            <li class="topBar">-->
+<!--              <router-link to="/upload" class="fnxsKA">测试:上传</router-link>-->
+<!--            </li>-->
+<!--            <li class="topBar">-->
+<!--              <router-link :to="'/channel/'+this.$store.state.user_id+'/all'" class="fnxsKA">我的上传</router-link>-->
+<!--            </li>-->
+<!--            <li class="topBar">-->
+<!--              <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'" class="fnxsKA">我的收藏</router-link>-->
+<!--              &lt;!&ndash;              <router-link to="/favorite" class="fnxsKA">我的收藏</router-link>&ndash;&gt;-->
+<!--            </li>-->
             <li class="topBar">
-              <router-link to="/upload" class="fnxsKA">测试:上传</router-link>
+              <router-link :to="'/recommend/'+this.$store.state.user_id" class="fnxsKA">猜你喜欢</router-link>
             </li>
-            <li class="topBar">
-              <router-link :to="'/channel/'+my_id+'/all'" class="fnxsKA">我的上传</router-link>
-            </li>
-            <li class="topBar">
-              <router-link :to="'/favorite/'+my_id+'/all'" class="fnxsKA">我的收藏</router-link>
-              <!--              <router-link to="/favorite" class="fnxsKA">我的收藏</router-link>-->
-            </li>
-            <li class="topBar">
-              <router-link to="/login" class="fnxsKA">登录</router-link>
-            </li>
+<!--            <li class="topBar">-->
+<!--              <router-link to="/login" class="fnxsKA">登录</router-link>-->
+<!--            </li>-->
           </ul>
         </div>
         <div class="container"><!-- 搜索框 -->
@@ -54,14 +58,21 @@
 
           <div v-if="!this.$store.state.login"><!--登录按钮-->
             <form>
-              <button class="upload"><span><router-link class="upload-button" to="/login">登录</router-link></span>
+              <button class="upload login"><span><router-link class="upload-button" to="/login">登录</router-link></span>
+              </button>
+            </form>
+          </div>
+
+          <div v-if="!this.$store.state.login"><!--注册按钮-->
+            <form>
+              <button class="upload register"><span><router-link class="upload-button" to="/register">注册</router-link></span>
               </button>
             </form>
           </div>
 
           <div v-if="this.$store.state.login"><!--上传按钮-->
             <form>
-              <button class="upload"><span><router-link class="upload-button" to="/upload">上传</router-link></span>
+              <button class="upload upp"><span><router-link class="upload-button" to="/upload">上传</router-link></span>
               </button>
             </form>
           </div>
@@ -79,10 +90,10 @@
         <!-- 导航栏 -->
         <!--        * 根据user_id动态分配路由-->
         <li @click="jump">
-          <router-link :to="'/channel/'+this.$store.user_id+'/all'">我的上传</router-link>
+          <router-link :to="'/channel/'+this.$store.state.user_id+'/all'">我的上传</router-link>
         </li>
         <li @click="jump">
-          <router-link :to="'/favorite/'+this.$store.user_id+'/all'">我的收藏</router-link>
+          <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'">我的收藏</router-link>
         </li>
         <li @click="logout">
           <router-link to="/">退出登录</router-link>
@@ -119,6 +130,7 @@
         },
         computed: {
             key() {
+                this.my_id = this.$store.state.user_id;
                 return this.$route.path + Math.random();
             }
         },
@@ -129,11 +141,13 @@
             logout() {
                 console.log("logout");
                 this.isActive = false;
-                this.$store.login = false;
-                this.$store.user_id = "99";
-                this.$store.user_name = "Tester";
+                this.$store.state.login = false;
+                this.$store.state.user_id = "99";
+                this.$store.state.user_name = "Tester";
                 // this.$router.replace({ path: '' });
                 this.my_id = "99";
+                console.log(this.$store.state.login);
+                console.log(this.$store.state.user_id);
             },
             jump() {
                 console.log("jump");
@@ -178,6 +192,45 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  #header .logo{
+    padding-left: 20px;
+  }
+  #menu{
+    right: 30px;
+  }
+  .Menu{
+    left: 468px;
+  }
+  form {
+    margin: 0 0 -6.15em;
+  }
+  div.search {
+    padding: 0 175px 0 0;
+  }
+  button.login{
+   left: 350px;
+  }
+  button.register{
+    left: 470px;
+    background: rgb(89, 89, 89);
+  }
+  button.upp{
+   left: 350px;
+  }
+  button.register:hover{
+		color: rgb(89, 89, 89);
+    background: white;
+	}
+  .fnwVXu {
+    margin: 0 18em 0 14em;
+  }
+  #header nav a:not(.upload-button .Menu) {
+    padding: 0 1.5em;
+  }
+
+  .bar1 button{
+    left: 290px;
+  }
   .MENU {
     /*top:225px !important;*/
     visibility: visible !important;
@@ -226,7 +279,8 @@
   #header .logo {
     display: inline-block;
     height: inherit;
-    left: 1.25em;
+    /*left: 1.25em;*/
+    left: 4em;
     line-height: inherit;
     margin: 0;
     padding: 0;
@@ -447,6 +501,7 @@
 
   div.search {
     padding: 0 0;
+    padding-right: 175px;
   }
 
   body.container {
@@ -502,7 +557,7 @@
   }
 
   .bar1 button {
-    top: 59px;
+    top: 60px;
     right: 0;
     background: rgb(238, 106, 132);
     border-radius: 0 5px 5px 0;

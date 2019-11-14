@@ -142,8 +142,9 @@
 
   input {
     width: 100%;
-    height: 33px;
+    /*height: 33px;*/
     padding-left: 13px;
+    height: 39px;
   }
 
   button {
