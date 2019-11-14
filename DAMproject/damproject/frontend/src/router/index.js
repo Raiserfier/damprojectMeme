@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from '../components/Home'
 import Home1 from "../components/Home1";
 import Channel from '../components/Channel'
+import Recommend from '../components/Recommend';
  //import ImageStream from '../components/ImagePage/ImageStream'
 import Upload from '../components/Upload'
 import User from '../components/User'
@@ -17,10 +18,11 @@ Vue.use(Router)
 export default new Router({
   routes: [
     // home-page
-    {path: '/', name: 'Home', component: Home},
+    // {path: '/', name: 'Home', component: Home},
     {path: '/', name: 'Home', component: Home1},
     {path: '/:type/:key', name: 'PageWithTitle', component: Title},
     {path: '/:type/:id/:key', name: 'PageWithSearch', component: Channel},
+    {path: '/recommend/:id', name: 'Recommend', component: Recommend},
     // {path:'/animal', name:'Animal',components:Upload},
     // // class-page
     // {path:'/animal', name:'Animal',component:Animal},
