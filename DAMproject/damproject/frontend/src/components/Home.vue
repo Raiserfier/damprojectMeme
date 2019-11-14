@@ -185,7 +185,7 @@
             },
             getcate() {
                 this.$api.post('/get_images', {number: this.each_num, email: this.my_id}).then(response => {
-                    if(response.data != 'Not received'){
+                    if(response.data !== 'Not received'){
                         this.cate_num = response.data.length;
                         this.classname = Object.keys(response.data[0]);
                         for (let i = 0; i < this.cate_num; i++) {

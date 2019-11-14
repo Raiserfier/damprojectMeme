@@ -1,49 +1,4 @@
 <template>
-  <!-- Thumbnails 使用poptrox-->
-  <!--            <section v-for="classi in imgList">-->
-  <!--              <header class="_30jhRtnB" style="height: 44px">-->
-  <!--                            <h2 class="_2uvC445S">{{classi.key}}</h2>-->
-  <!--                            <a class="_6Xeq5Ikb _3rHyVhAS" @click="tocate(classi.key)">-->
-  <!--                              <span class="_1_4B_gHA">更多</span>-->
-  <!--                              <svg aria-label="Arrow right" class="_2YAsIJAi _3f8vV4uW" role="img" tabindex="-32768"-->
-  <!--                                   viewBox="0 0 28.9 7.8" xmlns="http://www.w3.org/2000/svg">-->
-  <!--                                <path d="M 25 3.2 H 0.7 c -0.4 0 -0.7 0.3 -0.7 0.7 c 0 0.4 0.3 0.7 0.7 0.7 H 25 c 0.4 0 0.7 -0.3 0.7 -0.7 c 0 -0.4 -0.3 -0.7 -0.7 -0.7 Z"/>-->
-  <!--                                <path d="M 24.4 4.7 V 0.4 c 0 -0.4 0.3 -0.6 0.6 -0.3 l 1.2 1.1 c 0.3 0.3 0.9 0.8 1.2 1.1 l 1.2 1.1 c 0.3 0.3 0.3 0.8 0 1.1 l -1.2 1.1 c -0.3 0.3 -0.9 0.8 -1.2 1.1 l -1.2 0.9 c -0.3 0.3 -0.6 0.2 -0.6 -0.3 V 4.7 Z"/>-->
-  <!--                              </svg>-->
-  <!--                            </a>-->
-  <!--                          </header>-->
-  <!--              <ul class="ELHm5RGs">-->
-  <!--                <li v-for="img in classi.value" class="_2-KcWAGg">-->
-  <!--                  <section class="thumbnails" style="margin-left: 10%; margin-right: 10%">-->
-  <!--                    <div class="v-waterfall-content" id="v-waterfall">-->
-  <!--                      <div class="v-waterfall-item">-->
-  <!--                        <div class="icons">&lt;!&ndash; 三个icon按钮 &ndash;&gt;-->
-  <!--                                  <ul @mouseout="leaveul($event)" @mouseover="enterul($event)">-->
-  <!--                                    <li><p @click="clickCollect($event)" class="icon style2 fa-star"-->
-  <!--                                           v-bind:class="{ Collected:img.state }"><span class="label">Collect</span></p></li>-->
-  <!--                                    <li><p @click="clickLike($event)" class="icon style2 fa-thumbs-up"-->
-  <!--                                           v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p></li>-->
-  <!--                                    <li><a class="icon style2 fa-info" data-poptrox="iframe,1200x800" href="index.html"><span-->
-  <!--                                      class="label">ForMore</span></a></li>-->
-
-  <!--                                  </ul>-->
-  <!--                                </div>-->
-  <!--                        <div class="labels">&lt;!&ndash; labels链接 &ndash;&gt;-->
-  <!--                          <ul :style="{top:this.imgheight+ 20 +'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)" class="KSVul">-->
-  <!--                            <a href="#" v-for="tag in img.tags">{{'#'+tag}}</a>-->
-  <!--                          </ul>-->
-  <!--                        </div>-->
-  <!--                        <a>-->
-  <!--                          <img :id="img.id" :src="img.img" @mouseenter="enterpic($event)" @mouseleave="leavepic($event)"-->
-  <!--                               alt="" style="width: 100%; height: 100%; position: absolute; inset: 0px;">-->
-  <!--                        </a>-->
-  <!--                      </div>-->
-  <!--                    </div>-->
-  <!--                  </section>-->
-  <!--                </li>-->
-  <!--              </ul>-->
-  <!--            </section>-->
-
   <section id="main" style="align-content: center;align-items: center">
     <header>
     </header>
@@ -207,7 +162,7 @@
             },
             getcate() {
                 this.$api.post('/get_images', {number: this.each_num, email: this.my_id}).then(response => {
-                    if(response.data != 'Not received'){
+                    if(response.data !== 'Not received'){
                         console.log(response.data)
                         this.cate_num = response.data.length;
                         for (let i = 0; i < this.cate_num; i++) {

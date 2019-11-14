@@ -115,7 +115,7 @@
             },
             parentarr() {
                 if (this.parentarr.length > 0) {
-                    this.labelarr = []
+                    this.labelarr = [];
                     for (let i = 0; i < this.parentarr.length; i++) {
                         this.labelarr.push(this.parentarr[i])
                     }
@@ -135,7 +135,7 @@
             //添加标签
             // input回车加入labelarr中
             addlabel() {
-                let count = this.labelarr.indexOf(this.currentval)
+                let count = this.labelarr.indexOf(this.currentval);
                 if (count === -1) {
                     this.labelarr.push('#' + this.currentval)
                 }
@@ -147,7 +147,7 @@
                 for (let i = 0; i < e.target.files.length; i++) {
                     let reader = new FileReader();
                     let that = this;
-                    console.log(e.target.files[i].type)
+                    console.log(e.target.files[i].type);
                     if (e.target.files[i].type === 'image/gif') {
                         reader.readAsDataURL(e.target.files[i]);
                         reader.onload = function (e) {
@@ -160,7 +160,7 @@
                         reader.readAsDataURL(e.target.files[i]);
                         reader.onload = function (e) {
                             // console.log(this.result);
-                            let image = new Image() //新建一个img标签（还没嵌入DOM节点)
+                            let image = new Image(); //新建一个img标签（还没嵌入DOM节点)
                             image.src = this.result;
                             image.onload = function () {
                                 let canvas = document.createElement('canvas'), // 新建canvas
@@ -180,7 +180,7 @@
                                 canvas.width = imageWidth;
                                 canvas.height = imageHeight;
                                 context.drawImage(image, 0, 0, imageWidth, imageHeight);
-                                data = canvas.toDataURL('image/jpeg') // 输出压缩后的base64
+                                data = canvas.toDataURL('image/jpeg'); // 输出压缩后的base64
                                 // console.log(data);
                                 that.up_img.push(data);
                             }
@@ -197,7 +197,7 @@
             },
             upload() {
                 console.log(this.labelarr);
-                let tags = ''
+                let tags = '';
                 for (let i = 0; i < this.labelarr.length; i++) {
                     tags += '#' + this.labelarr[i];
                 }
@@ -209,7 +209,7 @@
                         classification: this.cate
                     }).then(response => {
                         //console.log(response.data);
-                        if (response.data == 'SUCCESS') {
+                        if (response.data === 'SUCCESS') {
                             this.$message.success('上传成功！');
                             //跳转到个人上传页
                             this.$route.replace({path: '/channel/' + this.my_id + '/all'});

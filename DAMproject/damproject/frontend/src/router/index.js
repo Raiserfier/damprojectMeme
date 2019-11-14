@@ -18,7 +18,7 @@ export default new Router({
   routes: [
     // home-page
     {path: '/', name: 'Home', component: Home},
-    {path: '/', name: 'Home', component: Home1},
+    {path: '/1', name: 'Home', component: Home1},
     {path: '/:type/:key', name: 'PageWithTitle', component: Title},
     {path: '/:type/:id/:key', name: 'PageWithSearch', component: Channel},
     // {path:'/animal', name:'Animal',components:Upload},
