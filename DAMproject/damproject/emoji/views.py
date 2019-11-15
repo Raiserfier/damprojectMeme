@@ -234,7 +234,7 @@ def get_user_liked_image(email):
         imgid = '#' + str(image.id) + '#'
         if imgid in user.like_images:
             like_image.append(get_all_info(image, email))
-
+    print(user, like_image)
     return like_image
 
 
@@ -258,7 +258,7 @@ def get_user_image(request):
         email = request.POST.get('email', default='')
         email_user = request.POST.get('email_user')
         key = request.POST.get('key', default='all')
-        #print(type)
+        print(type)
         #全站搜索 同时搜索标签和类别
         if type == '0':
             data = get_key_search(key, email_user)
