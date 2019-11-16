@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="da9a7d25-91da-4c11-a2df-6a612785c06d" name="Default Changelist" comment="zsbd">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/dam.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dam.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -10,6 +11,12 @@
       <change beforePath="$PROJECT_DIR$/DAMproject/damproject/emoji/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/emoji/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DAMproject/damproject/emoji/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/emoji/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DAMproject/damproject/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/frontend/package.json" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAMproject/damproject/emoji/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/emoji/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAMproject/damproject/emoji/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/emoji/views.py" afterDir="false" />
+>>>>>>> master
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,6 +216,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
