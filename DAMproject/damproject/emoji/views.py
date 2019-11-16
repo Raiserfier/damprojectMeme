@@ -44,7 +44,7 @@ def create_user(request):
             return HttpResponse("Exist")
         else:
             User.objects.create(username=username, email=email, password=password)
-            return HttpResponse("SUCCEESS")
+            return HttpResponse("SUCCESS")
     except:
         return HttpResponse("未收到数据")
 
@@ -72,6 +72,7 @@ def login(request):
 def like_image(request):
     try:
         image_id = request.POST.get("id")
+        print(image_id)
         email = request.POST.get("email")
         state = request.POST.get("state")
         image = Image.objects.get(id=image_id)
@@ -100,17 +101,24 @@ def get_images(request):
         email = request.POST.get('email')
         number = request.POST.get('number')
         classification_list = get_classification()
-        print(classification_list)
         for index in range(len(classification_list)):
             certain_classification = get_number_image(classification_list[index], number)
             images = []
             for image in certain_classification:
-                print("haha")
                 images.append(get_image_info(image, email))
             data.append({classification_list[index]: images})
         return HttpResponse(json.dumps(data), content_type="application/json")
     except:
         return HttpResponse('Not received')
+
+
+def delete_image(request):
+    try:
+        image_id = request.POST.get("id")
+        Image.objects.get(id=image_id).delete()
+        return HttpResponse("SUCCESS")
+    except:
+        return HttpResponse("没有此图片")
 
 
 #获取单张图片对应的全部信息 包括喜欢状态 另，用户有可能没有喜欢自己上传的图片
