@@ -1,4 +1,4 @@
-from .models import Image, User
+from .models import Image, User, Tag, Image2tag
 from django.shortcuts import redirect
 from django.http import HttpResponse
 import json
@@ -10,10 +10,23 @@ def upload_img(request):
         if request.method == 'POST':
             email = request.POST.get("email")
             classification = request.POST.get("classification")
-            tags = request.POST.get("tags")
+            tagstr = request.POST.get("tags")
             img = request.POST.get("img")
             user = User.objects.get(email=email)
-            Image.objects.create(classification=classification, tags=tags, img=img, owner=user)
+            img = Image.objects.create(classification=classification, img=img, owner=user)
+            tags = tagstr.split('#')
+            tags.remove('')
+            for tag in tags:
+                taginfo = Tag.objects.filter(content=tag)
+                if taginfo.exists():
+                    tagobj = taginfo.first()
+                    tagobj.frequency += 1
+                    tagobj.save()
+                else:
+                    Tag.objects.create(content=tag)
+                tagobj = Tag.objects.get(content=tag) #再取一遍为了让数据库添加default项目
+                imgobj = Image.objects.get(id=img.id)
+                Image2tag.objects.create(image=imgobj, tag=tagobj)
             return HttpResponse("SUCCESS")
         else:
             return HttpResponse("不是POST")
@@ -80,23 +93,21 @@ def like_image(request):
         return HttpResponse("未收到数据")
 
 
+#主页按照类别获取图片
 def get_images(request):
     try:
         data = []
         email = request.POST.get('email')
         number = request.POST.get('number')
-        print(email, number)
         classification_list = get_classification()
-        print("1")
+        print(classification_list)
         for index in range(len(classification_list)):
             certain_classification = get_number_image(classification_list[index], number)
             images = []
-            print("2")
             for image in certain_classification:
+                print("haha")
                 images.append(get_image_info(image, email))
-                print("3")
             data.append({classification_list[index]: images})
-            print(classification_list[index])
         return HttpResponse(json.dumps(data), content_type="application/json")
     except:
         return HttpResponse('Not received')
@@ -108,11 +119,15 @@ def get_all_info(image, email):
     if email == "99":
         print("99")
         state = False
+        tagsobj = image.image2tag_set.all()
+        tags = ''
+        for tagobj in tagsobj:
+            tags += '#' + tagobj.tag.content
         return {
             'id': image.id,
             'img': image.img,
             'classification': image.classification,
-            'tags': image.tags,
+            'tags': tags,
             'state': state
         }
     else:
@@ -121,11 +136,15 @@ def get_all_info(image, email):
             state = True
         else:
             state = False
+        tagsobj = image.image2tag_set.all()
+        tags = ''
+        for tagobj in tagsobj:
+            tags += '#' + tagobj.tag.content
         return {
             'id': image.id,
             'img': image.img,
             'classification': image.classification,
-            'tags': image.tags,
+            'tags': tags,
             'state': state
         }
 
@@ -139,10 +158,14 @@ def get_image_info(image, email):
             state = False
     except:
         state = False
+    tagsobj = image.image2tag_set.all()
+    tags = ''
+    for tagobj in tagsobj:
+        tags += '#' + tagobj.tag.content
     return {
         'id': image.id,
         'img': image.img,
-        'tags': image.tags,
+        'tags': tags,
         'state': state
     }
 
