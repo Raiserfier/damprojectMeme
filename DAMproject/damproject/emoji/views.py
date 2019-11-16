@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 import json
 from django.http import JsonResponse
-
+import heapq
 
 def upload_img(request):
     try:
@@ -69,11 +69,14 @@ def login(request):
         return HttpResponse("未收到数据")
 
 
+#收藏图片
 def like_image(request):
     try:
+        email = request.POST.get("email")
+        print(email)
         image_id = request.POST.get("id")
         print(image_id)
-        email = request.POST.get("email")
+        #email = request.POST.get("email")
         state = request.POST.get("state")
         image = Image.objects.get(id=image_id)
         user = User.objects.get(email=email)
@@ -112,6 +115,7 @@ def get_images(request):
         return HttpResponse('Not received')
 
 
+#删除图片
 def delete_image(request):
     try:
         image_id = request.POST.get("id")
@@ -157,6 +161,7 @@ def get_all_info(image, email):
         }
 
 
+#获取单张图片的信息
 def get_image_info(image, email):
     try:
         user = User.objects.get(email=email)
@@ -316,6 +321,46 @@ def get_user_image(request):
         return HttpResponse('Not received')
 
 
+#堆排序，找出最受欢迎的图片（目前只支持收藏）
+def most_popular(request):
+    try:
+        data = []
+        email = request.POST.get('email')
+        number = request.POST.get('number')
+        popular = []
+        images = Image.objects.all()
+        for image in images:#按照id将流行度存入 注意id从1开始 列表从0开始
+            popular += image.total_likes + image.total_thumbs #可以在此修改算法
+        #堆排序获得最大的number张图片并获得id
+        max_index = map(popular.index, heapq.nlargest(number, popular))
+        for i in list(max_index):
+            image = Image.objects.get(id=i+1)
+            data.append(get_all_info(image, email))
+        return HttpResponse(json.dumps(data))
+    except:
+        return HttpResponse('Not received')
 
+
+#点赞
+def thumb_image(request):
+    try:
+        email = request.POST.get("email")
+        print(email)
+        image_id = request.POST.get("id")
+        print(image_id)
+        state = request.POST.get("state")
+        image = Image.objects.get(id=image_id)
+        user = User.objects.get(email=email)
+        print(image_id, email, state)
+        if state == "true":
+            image.total_thumbs += 1
+            image.save()
+            return HttpResponse("SUCCESS")
+        else:
+            image.thumbs -= 1
+            image.save()
+            return HttpResponse("SUCCESS")
+    except:
+        return HttpResponse("未收到数据")
 
 # Create your views here.

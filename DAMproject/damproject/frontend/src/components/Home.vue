@@ -254,6 +254,7 @@
                     id: e.target.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttributeNode('id'),
                     email: this.my_id, state: flag
                 }).then(response => {
+                    //console.log("home")
                     //console.log(response.data);
                     if (response.data === 'SUCCESS') {
                         //改变按钮状态
