@@ -13,6 +13,7 @@ class Image(models.Model):
     total_likes = models.IntegerField(default=0)
     total_thumbs = models.IntegerField(default=0)
     upload_time = models.DateTimeField(auto_now_add=True)
+    #img = models.FileField(upload_to='media', default='')
     img = models.CharField(default='', max_length=5000000)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default='')
 
