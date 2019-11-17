@@ -4,6 +4,9 @@ from django.http import HttpResponse
 import json
 from django.http import JsonResponse
 import heapq
+import base64
+import io
+from PIL import Image as PImage, ImageSequence, ImageDraw
 
 
 def upload_img(request):
@@ -15,7 +18,9 @@ def upload_img(request):
             img = request.POST.get("img")
             state = request.POST.get("state")
             user = User.objects.get(email=email)
+            # print("ok")
             img = Image.objects.create(classification=classification, img=img, owner=user)
+            # print("okk")
             tags = tagstr.split('#')
             tags.remove('')
             for tag in tags:
@@ -29,7 +34,9 @@ def upload_img(request):
                 tagobj = Tag.objects.get(content=tag) #再取一遍为了让数据库添加default项目
                 imgobj = Image.objects.get(id=img.id)
                 Image2tag.objects.create(image=imgobj, tag=tagobj)
+            # state = True
             if state == True:
+                print("ok")
                 add_watermark(img.id, user.username)
             return HttpResponse("SUCCESS")
         else:
@@ -146,47 +153,48 @@ def add_watermark(image_id, username):
                 image_type = 'jpg'
             else:
                 return HttpResponse("Unresolved image type")
-            pic_path = './images/' + image_id + '.' + image_type
+            pic_path = './emoji/images/' + str(image_id) + '.' + image_type
             with open(pic_path, 'wb') as f:
                 f.write(base64.b64decode(image_url.split(',')[1]))
-            image_origin = Image.open(pic_path)
+            image_origin = PImage.open(pic_path)
             if image_type == 'gif':
                 frames = []
                 for frame in ImageSequence.Iterator(image):
                     text = '@' + username
                     layer = frame.convert('RGBA')
-                    text_overlayer = Image.new('RGBA', layer.size, (255, 255, 255, 0))
+                    text_overlayer = PImage.new('RGBA', layer.size, (255, 255, 255, 0))
                     image_draw = ImageDraw.Draw(text_overlayer)
                     text_size_x, text_size_y = image_draw.textsize(text)
                     text_xy = (layer.size[0] - text_size_x, layer.size[1] - text_size_y)
                     image_draw.text(text_xy, text, fill=(0, 0, 0, 50))
-                    temp = Image.alpha_composite(layer, text_overlayer)
+                    temp = PImage.alpha_composite(layer, text_overlayer)
                     frame = temp.convert('RGB')
                     b = io.BytesIO()
                     frame.save(b, format="GIF")
-                    frame = Image.open(b)
+                    frame = PImage.open(b)
                     frames.append(frame)
                 frames[0].save(pic_path, save_all=True, append_images=frames[1:])
                 with open(pic_path, 'rb') as f:
                     image_byte = f.read()
                     image_base64 = str(base64.b64encode(image_byte), encoding='utf-8')
-                image.img = image_base64
+                image.img = image_url.split(',')[0] + ',' + image_base64
                 image.save()
             else:
                 text = '@' + username
                 layer = image_origin.convert('RGBA')
-                text_overlayer = Image.new('RGBA', layer.size, (255, 255, 255, 0))
+                text_overlayer = PImage.new('RGBA', layer.size, (255, 255, 255, 0))
                 image_draw = ImageDraw.Draw(text_overlayer)
                 text_size_x, text_size_y = image_draw.textsize(text)
                 text_xy = (layer.size[0] - text_size_x, layer.size[1] - text_size_y)
                 image_draw.text(text_xy, text, fill=(0, 0, 0, 50))
-                result = Image.alpha_composite(layer, text_overlayer)
+                result = PImage.alpha_composite(layer, text_overlayer)
                 result = result.convert('RGB')
                 result.save(pic_path)
                 with open(pic_path, 'rb') as f:
                     image_byte = f.read()
                     image_base64 = str(base64.b64encode(image_byte), encoding='utf-8')
-                image.img = image_base64
+                # print(image_url.split(',')[0], "ttt")
+                image.img = image_url.split(',')[0] + ',' + image_base64
                 image.save()
             return HttpResponse(image.img)
     except:
