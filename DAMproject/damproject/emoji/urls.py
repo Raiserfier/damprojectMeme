@@ -14,5 +14,6 @@ urlpatterns = [
     path('get_image_info', views.get_image_info),
     path('like_image', views.like_image),
     path('get_image_info', views.get_image_info),
-    path('thumb_image', views.thumb_image)
+    path('thumb_image', views.thumb_image),
+    path('add_watermark', views.add_watermark)
 ]

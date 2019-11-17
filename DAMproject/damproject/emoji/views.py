@@ -5,6 +5,7 @@ import json
 from django.http import JsonResponse
 import heapq
 
+
 def upload_img(request):
     try:
         if request.method == 'POST':
@@ -122,7 +123,50 @@ def delete_image(request):
         Image.objects.get(id=image_id).delete()
         return HttpResponse("SUCCESS")
     except:
-        return HttpResponse("没有此图片")
+        return HttpResponse("Image not Received")
+
+
+def add_watermark(request):
+    try:
+        image_id = request.POST.get("id")
+        username = request.POST.get("username")
+        if username == '':
+            return HttpResponse("Username not received")
+        else:
+            image = Image.objects.get(id=image_id)
+            image_url = image.img
+            if 'jpeg' in image_url:
+                image_type = 'jpeg'
+            elif 'gif' in image_url:
+                image_type = 'gif'
+            elif 'png' in image_url:
+                image_type = 'png'
+            elif 'jpg' in image_url:
+                image_type = 'jpg'
+            else:
+                return HttpResponse("Unresolved image type")
+            pic_path = './images/' + image_id + '.' + image_type
+            with open(pic_path, 'wb') as f:
+                f.write(base64.b64decode(image_url.split(',')[1]))
+            image_origin = Image.open(pic_path)
+            text = '@' + username
+            layer = image_origin.convert('RGBA')
+            text_overlayer = Image.new('RGBA', layer.size, (255, 255, 255, 0))
+            image_draw = ImageDraw.Draw(text_overlayer)
+            text_size_x, text_size_y = image_draw.textsize(text)
+            text_xy = (layer.size[0] - text_size_x, layer.size[1] - text_size_y)
+            image_draw.text(text_xy, text, fill=(0, 0, 0, 50))
+            result = Image.alpha_composite(layer, text_overlayer)
+            result = result.convert('RGB')
+            result.save(pic_path)
+            with open(pic_path, 'rb') as f:
+                image_byte = f.read()
+                image_base64 = str(base64.b64encode(image_byte), encoding='utf-8')
+            image.img = image_base64
+            image.save()
+            return HttpResponse(image.img)
+    except:
+        return HttpResponse("Data not received")
 
 
 #获取单张图片对应的全部信息 包括喜欢状态 另，用户有可能没有喜欢自己上传的图片
