@@ -7,6 +7,7 @@ import heapq
 import base64
 import io
 from PIL import Image as PImage, ImageSequence, ImageDraw
+import random
 
 
 def upload_img(request):
@@ -438,5 +439,146 @@ def thumb_image(request):
             return HttpResponse("SUCCESS")
     except:
         return HttpResponse("未收到数据")
+
+
+#猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
+def get_recommend(request):
+    try:
+        email = request.POST.get("email_user")
+        user = User.objects.get(email=email)
+        like_str = user.like_images
+        like_list = like_str.split('#')
+        like_list.remove('')
+        chosen = random.sample(like_list, round(len(like_list) * 0.3))
+        recom_list = []
+        num = 3
+        for i in chosen:
+            recom_list += list(recommend(i, num))
+        recom_list = list(set(recom_list))
+        data = []
+        for i in recom_list:
+            image = Image.objects.get(id=i+1)
+            data.append(get_all_info(image, email))
+        return HttpResponse(json.dumps(data))
+    except:
+        return HttpResponse("没有此用户")
+
+
+#表情包详情页推荐
+def detail_recommend(request):
+    try:
+        data = []
+        img_id = request.POST.get("id")
+        number = request.POST.get("number")
+        email = request.POST.get("email")
+        image = Image.objects.get(id=img_id)
+        recom_list = recommend(img_id, number)
+        for i in list(recom_list):
+            image = Image.objects.get(id=i+1)
+            data.append(get_all_info(image, email))
+        return HttpResponse(json.dumps(data))
+    except:
+        return HttpResponse("没有此图片")
+
+
+#推荐算法 通过一张图片推荐num张图片id
+def recommend(img_id, num):
+    image = Image.objects.get(id=img_id)
+    image_url = image.img
+    image_type = img_type(image_url)
+    pic_path_target = './emoji/images/' + 'target.' + image_type
+    with open(pic_path_target, 'wb') as f:
+        f.write(base64.b64decode(image_url.split(',')[1]))
+    img_all = Image.objects.all()
+    similarity = []
+    for img_com in img_all:
+        if img_com.id == id:
+            similarity += 10000000000000 #绝对选不到我自己
+        else:
+            image_url = img_com.img
+            image_type = img_type(image_url)
+            pic_path_com = './emoji/images/' + 'compare.' + image_type
+            p_similarity = get_similarity(pic_path_target, pic_path_com)
+            tags_target = image.image2tag_set.all()
+            tags_com = image.image2tag_set.all()
+            p_tag = 0
+            for tag_c in tags_com:
+                for tag_t in tags_target:
+                    if tag_t.tag.content == tag_c.tag.content:
+                        p_tag += 1
+                        break
+            p_tag = len(tags_target) - p_tag
+            similarity += p_tag * 5 + p_similarity  #配比随便写的
+    return map(similarity.index, heapq.nsmallest(num, similarity))
+
+
+#判断url类型
+def img_type(image_url):
+    if 'jpeg' in image_url:
+        return 'jpeg'
+    elif 'gif' in image_url:
+        return 'gif'
+    elif 'png' in image_url:
+        return 'png'
+    elif 'jpg' in image_url:
+        return 'jpg'
+
+
+#计算两张图片的相似度 差异值哈希算法 不知道gif行不行
+def get_similarity(target, compare):
+    image_target = PImage.open(target)
+    image_com = PImage.open(compare)
+    return DHash.hamming_distance(image_target, image_com)
+
+
+#一般来说，汉明距离小于5，基本就是同一张图片
+class DHash(object):
+    @staticmethod
+    def calculate_hash(image):
+        difference = DHash.__difference(image)
+        decimal_value = 0
+        hash_string = ""
+        for index, value in enumerate(difference):
+            if value:
+                decimal_value += value * (2 ** (index % 8))
+            if index % 8 == 7:
+                hash_string += str(hex(decimal_value)[2:].rjust(2, "0"))  # 不足2位以0填充。0xf=>0x0f
+                decimal_value = 0
+        return hash_string
+
+    @staticmethod
+    def hamming_distance(first, second):
+        if isinstance(first, str):
+            return DHash.__hamming_distance_with_hash(first, second)
+
+        hamming_distance = 0
+        image1_difference = DHash.__difference(first)
+        image2_difference = DHash.__difference(second)
+        for index, img1_pix in enumerate(image1_difference):
+            img2_pix = image2_difference[index]
+            if img1_pix != img2_pix:
+                hamming_distance += 1
+        return hamming_distance
+
+    @staticmethod
+    def __difference(image):
+        resize_width = 9
+        resize_height = 8
+        smaller_image = image.resize((resize_width, resize_height))
+        grayscale_image = smaller_image.convert("L")
+        pixels = list(grayscale_image.getdata())
+        difference = []
+        for row in range(resize_height):
+            row_start_index = row * resize_width
+            for col in range(resize_width - 1):
+                left_pixel_index = row_start_index + col
+                difference.append(pixels[left_pixel_index] > pixels[left_pixel_index + 1])
+        return difference
+
+    @staticmethod
+    def __hamming_distance_with_hash(dhash1, dhash2):
+        difference = (int(dhash1, 16)) ^ (int(dhash2, 16))
+        return bin(difference).count("1")
+
 
 # Create your views here.
