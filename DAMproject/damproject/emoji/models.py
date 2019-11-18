@@ -3,9 +3,11 @@ from django.db import models
 
 class User(models.Model):
     username = models.CharField(max_length=20)
+    portrait = models.CharField(default='', max_length=5000000)
     email = models.EmailField(max_length=40, default='')
     password = models.CharField(max_length=20)
     like_images = models.TextField(default='')
+    profile = models.CharField(default='', max_length=100)
 
 
 class Image(models.Model):
