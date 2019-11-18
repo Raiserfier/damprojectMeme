@@ -5,6 +5,8 @@ import Home from '../components/Home'
 import Home1 from "../components/Home1";
 import Channel from '../components/Channel'
 import Recommend from '../components/Recommend';
+import PicDetail from "../components/PicDetail";
+import Info_setting from "../components/Info_setting";
  //import ImageStream from '../components/ImagePage/ImageStream'
 import Upload from '../components/Upload'
 import User from '../components/User'
@@ -20,6 +22,7 @@ export default new Router({
     // home-page
     // {path: '/', name: 'Home', component: Home},
     {path: '/', name: 'Home', component: Home1},
+    {path: '/detail', name: 'PicDetail', component: PicDetail},
     {path: '/:type/:key', name: 'PageWithTitle', component: Title},
     {path: '/:type/:id/:key', name: 'PageWithSearch', component: Channel},
     {path: '/recommend/:id', name: 'Recommend', component: Recommend},
@@ -45,6 +48,7 @@ export default new Router({
     // {path: '/favorite', name: 'Favorite', component: Favorite},
     // {path: '/favorite', name:'Favorite', component: ImageStream},
     // login-page
+    {path: '/setting', name: 'Info_setting', component: Info_setting},
     {path: '/login', name: 'Login', component: User,
       children:[
         {path: '', name: 'Login', component: Login}

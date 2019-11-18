@@ -16,8 +16,13 @@
           <div class="Uploader">
             <div class="Userpic_window">
               <a href="" class="User_pic"
-                 :style="{'border-radius':100+'%','background-image':'url'+'(\'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3900046848,1834418761&fm=26&gp=0.jpg\')'}"></a>
+                 :style="{'background-image':'url'+'(\'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3900046848,1834418761&fm=26&gp=0.jpg\')'}"></a>
               <h2 class="User_name"><a href="">TESTER</a></h2>
+            </div>
+            <div>
+              <p class="user_introduction">
+                这是用户简介
+              </p>
             </div>
           </div>
           <div class="info_line"><i class="icon fa-clock-o"></i><span>Upload time</span></div>
@@ -36,6 +41,9 @@
           </div>
         </div><!-- 推荐图片瀑布流-->
         <section id="main" style="align-content: center;align-items: center">
+          <div>
+            <h2 class="Title">相似表情包</h2>
+          </div>
           <!-- Thumbnails 使用poptrox-->
           <section class="thumbnails" style="margin-left: 10%; margin-right: 10%">
             <div class="v-waterfall-content" id="v-waterfall">
@@ -444,6 +452,28 @@
   .icons .icon{
     float: right;
     margin-right: 0;
+  }
+
+  .Title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.1;
+    width: 100%;
+    margin-left: 200px;
+    margin-bottom: 15px;
+  }
+  .user_introduction{
+    color: #b2b2b2;
+    font-size: 12px;
+    line-height: 19px;
+    -webkit-transition: max-height .5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: max-height .5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    padding-top: 20px;
+    background-color: #202024;
+    cursor: default;
+    box-shadow: none;
+    text-align: left;
+    margin: 0 0 15%;
   }
 
 </style>
