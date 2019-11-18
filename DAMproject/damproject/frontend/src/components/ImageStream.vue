@@ -40,14 +40,12 @@
                 type: 0,//0是全局搜索，1是收藏，2是上传，3是类别
                 isCollect:false,
                 isLike: false,
-
                 imgList: [],//从后端获取到的图片包括图片的url\id\tags\like\favorite\thumb
                 count: 0,//已经从后端获取的图片数量
                 last: 0,//List中未被加载的图片数量
                 each_time: 10,//每次加载的图片数量
                 imgArr:[],//当次要加载的图片
                 waterfallList:[],//已经加载的照片
-
                 waterfallImgWidth:350,
                 waterfallImgCol:3,
                 waterfallImgRight:10,
@@ -103,7 +101,6 @@
                     scrollTop = $(window).scrollTop(),
                     winHeight = $(window).height(),
                     thresold = pageHeight - scrollTop - winHeight;
-
                 if (thresold <= 10) {
                     console.log('end');
                     if(this.last){
@@ -178,7 +175,6 @@
                 }
                 e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOut";
             },
-
             //搜索结果
             get_img(t,k){
                 this.$api.post('/get_user_image',{key:k,email:this.my_id,email_user:this.my_id,type:t}).then(response=>{
@@ -253,7 +249,6 @@
                 const min = Math.min.apply(null, this.waterfallDeviationHeight);
                 return this.waterfallDeviationHeight.indexOf(min);
             },
-
             //点赞
             thumb_click(e){
                 // let flag = true;
@@ -323,7 +318,6 @@
     -webkit-transition: all 1s ease-in-out;
     transition: all 0.3s ease-in-out;
   }
-
   .IconOver {
     visibility: visible;
     opacity: 1;
@@ -354,7 +348,6 @@
       transform: translateY(-10px);
       opacity: 0;
     }
-
 .thumbnails .v-waterfall-content{
     width: 100%;
     height: 100%;
