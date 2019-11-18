@@ -1,12 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da9a7d25-91da-4c11-a2df-6a612785c06d" name="Default Changelist" comment="" />
+    <list default="true" id="da9a7d25-91da-4c11-a2df-6a612785c06d" name="Default Changelist" comment="zsbd">
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.idea/dam.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dam.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAMproject/damproject/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAMproject/damproject/emoji/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/emoji/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAMproject/damproject/emoji/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/emoji/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAMproject/damproject/emoji/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/emoji/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAMproject/damproject/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/frontend/package.json" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAMproject/damproject/emoji/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/emoji/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAMproject/damproject/emoji/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAMproject/damproject/emoji/views.py" afterDir="false" />
+>>>>>>> master
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/emoji/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-551">
+              <caret line="124" column="44" selection-start-line="124" selection-start-column="44" selection-end-line="124" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/damproject/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1990" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/emoji/admin.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/damproject/urls.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/damproject/wsgi.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/damproject/__init__.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/frontend/src/components/Home.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="191" column="75" selection-start-line="191" selection-start-column="75" selection-end-line="191" selection-end-column="75" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/frontend/src/components/ImageStream.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-5358" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/frontend/src/components/ImagePage/ImageStream.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4769">
+              <caret line="251" column="41" selection-start-line="251" selection-start-column="41" selection-end-line="251" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DAMproject/damproject/emoji/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -17,19 +117,111 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/DAMproject/damproject/emoji/models.py" />
+        <option value="$PROJECT_DIR$/DAMproject/damproject/emoji/admin.py" />
+        <option value="$PROJECT_DIR$/DAMproject/damproject/emoji/views.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1940" />
+    <option name="height" value="1060" />
   </component>
   <component name="ProjectId" id="1T3UKGUWwIj5zFRoGgai2PU20te" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="1" id="Add" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="damprojectMeme" type="b2602c69:ProjectViewProjectNode" />
+              <item name="damprojectMeme" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="damprojectMeme" type="b2602c69:ProjectViewProjectNode" />
+              <item name="damprojectMeme" type="462c0819:PsiDirectoryNode" />
+              <item name="DAMproject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="damprojectMeme" type="b2602c69:ProjectViewProjectNode" />
+              <item name="damprojectMeme" type="462c0819:PsiDirectoryNode" />
+              <item name="DAMproject" type="462c0819:PsiDirectoryNode" />
+              <item name="damproject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="damprojectMeme" type="b2602c69:ProjectViewProjectNode" />
+              <item name="damprojectMeme" type="462c0819:PsiDirectoryNode" />
+              <item name="DAMproject" type="462c0819:PsiDirectoryNode" />
+              <item name="damproject" type="462c0819:PsiDirectoryNode" />
+              <item name="damproject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="damprojectMeme" type="b2602c69:ProjectViewProjectNode" />
+              <item name="damprojectMeme" type="462c0819:PsiDirectoryNode" />
+              <item name="DAMproject" type="462c0819:PsiDirectoryNode" />
+              <item name="damproject" type="462c0819:PsiDirectoryNode" />
+              <item name="emoji" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="damprojectMeme" type="b2602c69:ProjectViewProjectNode" />
+              <item name="damprojectMeme" type="462c0819:PsiDirectoryNode" />
+              <item name="DAMproject" type="462c0819:PsiDirectoryNode" />
+              <item name="damproject" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="damprojectMeme" type="b2602c69:ProjectViewProjectNode" />
+              <item name="damprojectMeme" type="462c0819:PsiDirectoryNode" />
+              <item name="DAMproject" type="462c0819:PsiDirectoryNode" />
+              <item name="damproject" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="damprojectMeme" type="b2602c69:ProjectViewProjectNode" />
+              <item name="damprojectMeme" type="462c0819:PsiDirectoryNode" />
+              <item name="DAMproject" type="462c0819:PsiDirectoryNode" />
+              <item name="damproject" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="damprojectMeme" type="b2602c69:ProjectViewProjectNode" />
+              <item name="damprojectMeme" type="462c0819:PsiDirectoryNode" />
+              <item name="DAMproject" type="462c0819:PsiDirectoryNode" />
+              <item name="damproject" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="ImagePage" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -75,6 +267,10 @@
       <workItem from="1573448526261" duration="1250000" />
       <workItem from="1573569976838" duration="25000" />
       <workItem from="1573731826202" duration="14898000" />
+      <workItem from="1573833325601" duration="1019000" />
+      <workItem from="1573866624745" duration="527000" />
+      <workItem from="1573868356150" duration="47000" />
+      <workItem from="1573868539996" duration="6734000" />
     </task>
     <task id="LOCAL-00001" summary="zsbd">
       <created>1573733714614</created>
@@ -90,15 +286,37 @@
       <option name="project" value="LOCAL" />
       <updated>1573746590781</updated>
     </task>
-    <task id="LOCAL-00003" summary="zsbd">
-      <created>1574051162651</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1574051162651</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="8327000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2600536" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.22237961" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -109,8 +327,28 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
               <option name="COLUMN_ORDER" />
             </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
           </value>
         </entry>
       </map>
@@ -119,5 +357,75 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="zsbd" />
     <option name="LAST_COMMIT_MESSAGE" value="zsbd" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/frontend/src/components/Upload.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2451" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/frontend/src/components/ImageStream.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5358" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/frontend/src/components/Home1.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/frontend/src/components/ImagePage/ImageStream.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4769">
+          <caret line="251" column="41" selection-start-line="251" selection-start-column="41" selection-end-line="251" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/emoji/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/damproject/urls.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/damproject/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/emoji/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/damproject/wsgi.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/frontend/src/components/Home.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="191" column="75" selection-start-line="191" selection-start-column="75" selection-end-line="191" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/damproject/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1990" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMproject/damproject/emoji/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-551">
+          <caret line="124" column="44" selection-start-line="124" selection-start-column="44" selection-end-line="124" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

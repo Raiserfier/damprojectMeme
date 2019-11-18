@@ -283,7 +283,7 @@
                     e.currentTarget.className = "icon style2 fa-star";
                     flag = false;
                 }
-                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttributeNode('id'),
+                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttributeNode('id'),
                     email:this.my_id,state: flag}).then(response =>{
                     //console.log(response.data);
                     if(response.data === 'SUCCESS'){

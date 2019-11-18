@@ -1,8 +1,12 @@
-from .models import Image, User
+from .models import Image, User, Tag, Image2tag
 from django.shortcuts import redirect
 from django.http import HttpResponse
 import json
 from django.http import JsonResponse
+import heapq
+import base64
+import io
+from PIL import Image as PImage, ImageSequence, ImageDraw
 
 
 def upload_img(request):
@@ -10,10 +14,30 @@ def upload_img(request):
         if request.method == 'POST':
             email = request.POST.get("email")
             classification = request.POST.get("classification")
-            tags = request.POST.get("tags")
+            tagstr = request.POST.get("tags")
             img = request.POST.get("img")
+            state = request.POST.get("state")
             user = User.objects.get(email=email)
-            Image.objects.create(classification=classification, tags=tags, img=img, owner=user)
+            # print("ok")
+            img = Image.objects.create(classification=classification, img=img, owner=user)
+            # print("okk")
+            tags = tagstr.split('#')
+            tags.remove('')
+            for tag in tags:
+                taginfo = Tag.objects.filter(content=tag)
+                if taginfo.exists():
+                    tagobj = taginfo.first()
+                    tagobj.frequency += 1
+                    tagobj.save()
+                else:
+                    Tag.objects.create(content=tag)
+                tagobj = Tag.objects.get(content=tag) #再取一遍为了让数据库添加default项目
+                imgobj = Image.objects.get(id=img.id)
+                Image2tag.objects.create(image=imgobj, tag=tagobj)
+            # state = True
+            if state == True:
+                print("ok")
+                add_watermark(img.id, user.username)
             return HttpResponse("SUCCESS")
         else:
             return HttpResponse("不是POST")
@@ -31,7 +55,7 @@ def create_user(request):
             return HttpResponse("Exist")
         else:
             User.objects.create(username=username, email=email, password=password)
-            return HttpResponse("SUCCEESS")
+            return HttpResponse("SUCCESS")
     except:
         return HttpResponse("未收到数据")
 
@@ -56,10 +80,14 @@ def login(request):
         return HttpResponse("未收到数据")
 
 
+#收藏图片
 def like_image(request):
     try:
-        image_id = request.POST.get("id")
         email = request.POST.get("email")
+        print(email)
+        image_id = request.POST.get("id")
+        print(image_id)
+        #email = request.POST.get("email")
         state = request.POST.get("state")
         image = Image.objects.get(id=image_id)
         user = User.objects.get(email=email)
@@ -80,26 +108,97 @@ def like_image(request):
         return HttpResponse("未收到数据")
 
 
+#主页按照类别获取图片
 def get_images(request):
     try:
         data = []
         email = request.POST.get('email')
         number = request.POST.get('number')
-        print(email, number)
         classification_list = get_classification()
-        print("1")
         for index in range(len(classification_list)):
             certain_classification = get_number_image(classification_list[index], number)
             images = []
-            print("2")
             for image in certain_classification:
                 images.append(get_image_info(image, email))
-                print("3")
             data.append({classification_list[index]: images})
-            print(classification_list[index])
         return HttpResponse(json.dumps(data), content_type="application/json")
     except:
         return HttpResponse('Not received')
+
+
+#删除图片
+def delete_image(request):
+    try:
+        image_id = request.POST.get("id")
+        Image.objects.get(id=image_id).delete()
+        return HttpResponse("SUCCESS")
+    except:
+        return HttpResponse("Image not Received")
+
+
+def add_watermark(image_id, username):
+    try:
+        if username == '':
+            return HttpResponse("Username not received")
+        else:
+            image = Image.objects.get(id=image_id)
+            image_url = image.img
+            if 'jpeg' in image_url:
+                image_type = 'jpeg'
+            elif 'gif' in image_url:
+                image_type = 'gif'
+            elif 'png' in image_url:
+                image_type = 'png'
+            elif 'jpg' in image_url:
+                image_type = 'jpg'
+            else:
+                return HttpResponse("Unresolved image type")
+            pic_path = './emoji/images/' + str(image_id) + '.' + image_type
+            with open(pic_path, 'wb') as f:
+                f.write(base64.b64decode(image_url.split(',')[1]))
+            image_origin = PImage.open(pic_path)
+            if image_type == 'gif':
+                frames = []
+                for frame in ImageSequence.Iterator(image):
+                    text = '@' + username
+                    layer = frame.convert('RGBA')
+                    text_overlayer = PImage.new('RGBA', layer.size, (255, 255, 255, 0))
+                    image_draw = ImageDraw.Draw(text_overlayer)
+                    text_size_x, text_size_y = image_draw.textsize(text)
+                    text_xy = (layer.size[0] - text_size_x, layer.size[1] - text_size_y)
+                    image_draw.text(text_xy, text, fill=(0, 0, 0, 50))
+                    temp = PImage.alpha_composite(layer, text_overlayer)
+                    frame = temp.convert('RGB')
+                    b = io.BytesIO()
+                    frame.save(b, format="GIF")
+                    frame = PImage.open(b)
+                    frames.append(frame)
+                frames[0].save(pic_path, save_all=True, append_images=frames[1:])
+                with open(pic_path, 'rb') as f:
+                    image_byte = f.read()
+                    image_base64 = str(base64.b64encode(image_byte), encoding='utf-8')
+                image.img = image_url.split(',')[0] + ',' + image_base64
+                image.save()
+            else:
+                text = '@' + username
+                layer = image_origin.convert('RGBA')
+                text_overlayer = PImage.new('RGBA', layer.size, (255, 255, 255, 0))
+                image_draw = ImageDraw.Draw(text_overlayer)
+                text_size_x, text_size_y = image_draw.textsize(text)
+                text_xy = (layer.size[0] - text_size_x, layer.size[1] - text_size_y)
+                image_draw.text(text_xy, text, fill=(0, 0, 0, 50))
+                result = PImage.alpha_composite(layer, text_overlayer)
+                result = result.convert('RGB')
+                result.save(pic_path)
+                with open(pic_path, 'rb') as f:
+                    image_byte = f.read()
+                    image_base64 = str(base64.b64encode(image_byte), encoding='utf-8')
+                # print(image_url.split(',')[0], "ttt")
+                image.img = image_url.split(',')[0] + ',' + image_base64
+                image.save()
+            return HttpResponse(image.img)
+    except:
+        return HttpResponse("Data not received")
 
 
 #获取单张图片对应的全部信息 包括喜欢状态 另，用户有可能没有喜欢自己上传的图片
@@ -108,11 +207,15 @@ def get_all_info(image, email):
     if email == "99":
         print("99")
         state = False
+        tagsobj = image.image2tag_set.all()
+        tags = ''
+        for tagobj in tagsobj:
+            tags += '#' + tagobj.tag.content
         return {
             'id': image.id,
             'img': image.img,
             'classification': image.classification,
-            'tags': image.tags,
+            'tags': tags,
             'state': state
         }
     else:
@@ -121,15 +224,20 @@ def get_all_info(image, email):
             state = True
         else:
             state = False
+        tagsobj = image.image2tag_set.all()
+        tags = ''
+        for tagobj in tagsobj:
+            tags += '#' + tagobj.tag.content
         return {
             'id': image.id,
             'img': image.img,
             'classification': image.classification,
-            'tags': image.tags,
+            'tags': tags,
             'state': state
         }
 
 
+#获取单张图片的信息
 def get_image_info(image, email):
     try:
         user = User.objects.get(email=email)
@@ -139,10 +247,14 @@ def get_image_info(image, email):
             state = False
     except:
         state = False
+    tagsobj = image.image2tag_set.all()
+    tags = ''
+    for tagobj in tagsobj:
+        tags += '#' + tagobj.tag.content
     return {
         'id': image.id,
         'img': image.img,
-        'tags': image.tags,
+        'tags': tags,
         'state': state
     }
 
@@ -234,7 +346,7 @@ def get_user_liked_image(email):
         imgid = '#' + str(image.id) + '#'
         if imgid in user.like_images:
             like_image.append(get_all_info(image, email))
-
+    print(user, like_image)
     return like_image
 
 
@@ -258,7 +370,7 @@ def get_user_image(request):
         email = request.POST.get('email', default='')
         email_user = request.POST.get('email_user')
         key = request.POST.get('key', default='all')
-        #print(type)
+        print(type)
         #全站搜索 同时搜索标签和类别
         if type == '0':
             data = get_key_search(key, email_user)
@@ -285,6 +397,46 @@ def get_user_image(request):
         return HttpResponse('Not received')
 
 
+#堆排序，找出最受欢迎的图片（目前只支持收藏）
+def most_popular(request):
+    try:
+        data = []
+        email = request.POST.get('email')
+        number = request.POST.get('number')
+        popular = []
+        images = Image.objects.all()
+        for image in images:#按照id将流行度存入 注意id从1开始 列表从0开始
+            popular += image.total_likes + image.total_thumbs #可以在此修改算法
+        #堆排序获得最大的number张图片并获得id
+        max_index = map(popular.index, heapq.nlargest(number, popular))
+        for i in list(max_index):
+            image = Image.objects.get(id=i+1)
+            data.append(get_all_info(image, email))
+        return HttpResponse(json.dumps(data))
+    except:
+        return HttpResponse('Not received')
 
+
+#点赞
+def thumb_image(request):
+    try:
+        email = request.POST.get("email")
+        print(email)
+        image_id = request.POST.get("id")
+        print(image_id)
+        state = request.POST.get("state")
+        image = Image.objects.get(id=image_id)
+        user = User.objects.get(email=email)
+        print(image_id, email, state)
+        if state == "true":
+            image.total_thumbs += 1
+            image.save()
+            return HttpResponse("SUCCESS")
+        else:
+            image.thumbs -= 1
+            image.save()
+            return HttpResponse("SUCCESS")
+    except:
+        return HttpResponse("未收到数据")
 
 # Create your views here.
