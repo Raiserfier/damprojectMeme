@@ -359,8 +359,14 @@ def get_key_search(key, email):
         if key == "all":
             data.append(get_all_info(image, email))
             continue
-        if image.classification == key or key in image.tags:
+        if image.classification == key:
             data.append(get_all_info(image, email))
+            continue
+        tagsobj = image.image2tag_set.all()
+        for tagobj in tagsobj:
+            if tagobj.tag.content == key:
+                data.append(get_all_info(image, email))
+                break
     return data
 
 
