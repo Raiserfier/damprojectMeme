@@ -46,7 +46,7 @@
                 imgList: [],//从后端获取到的图片包括图片的img\id\tags\state\classification
                 count: 0,//已经从后端获取的图片数量
                 last: 0,//List中未被加载的图片数量
-                each_time: 3,//每次加载的图片数量
+                each_time: 10,//每次加载的图片数量
                 imgArr:[],//当次要加载的图片
                 waterfallList:[],//已经加载的照片
 
@@ -61,11 +61,15 @@
         created() {
             this.my_id = this.$store.state.user_id;
             this.key = this.$route.params.key;
-            //用户页
+            //用户页\\推荐页
             if (this.$route.params.id !== undefined){
-                if(this.$route.params.type === 'channel') this.type = 2;
-                else if(this.$route.params.type === 'favorite') this.type = 1;
-                this.get_user(this.$route.params.id,this.type,this.key);
+                if(this.$route.params.type === undefined){
+                		this.get_recommend(this.$route.params.id);
+                }else{
+                    if(this.$route.params.type === 'channel') this.type = 2;
+                    else if(this.$route.params.type === 'favorite') this.type = 1;
+                    this.get_user(this.$route.params.id,this.type,this.key);
+                }
             }
             //搜索、类别页
             else {
@@ -99,13 +103,13 @@
                     scrollTop = $(window).scrollTop(),
                     winHeight = $(window).height(),
                     thresold = pageHeight - scrollTop - winHeight;
-                console.log(pageHeight,scrollTop,winHeight);
+                // console.log(pageHeight,scrollTop,winHeight);
                 if (thresold <= 10) {
                     console.log('end');
                     if(this.last){
                         console.log('2113434233');
                         this.load_more();
-                        this.imgPreloading();
+                        this.preloading();
                     }
                 }
                 // console.log('132\n\n'+document.body.scrollHeight,document.body.scrollTop,document.body.clientHeight);
@@ -222,7 +226,33 @@
                         }
                         this.calculationWidth();
                      }
+                }),(response)=>{
+                    //console.log("error");
+                    this.$message.error('图片获取失败');
+                }
+            },
+            //用户推荐
+            get_recommend(id){
+                this.$api.post('/get_recommend',{email_user:id}).then(response =>{
+                    if(response.data !== 'Not received'){
+                         // console.log(response.data);
+                        this.imgList = response.data;
+                        // console.log(this.imgList);
+                        this.count += response.data.length;
+                        this.last += response.data.length;
 
+                        //加载图片
+                        for (let i = 0; i < this.each_time; i++){
+                            if(this.last === 0) {
+                                break;
+                            }
+                            this.last--;
+                            this.imgArr.push(this.imgList[this.last]);
+                        }
+                        this.calculationWidth();
+                    }else{
+                        this.$message.warnings('图片获取失败');
+                    }
                 }),(response)=>{
                     //console.log("error");
                     this.$message.error('图片获取失败');
@@ -285,7 +315,7 @@
                     e.currentTarget.className = "icon style2 fa-thumbs-up";
                     flag = false;
                 }
-                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttributeNode('id'),
+                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
                     email:this.my_id,state: flag}).then(response =>{
                     console.log('1111111'+response.data);
                     if(response.data === 'SUCCESS'){
@@ -305,7 +335,7 @@
                     e.currentTarget.className = "icon style2 fa-star";
                     flag = false;
                 }
-                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttributeNode('id'),
+                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
                     email:this.my_id,state: flag}).then(response =>{
                     //console.log(response.data);
                     if(response.data === 'SUCCESS'){

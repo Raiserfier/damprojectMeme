@@ -7,7 +7,7 @@
         <div class="fnwVXu"><!-- 导航栏 -->
           <ul>
             <li v-for="c in categories" class="topBar">
-              <router-link :to="'/'+c.id" class="fnxsKA">{{c.name}}</router-link>
+              <router-link :to="'/category/'+c.id" class="fnxsKA">{{c.name}}</router-link>
             </li>
             <!--            <li class="topBar" >-->
             <!--              <router-link to="/animal" class="fnxsKA">动物</router-link>-->
@@ -94,6 +94,9 @@
         </li>
         <li @click="jump">
           <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'">我的收藏</router-link>
+        </li>
+        <li>
+          <router-link to="/settings">个人设置</router-link>
         </li>
         <li @click="logout">
           <router-link to="/">退出登录</router-link>

@@ -48,7 +48,7 @@ export default new Router({
     // {path: '/favorite', name: 'Favorite', component: Favorite},
     // {path: '/favorite', name:'Favorite', component: ImageStream},
     // login-page
-    {path: '/setting', name: 'Info_setting', component: Info_setting},
+    {path: '/settings', name: 'Info_setting', component: Info_setting},
     {path: '/login', name: 'Login', component: User,
       children:[
         {path: '', name: 'Login', component: Login}
