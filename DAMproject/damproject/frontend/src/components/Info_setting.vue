@@ -17,7 +17,8 @@
       <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'" class="column_button"><i class="icon fa-star"></i><span style="padding-left: 10px">我的收藏</span></router-link>
     </div>
     <div class="setting_window">
-      <form><!--Items-->
+      <!--Items-->
+      <form>
         <div class="form_container">
           <div class="setting_title">
             <div>
@@ -37,17 +38,17 @@
             </label>
           </div>
           <!--email address-->
-          <div class="form_content">
-            <div>
-              <div class="item_title">
-                <div>邮箱地址</div>
-              </div>
-            </div>
-            <label>
-              <input minlength="1" maxlength="30" type="text" name="email" placeholder="email address"
-                     class="setting_input" :value="this.$store.state.user_id">
-            </label>
-          </div>
+<!--          <div class="form_content">-->
+<!--            <div>-->
+<!--              <div class="item_title">-->
+<!--                <div>邮箱地址</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <label>-->
+<!--              <input minlength="1" maxlength="30" type="text" name="email" placeholder="email address"-->
+<!--                     class="setting_input" :value="this.$store.state.user_id">-->
+<!--            </label>-->
+<!--          </div>-->
           <!--introduction-->
           <div class="form_content">
             <div>
@@ -58,6 +59,58 @@
             <label>
               <textarea name="introduction" placeholder="这个用户很懒..." class="Introduction_input"></textarea>
 <!--              <input placeholder="这个用户很懒..." class="Introduction_input" type="text"/>-->
+            </label>
+          </div>
+          <!--commit button-->
+          <div class="setting_buttons">
+            <button class="setting_commit_button">
+              确认
+            </button>
+          </div>
+        </div>
+      </form>
+      <!--Password change-->
+      <form :style="{'padding-top': 5+'%'}">
+        <div class="form_container">
+          <div class="setting_title">
+            <div>
+              修改密码
+            </div>
+          </div>
+          <!--old password-->
+          <div class="form_content">
+            <div>
+              <div class="item_title">
+                <div>旧密码</div>
+              </div>
+            </div>
+            <label>
+              <input minlength="1" maxlength="30" type="text" name="old_password" placeholder="Old password"
+                     class="setting_input">
+            </label>
+          </div>
+          <!--new password-->
+          <div class="form_content">
+            <div>
+              <div class="item_title">
+                <div>新密码</div>
+              </div>
+            </div>
+            <label>
+              <input minlength="1" maxlength="30" type="password" name="new_password" placeholder="New password"
+                     class="setting_input">
+            </label>
+          </div>
+          <!--new password confirm-->
+          <div class="form_content">
+            <div>
+              <div class="item_title">
+                <div>新密码确认</div>
+              </div>
+            </div>
+            <label>
+              <input minlength="1" maxlength="30" type="password" name="new_password_confirm" placeholder="New password confirm"
+                     class="setting_input">
             </label>
           </div>
           <!--commit button-->
