@@ -477,6 +477,7 @@ def get_recommend(request):
 # 表情包详情页推荐
 def detail_recommend(request):
     try:
+        print("1")
         data = []
         img_id = request.POST.get("id")
         number = request.POST.get("number")
@@ -484,6 +485,7 @@ def detail_recommend(request):
         image = Image.objects.get(id=img_id)
         recom_list = recommend(img_id, number)
         for i in list(recom_list):
+            print(i)
             image = Image.objects.get(id=i + 1)
             data.append(get_all_info(image, email))
         return HttpResponse(json.dumps(data))
