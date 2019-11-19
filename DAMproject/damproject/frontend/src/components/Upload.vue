@@ -95,13 +95,13 @@
         data() {
             //select选中的值
             return {
-                cate: 'chrome',
+                cate: '动物',
                 options: [
-                    {name: '动物', id: 'chrome'},
-                    {name: '食物', id: 'safari'},
-                    {name: '动画', id: 'Edge'},
-                    {name: '游戏', id: 'firefox'},
-                    {name: '人物', id: 'ie8'}
+                    {name: '动物', id: '动物'},
+                    {name: '食物', id: '食物'},
+                    {name: '动画', id: '动画'},
+                    {name: '游戏', id: '游戏'},
+                    {name: '人物', id: '人物'}
                 ],
                 currentval: '',
                 labelarr: ["动物", "食物"],
@@ -207,6 +207,7 @@
                     tags += '#' + this.labelarr[i];
                 }
                 for (let i = 0; i < this.up_img.length; i++) {
+                    console.log(this.isMask);
                     this.$api.post('/upload_image', {
                         img: this.up_img,
                         email: this.$store.state.user_id,

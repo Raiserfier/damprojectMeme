@@ -39,50 +39,58 @@
             <a class="TAG" href=""><h3 class="TAG_title">#aaa</h3></a>
             <a class="TAG" href=""><h3 class="TAG_title">#aaa</h3></a>
           </div>
-        </div><!-- 推荐图片瀑布流-->
-        <section id="main" style="align-content: center;align-items: center">
-          <div>
-            <h2 class="Title">相似表情包</h2>
-          </div>
-          <!-- Thumbnails 使用poptrox-->
-          <section class="thumbnails" style="margin-left: 10%; margin-right: 10%">
-            <div class="v-waterfall-content" id="v-waterfall">
-              <div v-for="img in waterfallList"
-                   class="v-waterfall-item"
-                   :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">
-                <div class="icons"><!-- 三个icon按钮 -->
-                  <ul @mouseover="enterul($event)" @mouseout="leaveul($event)" :style="{right: 25+'%'}">
-                    <li><p class="icon style2 fa-star" @click="clickCollect($event)"
-                           v-bind:class="{ Collected:isCollect }"><span class="label">Collect</span></p></li>
-                    <li><p class="icon style2 fa-thumbs-up" @click="clickLike($event)"
-                           v-bind:class="{ Likeded:isLike }"><span class="label">Like</span></p></li>
-                    <li><a href="" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span
-                      class="label">ForMore</span></a></li>
-                  </ul>
-                </div>
-                <div class="labels"><!-- labels链接 -->
-                  <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul"
-                      :style="{top:img.height*0.8-10+'px'}">
-                    <a class="" href="#">#AAA</a>
-                    <a class="" href="#">#AAA</a>
-                    <a class="" href="#">#AAA</a>
-                  </ul>
-                </div>
-                <a>
-                  <img @mouseenter="enterpic($event)" @mouseleave="leavepic($event)" :src="img.src" alt="">
-                </a>
-              </div>
-            </div>
-          </section>
-        </section>
+        </div>
+
+        <!-- 推荐图片瀑布流-->
+        <details-recommend></details-recommend>
+
+<!--        <section id="main" style="align-content: center;align-items: center">-->
+<!--          <div>-->
+<!--            <h2 class="Title">相似表情包</h2>-->
+<!--          </div>-->
+<!--          &lt;!&ndash; Thumbnails 使用poptrox&ndash;&gt;-->
+<!--          <section class="thumbnails" style="margin-left: 10%; margin-right: 10%">-->
+<!--            <div class="v-waterfall-content" id="v-waterfall">-->
+<!--              <div v-for="img in waterfallList"-->
+<!--                   class="v-waterfall-item"-->
+<!--                   :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">-->
+<!--                <div class="icons">&lt;!&ndash; 三个icon按钮 &ndash;&gt;-->
+<!--                  <ul @mouseover="enterul($event)" @mouseout="leaveul($event)" :style="{right: 25+'%'}">-->
+<!--                    <li><p class="icon style2 fa-star" @click="clickCollect($event)"-->
+<!--                           v-bind:class="{ Collected:isCollect }"><span class="label">Collect</span></p></li>-->
+<!--                    <li><p class="icon style2 fa-thumbs-up" @click="clickLike($event)"-->
+<!--                           v-bind:class="{ Likeded:isLike }"><span class="label">Like</span></p></li>-->
+<!--                    <li><a href="" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span-->
+<!--                      class="label">ForMore</span></a></li>-->
+<!--                  </ul>-->
+<!--                </div>-->
+<!--                <div class="labels">&lt;!&ndash; labels链接 &ndash;&gt;-->
+<!--                  <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul"-->
+<!--                      :style="{top:img.height*0.8-10+'px'}">-->
+<!--                    <a class="" href="#">#AAA</a>-->
+<!--                    <a class="" href="#">#AAA</a>-->
+<!--                    <a class="" href="#">#AAA</a>-->
+<!--                  </ul>-->
+<!--                </div>-->
+<!--                <a>-->
+<!--                  <img @mouseenter="enterpic($event)" @mouseleave="leavepic($event)" :src="img.src" alt="">-->
+<!--                </a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </section>-->
+<!--        </section>-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+    import ImageStream from './ImagePage/ImageStream'
     export default {
         name: "PicDetail",
+        components:{
+            'details-recommend': ImageStream
+        },
         data() {
             return {
                 isCollect: false,

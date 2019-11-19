@@ -21,8 +21,7 @@
                   </li>
                   <li><p @click="thumb_click($event)" class="icon style2 fa-thumbs-up" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p>
                   </li>
-                  <li><a class="icon style2 fa-info" data-poptrox="iframe,1200x800" href="index.html"><span class="label">ForMore</span></a>
-                  </li>
+                  <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></router-link></li>
                 </ul>
               </div>
               <div class="labels"><!-- labels链接 -->
