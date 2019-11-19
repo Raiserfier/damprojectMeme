@@ -37,7 +37,7 @@
 <!--              &lt;!&ndash;              <router-link to="/favorite" class="fnxsKA">我的收藏</router-link>&ndash;&gt;-->
 <!--            </li>-->
             <li class="topBar">
-              <router-link :to="'/recommend/'+this.$store.state.user_id" class="fnxsKA">猜你喜欢</router-link>
+              <router-link to="/recommend" class="fnxsKA">猜你喜欢</router-link>
             </li>
 <!--            <li class="topBar">-->
 <!--              <router-link to="/login" class="fnxsKA">登录</router-link>-->

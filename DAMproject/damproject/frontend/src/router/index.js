@@ -7,47 +7,22 @@ import Channel from '../components/Channel'
 import Recommend from '../components/Recommend';
 import PicDetail from "../components/PicDetail";
 import Info_setting from "../components/Info_setting";
- //import ImageStream from '../components/ImagePage/ImageStream'
 import Upload from '../components/Upload'
 import User from '../components/User'
 import Login from '../components/User/Login'
 import Title from '../components/Title'
 import Register from '../components/User/Register'
-// import Favorite from '../components/Favorite'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    // home-page
-    // {path: '/', name: 'Home', component: Home},
     {path: '/', name: 'Home', component: Home1},
-    {path: '/detail', name: 'PicDetail', component: PicDetail},
+    {path: '/details/:id', name: 'PicDetail', component: PicDetail},
     {path: '/:type/:key', name: 'PageWithTitle', component: Title},
     {path: '/:type/:id/:key', name: 'PageWithSearch', component: Channel},
-    {path: '/recommend/:id', name: 'Recommend', component: Recommend},
-    // {path:'/animal', name:'Animal',components:Upload},
-    // // class-page
-    // {path:'/animal', name:'Animal',component:Animal},
-    // {path:'/anime', name:'Anime', component:Anime},
-    // {path:'/food', name:'Food', component:Food},
-    // {path:'/game', name:'Game', component:Game},
-    // {path:'/people', name:'People', component:People},
-    // {path:'/animal', name:'Animal',components:{Nav, Title, ImageStream}},
-    // {path:'/anime', name:'Anime', components:{Nav, Title, ImageStream}},
-    // {path:'/food', name:'Food', components:{Nav, Title, ImageStream}},
-    // {path:'/game', name:'Game', components:{Nav, Title, ImageStream}},
-    // {path:'/people', name:'People', component:{Nav, Title, ImageStream}},
-    // upload-page
+    {path: '/recommend', name: 'Recommend', component: Recommend},
     {path: '/upload', name: 'Upload', component: Upload},
-    // // search-page
-     //{path:'/search', name:'Search', component: {Nav, Title, ImageStream}},
-    // user-page
-    // {path: '/channel/user-id', name: 'Channel', component: Channel},
-    // favorite-page
-    // {path: '/favorite', name: 'Favorite', component: Favorite},
-    // {path: '/favorite', name:'Favorite', component: ImageStream},
-    // login-page
     {path: '/settings', name: 'Info_setting', component: Info_setting},
     {path: '/login', name: 'Login', component: User,
       children:[
