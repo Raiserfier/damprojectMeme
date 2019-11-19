@@ -32,7 +32,7 @@ def upload_img(request):
                     tagobj.save()
                 else:
                     Tag.objects.create(content=tag)
-                tagobj = Tag.objects.get(content=tag) #再取一遍为了让数据库添加default项目
+                tagobj = Tag.objects.get(content=tag)  # 再取一遍为了让数据库添加default项目
                 imgobj = Image.objects.get(id=img.id)
                 Image2tag.objects.create(image=imgobj, tag=tagobj)
             # state = True
@@ -81,14 +81,14 @@ def login(request):
         return HttpResponse("未收到数据")
 
 
-#收藏图片
+# 收藏图片
 def like_image(request):
     try:
         email = request.POST.get("email")
         print(email)
         image_id = request.POST.get("id")
         print(image_id)
-        #email = request.POST.get("email")
+        # email = request.POST.get("email")
         state = request.POST.get("state")
         image = Image.objects.get(id=image_id)
         user = User.objects.get(email=email)
@@ -109,7 +109,7 @@ def like_image(request):
         return HttpResponse("未收到数据")
 
 
-#主页按照类别获取图片
+# 主页按照类别获取图片
 def get_images(request):
     try:
         data = []
@@ -127,7 +127,7 @@ def get_images(request):
         return HttpResponse('Not received')
 
 
-#删除图片
+# 删除图片
 def delete_image(request):
     try:
         image_id = request.POST.get("id")
@@ -202,7 +202,7 @@ def add_watermark(image_id, username):
         return HttpResponse("Data not received")
 
 
-#获取单张图片对应的全部信息 包括喜欢状态 另，用户有可能没有喜欢自己上传的图片
+# 获取单张图片对应的全部信息 包括喜欢状态 另，用户有可能没有喜欢自己上传的图片
 def get_all_info(image, email):
     print("xxx")
     if email == "99":
@@ -238,7 +238,7 @@ def get_all_info(image, email):
         }
 
 
-#获取单张图片的信息
+# 获取单张图片的信息
 def get_image_info(image, email):
     try:
         user = User.objects.get(email=email)
@@ -273,7 +273,7 @@ def get_by_classification(request):
         return HttpResponse("暂无图片")
 
 
-#从全部图片中每一类别获取一张图片
+# 从全部图片中每一类别获取一张图片
 def get_classification():
     classfication_list = []
     images = Image.objects.all()
@@ -283,7 +283,7 @@ def get_classification():
     return classfication_list
 
 
-#获取某一类别的指定数目的图片
+# 获取某一类别的指定数目的图片
 def get_number_image(classification, number):
     images = Image.objects.all()
     certain_classification = []
@@ -293,7 +293,7 @@ def get_number_image(classification, number):
     return certain_classification
 
 
-#从用户上传的图片中每一类别获取一张图片
+# 从用户上传的图片中每一类别获取一张图片
 def get_user_classification(email):
     classfication_list = []
     print("x", email)
@@ -305,7 +305,7 @@ def get_user_classification(email):
     return classfication_list
 
 
-#按照类别获取用户喜欢的图片
+# 按照类别获取用户喜欢的图片
 def get_like_image(classification, email):
     user = User.objects.get(email=email)
     images = Image.objects.all()
@@ -317,7 +317,7 @@ def get_like_image(classification, email):
     return certain_classification
 
 
-#获取用户上传的某一类别图片
+# 获取用户上传的某一类别图片
 def get_user_upload(classification, email):
     user = User.objects.get(email=email)
     images = Image.objects.all()
@@ -328,7 +328,7 @@ def get_user_upload(classification, email):
     return certain_classification
 
 
-#按照给定类别查找所有图片
+# 按照给定类别查找所有图片
 def get_classification_images(classification, email):
     images = Image.objects.all()
     certain_classification = []
@@ -338,7 +338,7 @@ def get_classification_images(classification, email):
     return certain_classification
 
 
-#获取用户喜欢的图片
+# 获取用户喜欢的图片
 def get_user_liked_image(email):
     user = User.objects.get(email=email)
     images = Image.objects.all()
@@ -351,7 +351,7 @@ def get_user_liked_image(email):
     return like_image
 
 
-#全站搜索 同时搜索标签和类别
+# 全站搜索 同时搜索标签和类别
 def get_key_search(key, email):
     images = Image.objects.all()
     data = []
@@ -372,15 +372,15 @@ def get_user_image(request):
         email_user = request.POST.get('email_user')
         key = request.POST.get('key', default='all')
         print(type)
-        #全站搜索 同时搜索标签和类别
+        # 全站搜索 同时搜索标签和类别
         if type == '0':
             data = get_key_search(key, email_user)
             return HttpResponse(json.dumps(data))
-        #用户收藏图片
+        # 用户收藏图片
         elif type == '1':
             data = get_user_liked_image(email_user)
             return HttpResponse(json.dumps(data))
-        #用户上传图片
+        # 用户上传图片
         elif type == '2':
             images = Image.objects.all()
             user = User.objects.get(email=email_user)
@@ -388,7 +388,7 @@ def get_user_image(request):
                 if image.owner == user:
                     data.append(get_all_info(image, email_user))
             return HttpResponse(json.dumps(data))
-        #搜索某类别图片
+        # 搜索某类别图片
         elif type == '3':
             data = get_classification_images(key, email_user)
             return HttpResponse(json.dumps(data))
@@ -398,7 +398,7 @@ def get_user_image(request):
         return HttpResponse('Not received')
 
 
-#堆排序，找出最受欢迎的图片（目前只支持收藏）
+# 堆排序，找出最受欢迎的图片（目前只支持收藏）
 def most_popular(request):
     try:
         data = []
@@ -406,19 +406,19 @@ def most_popular(request):
         number = request.POST.get('number')
         popular = []
         images = Image.objects.all()
-        for image in images:#按照id将流行度存入 注意id从1开始 列表从0开始
-            popular += image.total_likes + image.total_thumbs #可以在此修改算法
-        #堆排序获得最大的number张图片并获得id
+        for image in images:  # 按照id将流行度存入 注意id从1开始 列表从0开始
+            popular += image.total_likes + image.total_thumbs  # 可以在此修改算法
+        # 堆排序获得最大的number张图片并获得id
         max_index = map(popular.index, heapq.nlargest(number, popular))
         for i in list(max_index):
-            image = Image.objects.get(id=i+1)
+            image = Image.objects.get(id=i + 1)
             data.append(get_all_info(image, email))
         return HttpResponse(json.dumps(data))
     except:
         return HttpResponse('Not received')
 
 
-#点赞
+# 点赞
 def thumb_image(request):
     try:
         email = request.POST.get("email")
@@ -441,7 +441,7 @@ def thumb_image(request):
         return HttpResponse("未收到数据")
 
 
-#猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
+# 猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
 def get_recommend(request):
     try:
         email = request.POST.get("email_user")
@@ -457,14 +457,14 @@ def get_recommend(request):
         recom_list = list(set(recom_list))
         data = []
         for i in recom_list:
-            image = Image.objects.get(id=i+1)
+            image = Image.objects.get(id=i + 1)
             data.append(get_all_info(image, email))
         return HttpResponse(json.dumps(data))
     except:
         return HttpResponse("没有此用户")
 
 
-#表情包详情页推荐
+# 表情包详情页推荐
 def detail_recommend(request):
     try:
         data = []
@@ -474,14 +474,14 @@ def detail_recommend(request):
         image = Image.objects.get(id=img_id)
         recom_list = recommend(img_id, number)
         for i in list(recom_list):
-            image = Image.objects.get(id=i+1)
+            image = Image.objects.get(id=i + 1)
             data.append(get_all_info(image, email))
         return HttpResponse(json.dumps(data))
     except:
         return HttpResponse("没有此图片")
 
 
-#推荐算法 通过一张图片推荐num张图片id
+# 推荐算法 通过一张图片推荐num张图片id
 def recommend(img_id, num):
     image = Image.objects.get(id=img_id)
     image_url = image.img
@@ -493,7 +493,7 @@ def recommend(img_id, num):
     similarity = []
     for img_com in img_all:
         if img_com.id == id:
-            similarity += 10000000000000 #绝对选不到我自己
+            similarity += 10000000000000  # 绝对选不到我自己
         else:
             image_url = img_com.img
             image_type = img_type(image_url)
@@ -508,11 +508,11 @@ def recommend(img_id, num):
                         p_tag += 1
                         break
             p_tag = len(tags_target) - p_tag
-            similarity += p_tag * 5 + p_similarity  #配比随便写的
+            similarity += p_tag * 5 + p_similarity  # 配比随便写的
     return map(similarity.index, heapq.nsmallest(num, similarity))
 
 
-#判断url类型
+# 判断url类型
 def img_type(image_url):
     if 'jpeg' in image_url:
         return 'jpeg'
@@ -524,14 +524,14 @@ def img_type(image_url):
         return 'jpg'
 
 
-#计算两张图片的相似度 差异值哈希算法 不知道gif行不行
+# 计算两张图片的相似度 差异值哈希算法 不知道gif行不行
 def get_similarity(target, compare):
     image_target = PImage.open(target)
     image_com = PImage.open(compare)
     return DHash.hamming_distance(image_target, image_com)
 
 
-#一般来说，汉明距离小于5，基本就是同一张图片
+# 一般来说，汉明距离小于5，基本就是同一张图片
 class DHash(object):
     @staticmethod
     def calculate_hash(image):
@@ -629,5 +629,21 @@ def modify_user_info(request):
             return HttpResponse("error")
     except:
         return HttpResponse("Email not received")
+
+
+def decide_password(request):
+    try:
+        email = request.POST.get("email")
+        password_old = request.POST.get("password_old")
+        password_new = request.POST.get("password_new")
+        user = User.objects.get(email=email)
+        if user.password == password_old:
+            user.password = password_new
+            user.save()
+            return HttpResponse("success")
+        else:
+            return HttpResponse("error")
+    except:
+        return HttpResponse("Data not received")
 
 # Create your views here.
