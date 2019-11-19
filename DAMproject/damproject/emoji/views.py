@@ -36,7 +36,7 @@ def upload_img(request):
                 imgobj = Image.objects.get(id=img.id)
                 Image2tag.objects.create(image=imgobj, tag=tagobj)
             # state = True
-            if state == True:
+            if state == "true":
                 print("ok")
                 add_watermark(img.id, user.username)
             return HttpResponse("SUCCESS")
