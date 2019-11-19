@@ -581,4 +581,53 @@ class DHash(object):
         return bin(difference).count("1")
 
 
+def get_user_data(user):
+    if user.profile == '':
+        profile = '这个人很懒，什么都没有留下'
+    else:
+        profile = user.profile
+    if user.portrait == '':
+        pic_path = './emoji/images/default.jpg'
+        with open(pic_path, 'rb') as f:
+            image_byte = f.read()
+            image_base64 = str(base64.b64encode(image_byte), encoding='utf-8')
+        portrait = 'data:image/jpg;base64' + ',' + image_base64
+
+    else:
+        portrait = user.portrait
+    return {
+        'username': user.username,
+        'email': user.email,
+        'profile': profile,
+        'portrait': portrait
+    }
+
+
+def get_user_info(request):
+    try:
+        email = request.POST.get("email")
+        user = User.objects.get(email=email)
+        data = get_user_data(user)
+        return HttpResponse(json.dumps(data))
+    except:
+        return HttpResponse("Email not received")
+
+
+def modify_user_info(request):
+    try:
+        email = request.POST.get("email")
+        username = request.POST.get("username")
+        profile = request.POST.get("profile")
+        portrait = request.POST.get("portrait")
+        user = User.objects.get(email=email)
+        try:
+            user.username = username
+            user.profile = profile
+            user.portrait = portrait
+            return HttpResponse("success")
+        except:
+            return HttpResponse("error")
+    except:
+        return HttpResponse("Email not received")
+
 # Create your views here.
