@@ -19,6 +19,7 @@ def upload_img(request):
             img = request.POST.get("img")
             state = request.POST.get("state")
             user = User.objects.get(email=email)
+            print("ttt", state)
             # print("ok")
             img = Image.objects.create(classification=classification, img=img, owner=user)
             # print("okk")
@@ -37,7 +38,6 @@ def upload_img(request):
                 Image2tag.objects.create(image=imgobj, tag=tagobj)
             # state = True
             if state == "true":
-                print("ok")
                 add_watermark(img.id, user.username)
             return HttpResponse("SUCCESS")
         else:
@@ -85,14 +85,14 @@ def login(request):
 def like_image(request):
     try:
         email = request.POST.get("email")
-        print(email)
+        # print(email)
         image_id = request.POST.get("id")
-        print(image_id)
+        # print(image_id)
         # email = request.POST.get("email")
         state = request.POST.get("state")
         image = Image.objects.get(id=image_id)
         user = User.objects.get(email=email)
-        print(image_id, email, state)
+        # print(image_id, email, state)
         if state == "true":
             image.total_likes += 1
             user.like_images += '#' + image_id + '#'
@@ -138,11 +138,14 @@ def delete_image(request):
 
 
 def add_watermark(image_id, username):
+    print("???")
     try:
+        print("in")
         if username == '':
             return HttpResponse("Username not received")
         else:
             image = Image.objects.get(id=image_id)
+            print(image)
             image_url = image.img
             if 'jpeg' in image_url:
                 image_type = 'jpeg'
@@ -158,6 +161,7 @@ def add_watermark(image_id, username):
             with open(pic_path, 'wb') as f:
                 f.write(base64.b64decode(image_url.split(',')[1]))
             image_origin = PImage.open(pic_path)
+            print(pic_path)
             if image_type == 'gif':
                 frames = []
                 for frame in ImageSequence.Iterator(image):
@@ -204,7 +208,7 @@ def add_watermark(image_id, username):
 
 # 获取单张图片对应的全部信息 包括喜欢状态 另，用户有可能没有喜欢自己上传的图片
 def get_all_info(image, email):
-    print("xxx")
+    # print("xxx")
     if email == "99":
         print("99")
         state = False
@@ -347,7 +351,7 @@ def get_user_liked_image(email):
         imgid = '#' + str(image.id) + '#'
         if imgid in user.like_images:
             like_image.append(get_all_info(image, email))
-    print(user, like_image)
+    # print(user, like_image)
     return like_image
 
 
@@ -428,13 +432,13 @@ def most_popular(request):
 def thumb_image(request):
     try:
         email = request.POST.get("email")
-        print(email)
+        # print(email)
         image_id = request.POST.get("id")
-        print(image_id)
+        # print(image_id)
         state = request.POST.get("state")
         image = Image.objects.get(id=image_id)
         user = User.objects.get(email=email)
-        print(image_id, email, state)
+        # print(image_id, email, state)
         if state == "true":
             image.total_thumbs += 1
             image.save()
@@ -473,6 +477,7 @@ def get_recommend(request):
 # 表情包详情页推荐
 def detail_recommend(request):
     try:
+        print("1")
         data = []
         img_id = request.POST.get("id")
         number = request.POST.get("number")
@@ -480,6 +485,7 @@ def detail_recommend(request):
         image = Image.objects.get(id=img_id)
         recom_list = recommend(img_id, number)
         for i in list(recom_list):
+            print(i)
             image = Image.objects.get(id=i + 1)
             data.append(get_all_info(image, email))
         return HttpResponse(json.dumps(data))
