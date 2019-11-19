@@ -85,7 +85,7 @@
               </div>
             </div>
             <label>
-              <input minlength="1" maxlength="30" type="text" name="old_password" placeholder="Old password"
+              <input minlength="1" maxlength="30" type="password" name="old_password" placeholder="Old password"
                      class="setting_input">
             </label>
           </div>

@@ -95,7 +95,7 @@
         <li @click="jump">
           <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'">我的收藏</router-link>
         </li>
-        <li>
+        <li @click="jump">
           <router-link to="/settings">个人设置</router-link>
         </li>
         <li @click="logout">

@@ -4,7 +4,7 @@
       <div class="inner">
         <header>
           <h1>Upload</h1>
-          <p>Upload your GIF collection to share on Facebook, Twitter,<br/>
+          <p>Upload your MEME collection to share on Facebook, Twitter,<br/>
             Instagram, text message, email, and everywhere else.</p>
         </header>
       </div>
@@ -51,6 +51,9 @@
             </div>
           </div>
 
+          <div>
+            <label>添加水印 <input type="checkbox" v-model="isMask" /></label>
+          </div>
 
           <div class="uuppp"><!--上传按钮-->
             <form action="" method="post">
@@ -104,6 +107,7 @@
                 labelarr: ["动物", "食物"],
                 up_img: [],
                 img_num: 0,
+                isMask: false,
             }
         },
         created() {
@@ -137,7 +141,7 @@
             addlabel() {
                 let count = this.labelarr.indexOf(this.currentval);
                 if (count === -1) {
-                    this.labelarr.push('#' + this.currentval)
+                    this.labelarr.push(this.currentval)
                 }
                 this.currentval = ''
             },
@@ -197,6 +201,7 @@
             },
             upload() {
                 console.log(this.labelarr);
+                console.log(this.isMask);
                 let tags = '';
                 for (let i = 0; i < this.labelarr.length; i++) {
                     tags += '#' + this.labelarr[i];
@@ -206,21 +211,28 @@
                         img: this.up_img,
                         email: this.$store.state.user_id,
                         tags: tags,
-                        classification: this.cate
+                        classification: this.cate,
+                        state: this.isMask,
                     }).then(response => {
                         //console.log(response.data);
                         if (response.data === 'SUCCESS') {
                             this.$message.success('上传成功！');
                             //跳转到个人上传页
-                            this.$route.replace({path: '/channel/' + this.my_id + '/all'});
+                            this.$router.replace({path: '/channel/' + this.my_id + '/all'});
+                        }
+                        else if(response.data === '上传图片失败'){
+                            this.$message.error('上传图片失败！');
+                        }else{
+                            this.$message.warning('上传失败！');
                         }
                     }), (response) => {
                         //console.log("error");
-                        this.$message.err('上传失败！');
+                        this.$message.warning('上传失败！');
                     }
                 }
                 this.up_img = [];
                 this.labelarr = [];
+                this.isMask = false;
             }
 
         }
