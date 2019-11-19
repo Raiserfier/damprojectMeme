@@ -524,7 +524,7 @@ def img_type(image_url):
         return 'jpg'
 
 
-#计算两张图片的相似度 差异值哈希算法 不知道gif行不行
+#计算两张图片的相似度 差异值哈希算法 支持gif相互比较或者gif与其他图片比较
 def get_similarity(target, compare):
     image_target = PImage.open(target)
     image_com = PImage.open(compare)
