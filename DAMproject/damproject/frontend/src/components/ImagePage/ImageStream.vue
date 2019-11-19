@@ -215,6 +215,7 @@
             },
             //看主页和收藏
             get_user(id,t,k){
+                console.log(k);
                 this.$api.post('/get_user_image',{key:k,email:id,type:t,email_user:this.my_id}).then(response =>{
                      if(response.data !== 'Not received'){
                          // console.log(response.data);

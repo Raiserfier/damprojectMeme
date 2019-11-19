@@ -12,12 +12,12 @@
           <!--						designed by Templated and released under the Creative Commons License.</p>-->
           <div class="container"><!-- 搜索框 -->
             <div class="search bar3">
-              <form action="" method="post">
+<!--              <form>-->
                 <label>
-                  <input type="text" placeholder="搜索我的上传...">
+                  <input type="text" @keyup.enter="search_self($event)" placeholder="搜索我的上传...">
                 </label>
-                <button type="submit" @click="search_user($event)"></button>
-              </form>
+                <button @click="search($event)"></button>
+<!--              </form>-->
             </div>
           </div>
         </header>
@@ -45,14 +45,30 @@
         },
         data() {
             return {
-                msg: "搜索我的上传为...",
+                msg: "在图库中搜索...",
                 keyw: 'all',
             };
         },
         methods: {
-            search_user(e) {
-                this.keyw = e.target.text.trim();
-                this.$route.push({query: merge(this.$route.query, {'key': this.keyw})});
+            // search_user(e) {
+            //     this.keyw = e.target.text.trim();
+            //     if (this.keyw == '') this.keyw = 'all'
+            //     console.log(this.keyw);
+            //     console.log(this.$route.params);
+            //     // console.log(merge(this.$route.query, {'key': this.keyw}));
+            //     // this.$router.push({query: merge(this.$route.query, {'key': this.keyw})});
+            //     this.$router.push({name:'PageWithSearch', params:{type:this.$route.params.type,id:this.$route.params.id,key:this.keyw}});
+            // },
+            //点击搜索跳转
+            search_self(e) {
+                this.keyw = e.target.value.trim();
+                if (this.keyw == '') this.keyw = 'all';
+                this.$router.push({name:'PageWithSearch', params:{type:this.$route.params.type,id:this.$route.params.id,key:this.keyw}});
+            },
+            search(e) {
+                this.keyw = e.target.previousElementSibling.firstElementChild.value.trim();
+                if (this.keyw == '') this.keyw = 'all';
+                this.$router.push({name:'PageWithSearch', params:{type:this.$route.params.type,id:this.$route.params.id,key:this.keyw}});
             },
         }
     }
