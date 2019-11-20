@@ -415,13 +415,21 @@ def most_popular(request):
         email = request.POST.get('email')
         number = request.POST.get('number')
         popular = []
+        id_list = []
         images = Image.objects.all()
         for image in images:  # 按照id将流行度存入 注意id从1开始 列表从0开始
+            id_list.append(image.id)
             popular += image.total_likes + image.total_thumbs  # 可以在此修改算法
         # 堆排序获得最大的number张图片并获得id
-        max_index = map(popular.index, heapq.nlargest(number, popular))
-        for i in list(max_index):
-            image = Image.objects.get(id=i + 1)
+        temp = []
+        for i in range(number):
+            temp.append(popular.index(max(popular)))
+            popular[popular.index(max(popular))] = 0
+        index = []
+        for i in temp:
+            index.append(id_list[i])
+        for i in index:
+            image = Image.objects.get(id=i)
             data.append(get_all_info(image, email))
         return HttpResponse(json.dumps(data))
     except:
@@ -454,22 +462,22 @@ def thumb_image(request):
 # 猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
 def get_recommend(request):
     try:
-        print("user recommend backend")
         email = request.POST.get("email_user")
-        print(email)
         user = User.objects.get(email=email)
         like_str = user.like_images
         like_list = like_str.split('#')
-        like_list.remove('')
+        for x in range(like_list.count('')):
+            if '' in like_list:
+                like_list.remove('')
         chosen = random.sample(like_list, round(len(like_list) * 0.3))
         recom_list = []
-        num = 3
+        num = 5
         for i in chosen:
             recom_list += list(recommend(i, num))
         recom_list = list(set(recom_list))
         data = []
-        for i in recom_list:
-            image = Image.objects.get(id=i + 1)
+        for img_id in recom_list:
+            image = Image.objects.get(id=img_id)
             data.append(get_all_info(image, email))
         return HttpResponse(json.dumps(data))
     except:
@@ -479,20 +487,15 @@ def get_recommend(request):
 # 表情包详情页推荐
 def detail_recommend(request):
     try:
-        print("detail recommend backend")
         data = []
         img_id = request.POST.get("id")
         number = request.POST.get("number")
         email = request.POST.get("email")
-        print(img_id)
-        print(number)
-        print(email)
         image = Image.objects.get(id=img_id)
         recom_list = recommend(img_id, number)
-        for i in list(recom_list):
-            print(i)
-            image = Image.objects.get(id=i + 1)
-            data.append(get_all_info(image, email))
+        for i in recom_list:
+            img = Image.objects.get(id=i)
+            data.append(get_all_info(img, email))
         return HttpResponse(json.dumps(data))
     except:
         return HttpResponse("没有此图片")
@@ -500,22 +503,33 @@ def detail_recommend(request):
 
 # 推荐算法 通过一张图片推荐num张图片id
 def recommend(img_id, num):
+    print("id" + img_id)
     image = Image.objects.get(id=img_id)
     image_url = image.img
     image_type = img_type(image_url)
+    print(image_type)
     pic_path_target = './emoji/images/' + 'target.' + image_type
     with open(pic_path_target, 'wb') as f:
         f.write(base64.b64decode(image_url.split(',')[1]))
     img_all = Image.objects.all()
     similarity = []
+    id_list = []
+    Inf = 100000
     for img_com in img_all:
-        if img_com.id == id:
-            similarity += 10000000000000  # 绝对选不到我自己
+        if img_com.id == Inf:
+            print("=")
+            similarity.append(1000)  # 绝对选不到我自己
+            id_list.append(img_com.id)
         else:
+            #print(img_com.id)
+            id_list.append(img_com.id)
             image_url = img_com.img
             image_type = img_type(image_url)
             pic_path_com = './emoji/images/' + 'compare.' + image_type
+            with open(pic_path_com, 'wb') as f:
+                f.write(base64.b64decode(image_url.split(',')[1]))
             p_similarity = get_similarity(pic_path_target, pic_path_com)
+            #print(p_similarity)
             tags_target = image.image2tag_set.all()
             tags_com = image.image2tag_set.all()
             p_tag = 0
@@ -525,8 +539,15 @@ def recommend(img_id, num):
                         p_tag += 1
                         break
             p_tag = len(tags_target) - p_tag
-            similarity += p_tag * 5 + p_similarity  # 配比随便写的
-    return map(similarity.index, heapq.nsmallest(num, similarity))
+            similarity.append(p_tag * 5 + p_similarity) # 配比随便写的
+    temp = []
+    for i in range(num):
+        temp.append(similarity.index(min(similarity)))
+        similarity[similarity.index(min(similarity))] = Inf
+    index = []
+    for i in temp:
+        index.append(id_list[i])
+    return index
 
 
 # 判断url类型
