@@ -459,6 +459,25 @@ def thumb_image(request):
         return HttpResponse("未收到数据")
 
 
+def image_detail(request):
+    try:
+        image_id = request.POST.get("id")
+        image = Image.objects.get(id=image_id)
+        tagsobj = image.image2tag_set.all()
+        tags = ''
+        for tagobj in tagsobj:
+            tags += '#' + tagobj.tag.content
+        info = {
+            'owner': image.owner,
+            'upload_time': image.upload_time,
+            'likes': image.total_likes,
+            'thumbs': image.total_thumbs,
+            'tags': tags
+        }
+        return HttpResponse(json.dumps(info))
+    except:
+        return HttpResponse("没有这张图片")
+
 # 猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
 def get_recommend(request):
     try:
