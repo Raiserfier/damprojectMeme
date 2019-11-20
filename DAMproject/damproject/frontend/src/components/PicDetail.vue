@@ -15,9 +15,9 @@
         <div class="info_window">
           <div class="Uploader">
             <div class="Userpic_window">
-              <a href="" class="User_pic" :src="owner.portrait"
+              <a href="" class="User_pic" :src="owner.portrait" @click="to_owner_channel()"
                  :style="{'background-image':'url'+'(\'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3900046848,1834418761&fm=26&gp=0.jpg\')'}"></a>
-              <h2 class="User_name"><a href="">{{owner.username}}</a></h2>
+              <h2 class="User_name" @click="to_owner_channel()"><a href="">{{owner.username}}</a></h2>
             </div>
             <div>
               <p class="user_introduction">
@@ -123,8 +123,9 @@
             }
         },
         methods:{
-
-
+            to_owner_channel(){
+                this.route.replace({path: '/channel/'+ this.owner.email +'/all'});
+            }
         }
     }
 </script>
