@@ -81,9 +81,11 @@
                 if(this.$route.params.type === undefined){
                     this.get_recommend(this.$store.state.user_id);
                 }
-                else if(this.$route.params.type === 'search') this.type = 0;
-                else if(this.$route.params.type === 'category') this.type = 3;
-                this.get_img(this.type,this.key);
+                else {
+                    if (this.$route.params.type === 'search') this.type = 0;
+                    else if (this.$route.params.type === 'category') this.type = 3;
+                    this.get_img(this.type, this.key);
+                }
             }
         },
         mounted(){
@@ -242,6 +244,8 @@
             },
             //用户推荐
             get_recommend(id){
+                console.log("user recommend");
+                console.log(id);
                 this.$api.post('/get_recommend',{email_user:id}).then(response =>{
                     if(response.data !== 'Not received'){
                          // console.log(response.data);
@@ -269,7 +273,8 @@
             },
             //图片详情页推荐（待接）
             get_details_recommend(pid,id){
-                console.log(pid);
+                console.log("details recommend");
+                console.log(pid,id);
                 this.$api.post('/detail_recommend',{id:pid,number:5,email:id}).then(response =>{
                     console.log(response.data);
                     if(response.data !== 'Not received'){

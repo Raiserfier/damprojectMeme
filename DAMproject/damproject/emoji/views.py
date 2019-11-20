@@ -454,7 +454,9 @@ def thumb_image(request):
 # 猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
 def get_recommend(request):
     try:
+        print("user recommend backend")
         email = request.POST.get("email_user")
+        print(email)
         user = User.objects.get(email=email)
         like_str = user.like_images
         like_list = like_str.split('#')
@@ -477,11 +479,14 @@ def get_recommend(request):
 # 表情包详情页推荐
 def detail_recommend(request):
     try:
-        print("1")
+        print("detail recommend backend")
         data = []
         img_id = request.POST.get("id")
         number = request.POST.get("number")
         email = request.POST.get("email")
+        print(img_id)
+        print(number)
+        print(email)
         image = Image.objects.get(id=img_id)
         recom_list = recommend(img_id, number)
         for i in list(recom_list):
