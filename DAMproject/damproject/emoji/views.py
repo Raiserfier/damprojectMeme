@@ -422,7 +422,7 @@ def most_popular(request):
             popular += image.total_likes + image.total_thumbs  # 可以在此修改算法
         # 堆排序获得最大的number张图片并获得id
         temp = []
-        for i in range(number):
+        for i in range(int(number)):
             temp.append(popular.index(max(popular)))
             popular[popular.index(max(popular))] = 0
         index = []
@@ -505,13 +505,14 @@ def get_recommend(request):
 
 # 表情包详情页推荐
 def detail_recommend(request):
+    print("hi")
     try:
         data = []
         img_id = request.POST.get("id")
         number = request.POST.get("number")
         email = request.POST.get("email")
         image = Image.objects.get(id=img_id)
-        recom_list = recommend(img_id, number)
+        recom_list = recommend(img_id, int(number))
         for i in recom_list:
             img = Image.objects.get(id=i)
             data.append(get_all_info(img, email))
