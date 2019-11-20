@@ -199,7 +199,7 @@
                 }
             },
             getpop(){
-                this.$api.post('/get_pop', {number: this.pop_num, email: this.my_id}).then(response => {
+                this.$api.post('/most_popular', {number: this.pop_num, email: this.my_id}).then(response => {
                     if(response.data !== 'Not received'){
                         // console.log(response.data)
                         this.popList = response.data;
