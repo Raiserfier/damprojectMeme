@@ -31,17 +31,12 @@
 </template>
 
 <script>
-    import merge from 'webpack-merge';
     import ImageStream from './ImagePage/ImageStream'
-    import ImageStream3 from './ImagePage/ImageStream3';
-    import ImageStream1 from './ImagePage/ImageStream(1)'
 
     export default {
         name: 'Channel',
         components: {
             'user-uploads': ImageStream,
-            'test-images': ImageStream3,
-            'test-images1': ImageStream1
         },
         data() {
             return {

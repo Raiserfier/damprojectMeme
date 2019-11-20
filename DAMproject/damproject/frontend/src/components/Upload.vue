@@ -200,18 +200,18 @@
                 console.log("选中了", this.cate);
             },
             upload() {
-                console.log(this.labelarr);
-                console.log(this.isMask);
-                let tags = '';
-                for (let i = 0; i < this.labelarr.length; i++) {
-                    tags += '#' + this.labelarr[i];
-                }
+                // console.log(this.labelarr);
+                // console.log(this.isMask);
+                // let tags = '';
+                // for (let i = 0; i < this.labelarr.length; i++) {
+                //     tags += '#' + this.labelarr[i];
+                // }
                 for (let i = 0; i < this.up_img.length; i++) {
                     console.log(this.isMask);
                     this.$api.post('/upload_image', {
                         img: this.up_img,
                         email: this.$store.state.user_id,
-                        tags: tags,
+                        tags: labelarr,
                         classification: this.cate,
                         state: this.isMask,
                     }).then(response => {

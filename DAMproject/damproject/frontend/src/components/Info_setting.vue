@@ -127,7 +127,13 @@
 
 <script>
     export default {
-        name: "Info_setting"
+        name: "Info_setting",
+        data(){
+
+        },
+        methods:{
+            
+        }
     }
 </script>
 
