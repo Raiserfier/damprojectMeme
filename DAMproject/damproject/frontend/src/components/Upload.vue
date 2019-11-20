@@ -4,7 +4,7 @@
       <div class="inner">
         <header>
           <h1>Upload</h1>
-          <p>Upload your GIF collection to share on Facebook, Twitter,<br/>
+          <p>Upload your MEME collection to share on Facebook, Twitter,<br/>
             Instagram, text message, email, and everywhere else.</p>
         </header>
       </div>
@@ -51,6 +51,9 @@
             </div>
           </div>
 
+          <div>
+            <label>添加水印 <input type="checkbox" v-model="isMask" /></label>
+          </div>
 
           <div class="uuppp"><!--上传按钮-->
             <form action="" method="post">
@@ -92,18 +95,19 @@
         data() {
             //select选中的值
             return {
-                cate: 'chrome',
+                cate: '动物',
                 options: [
-                    {name: '动物', id: 'chrome'},
-                    {name: '食物', id: 'safari'},
-                    {name: '动画', id: 'Edge'},
-                    {name: '游戏', id: 'firefox'},
-                    {name: '人物', id: 'ie8'}
+                    {name: '动物', id: '动物'},
+                    {name: '食物', id: '食物'},
+                    {name: '动画', id: '动画'},
+                    {name: '游戏', id: '游戏'},
+                    {name: '人物', id: '人物'}
                 ],
                 currentval: '',
                 labelarr: ["动物", "食物"],
                 up_img: [],
                 img_num: 0,
+                isMask: false,
             }
         },
         created() {
@@ -137,7 +141,7 @@
             addlabel() {
                 let count = this.labelarr.indexOf(this.currentval);
                 if (count === -1) {
-                    this.labelarr.push('#' + this.currentval)
+                    this.labelarr.push(this.currentval)
                 }
                 this.currentval = ''
             },
@@ -196,31 +200,37 @@
                 console.log("选中了", this.cate);
             },
             upload() {
-                console.log(this.labelarr);
-                let tags = '';
-                for (let i = 0; i < this.labelarr.length; i++) {
-                    tags += '#' + this.labelarr[i];
-                }
+                // console.log(this.labelarr);
+                // console.log(this.isMask);
+                // let tags = '';
+                // for (let i = 0; i < this.labelarr.length; i++) {
+                //     tags += '#' + this.labelarr[i];
+                // }
                 for (let i = 0; i < this.up_img.length; i++) {
+                    console.log(this.isMask);
                     this.$api.post('/upload_image', {
                         img: this.up_img,
                         email: this.$store.state.user_id,
-                        tags: tags,
-                        classification: this.cate
+                        tags: this.labelarr,
+                        classification: this.cate,
+                        state: this.isMask,
                     }).then(response => {
                         //console.log(response.data);
                         if (response.data === 'SUCCESS') {
                             this.$message.success('上传成功！');
                             //跳转到个人上传页
-                            this.$route.replace({path: '/channel/' + this.my_id + '/all'});
+                            this.$router.replace({path: '/channel/' + this.my_id + '/all'});
+                        }else{
+                            this.$message.error('上传图片失败！');
                         }
                     }), (response) => {
                         //console.log("error");
-                        this.$message.err('上传失败！');
+                        this.$message.warning('上传失败！');
                     }
                 }
                 this.up_img = [];
                 this.labelarr = [];
+                this.isMask = false;
             }
 
         }

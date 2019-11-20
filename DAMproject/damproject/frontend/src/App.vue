@@ -2,7 +2,7 @@
   <div id="app">
     <Nav></Nav>
     <transition name="fade" mode="out-in">
-      <router-view/>
+      <router-view :key="key"/>
     </transition>
   </div>
 </template>
@@ -11,7 +11,18 @@
 import Nav from './components/Nav'
 export default {
   name: 'App',
-  components: { 'Nav': Nav }
+  components: { 'Nav': Nav },
+  data() {
+      return {
+          key: 0
+      }
+  },
+  watch:{
+     '$route': function () {
+         // console.log("route change");
+         this.key += 1;
+     }
+  }
 }
 </script>
 

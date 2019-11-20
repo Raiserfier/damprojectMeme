@@ -21,14 +21,14 @@
                   </li>
                   <li><p @click="thumb_click($event)" class="icon style2 fa-thumbs-up" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p>
                   </li>
-                  <li><a class="icon style2 fa-info" data-poptrox="iframe,1200x800" href="index.html"><span class="label">ForMore</span></a>
-                  </li>
+                  <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></router-link></li>
                 </ul>
               </div>
               <div class="labels"><!-- labels链接 -->
                 <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
                     class="KSVul">
-                  <a>{{img.tags}}</a>
+                    <!--<a class="" href="#">{{img.tags}}</a>-->
+                    <a class="" v-for="tag in img.tags" href="#">{{'#'+tag}}</a>
                 </ul>
               </div>
               <div class="Img-Iput">
@@ -40,6 +40,42 @@
             </div>
           </div>
           </section>
+          <!--点赞数最高的十张图-->
+            <div class="Cat">
+            <div>
+              <h2 class="Titleeeee" @click="tocate(classname[count-1])" :style="{'padding-top':(count-1)*340+'px'}">{{'流行表情包Top'+pop_num}}</h2>
+            </div>
+            <div class="Line">
+              <div v-for="(img, index) in popList"
+                 class="v-waterfall-item"
+                 :style="{top:140+(cate_num)*400+index/4+ 'px',left:30+(index%4)*300+'px',width:250+'px',height:250+'px','padding-right':10+'px'}">
+              <div class="icons"> <!-- 三个icon按钮 -->
+                <ul @mouseout="leaveul($event)" @mouseover="enterul($event)"
+                    :style="{top:imgheight-395+'px',right:3+'%'}">
+                  <li><p @click="fav_click($event)" class="icon style2 fa-star" v-bind:class="{ Collected:img.state }"><span class="label">Collect</span></p>
+                  </li>
+                  <li><p @click="thumb_click($event)" class="icon style2 fa-thumbs-up" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p>
+                  </li>
+                  <li><a class="icon style2 fa-info" data-poptrox="iframe,1200x800" href="index.html"><span class="label">ForMore</span></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="labels"><!-- labels链接 -->
+                <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
+                    class="KSVul">
+                  <a>{{img.classification}}</a>
+                  <!--<a class="" href="#">{{img.tags}}</a>-->
+                  <a class="" v-for="tag in img.tags" href="#">{{'#'+tag}}</a>
+                </ul>
+              </div>
+              <div class="Img-Iput">
+                <div class="img_inputBox" @mouseenter="enterpic($event)" @mouseleave="leavepic($event)">
+                  <img :id="img.id" :src="img.img" alt="" class="img-inputer">
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -58,15 +94,16 @@
                 my_id: '',
                 imgheight: 400,
                 classname: [],
-                pic_no: 1,
+                pop_num: 10,
+                popList: [],
             }
         },
         created() {
             this.my_id = this.$store.state.user_id;
-
         },
         mounted() {
             this.getcate();
+            this.getpop();
         },
 
         methods: {
@@ -128,7 +165,7 @@
             getcate() {
                 this.$api.post('/get_images', {number: this.each_num, email: this.my_id}).then(response => {
                     if(response.data !== 'Not received'){
-                        console.log(response.data)
+                        // console.log(response.data)
                         this.cate_num = response.data.length;
                         for (let i = 0; i < this.cate_num; i++) {
                             this.classname.push(Object.keys(response.data[i]));
@@ -136,13 +173,13 @@
                             // this.imgList.left = i * 300;
                             // list.left = i * 300;
                             this.imgList.push(list)
-                            console.log(list);
+                            // console.log(list);
                             // for (let j = 0; j < 4; j++) {
                             //     list[j].left = 300 * i;
                             //     console.log(list[j]);
                             // }
-                        console.log('classname : '+(this.classname[i][0]))
-                        console.log('imgs' +this.imgList[i])
+                        // console.log('classname : '+(this.classname[i][0]))
+                        // console.log('imgs' +this.imgList[i])
                         }
                     }
                         // // for (let key in keys) {
@@ -160,13 +197,17 @@
                     console.log("error");
                     this.$message.error('获取图片失败');
                 }
-                this.preloading();
             },
-            preloading() {
-                for (let i = 0; i < this.cate_num; i++) {
-                    for (let j = 0; j < this.each_num; j++) {
-
+            getpop(){
+                this.$api.post('/get_pop', {number: this.pop_num, email: this.my_id}).then(response => {
+                    if(response.data !== 'Not received'){
+                        // console.log(response.data)
+                        this.popList = response.data;
+                        // console.log(this.popList);
                     }
+                }), (response) => {
+                    console.log("error");
+                    this.$message.error('获取图片失败');
                 }
             },
             //点赞

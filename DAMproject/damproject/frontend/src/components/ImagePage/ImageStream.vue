@@ -11,13 +11,15 @@
               <ul @mouseover="enterul($event)" @mouseout="leaveul($event)">
                 <li><p class="icon style2 fa-star" @click="fav_click($event)" v-bind:class="{ Collected:img.state }" ><span class="label">Collect</span></p></li>
                 <li><p class="icon style2 fa-thumbs-up" @click="thumb_click($event)" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p></li>
-                <li><a href="index.html" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></a></li>
+<!--                <li><a href="index.html" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></a></li>-->
+                <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></router-link></li>
               </ul>
           </div>
         <div class="labels">
           <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul" :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
             <a class="" href="#">{{'#'+img.classification}}</a>
-            <a  class="" href="#">{{img.tags}}</a>
+            <!--<a class="" href="#">{{img.tags}}</a>-->
+            <a class="" v-for="tag in img.tags" href="#">{{'#'+tag}}</a>
           </ul>
         </div>
         <a>
@@ -46,7 +48,7 @@
                 imgList: [],//从后端获取到的图片包括图片的img\id\tags\state\classification
                 count: 0,//已经从后端获取的图片数量
                 last: 0,//List中未被加载的图片数量
-                each_time: 3,//每次加载的图片数量
+                each_time: 10,//每次加载的图片数量
                 imgArr:[],//当次要加载的图片
                 waterfallList:[],//已经加载的照片
 
@@ -59,19 +61,31 @@
             }
         },
         created() {
+            // console.log(this.$route.params.type);
+            // console.log(this.$route.params.key);
+            // console.log(this.$route.params.id);
             this.my_id = this.$store.state.user_id;
             this.key = this.$route.params.key;
-            //用户页
+            //用户页\\图片详情页推荐
             if (this.$route.params.id !== undefined){
-                if(this.$route.params.type === 'channel') this.type = 2;
-                else if(this.$route.params.type === 'favorite') this.type = 1;
-                this.get_user(this.$route.params.id,this.type,this.key);
+                if(this.$route.params.type === undefined){
+                		this.get_details_recommend(this.$route.params.id,this.$store.state.user_id);
+                }else{
+                    if(this.$route.params.type === 'channel') this.type = 2;
+                    else if(this.$route.params.type === 'favorite') this.type = 1;
+                    this.get_user(this.$route.params.id,this.type,this.key);
+                }
             }
-            //搜索、类别页
+            //搜索、类别页\\用户推荐页
             else {
-                if(this.$route.params.type === 'search') this.type = 0;
-                else if(this.$route.params.type === 'category') this.type = 3;
-                this.get_img(this.type,this.key);
+                if(this.$route.params.type === undefined){
+                    this.get_recommend(this.$store.state.user_id);
+                }
+                else {
+                    if (this.$route.params.type === 'search') this.type = 0;
+                    else if (this.$route.params.type === 'category') this.type = 3;
+                    this.get_img(this.type, this.key);
+                }
             }
         },
         mounted(){
@@ -99,13 +113,13 @@
                     scrollTop = $(window).scrollTop(),
                     winHeight = $(window).height(),
                     thresold = pageHeight - scrollTop - winHeight;
-                console.log(pageHeight,scrollTop,winHeight);
+                // console.log(pageHeight,scrollTop,winHeight);
                 if (thresold <= 10) {
                     console.log('end');
                     if(this.last){
                         console.log('2113434233');
                         this.load_more();
-                        this.imgPreloading();
+                        this.preloading();
                     }
                 }
                 // console.log('132\n\n'+document.body.scrollHeight,document.body.scrollTop,document.body.clientHeight);
@@ -204,6 +218,7 @@
             },
             //看主页和收藏
             get_user(id,t,k){
+                console.log(k);
                 this.$api.post('/get_user_image',{key:k,email:id,type:t,email_user:this.my_id}).then(response =>{
                      if(response.data !== 'Not received'){
                          // console.log(response.data);
@@ -222,7 +237,64 @@
                         }
                         this.calculationWidth();
                      }
+                }),(response)=>{
+                    //console.log("error");
+                    this.$message.error('图片获取失败');
+                }
+            },
+            //用户推荐
+            get_recommend(id){
+                console.log("user recommend");
+                console.log(id);
+                this.$api.post('/get_recommend',{email_user:id}).then(response =>{
+                    if(response.data !== 'Not received'){
+                         // console.log(response.data);
+                        this.imgList = response.data;
+                        // console.log(this.imgList);
+                        this.count += response.data.length;
+                        this.last += response.data.length;
 
+                        //加载图片
+                        for (let i = 0; i < this.each_time; i++){
+                            if(this.last === 0) {
+                                break;
+                            }
+                            this.last--;
+                            this.imgArr.push(this.imgList[this.last]);
+                        }
+                        this.calculationWidth();
+                    }else{
+                        this.$message.warnings('图片获取失败');
+                    }
+                }),(response)=>{
+                    //console.log("error");
+                    this.$message.error('图片获取失败');
+                }
+            },
+            //图片详情页推荐（待接）
+            get_details_recommend(pid,id){
+                console.log("details recommend");
+                console.log(pid,id);
+                this.$api.post('/detail_recommend',{id:pid,number:5,email:id}).then(response =>{
+                    console.log(response.data);
+                    if(response.data !== 'Not received'){
+                        this.imgList = response.data;
+                        console.log(this.imgList);
+                        this.count += response.data.length;
+                        this.last += response.data.length;
+
+                        //加载图片
+                        for (let i = 0; i < this.each_time; i++){
+                            if(this.last === 0) {
+                                break;
+                            }
+                            this.last--;
+                            this.imgArr.push(this.imgList[this.last]);
+                        }
+                        this.calculationWidth();
+                    }else{
+                        this.$message.warnings('图片获取失败');
+                    }
                 }),(response)=>{
                     //console.log("error");
                     this.$message.error('图片获取失败');
@@ -285,7 +357,7 @@
                     e.currentTarget.className = "icon style2 fa-thumbs-up";
                     flag = false;
                 }
-                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttributeNode('id'),
+                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
                     email:this.my_id,state: flag}).then(response =>{
                     console.log('1111111'+response.data);
                     if(response.data === 'SUCCESS'){
@@ -305,7 +377,7 @@
                     e.currentTarget.className = "icon style2 fa-star";
                     flag = false;
                 }
-                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttributeNode('id'),
+                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
                     email:this.my_id,state: flag}).then(response =>{
                     //console.log(response.data);
                     if(response.data === 'SUCCESS'){
