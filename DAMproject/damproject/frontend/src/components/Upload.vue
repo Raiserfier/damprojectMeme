@@ -211,7 +211,7 @@
                     this.$api.post('/upload_image', {
                         img: this.up_img,
                         email: this.$store.state.user_id,
-                        tags: labelarr,
+                        tags: this.labelarr,
                         classification: this.cate,
                         state: this.isMask,
                     }).then(response => {
@@ -220,11 +220,8 @@
                             this.$message.success('上传成功！');
                             //跳转到个人上传页
                             this.$router.replace({path: '/channel/' + this.my_id + '/all'});
-                        }
-                        else if(response.data === '上传图片失败'){
-                            this.$message.error('上传图片失败！');
                         }else{
-                            this.$message.warning('上传失败！');
+                            this.$message.error('上传图片失败！');
                         }
                     }), (response) => {
                         //console.log("error");
