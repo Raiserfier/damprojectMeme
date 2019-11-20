@@ -66,15 +66,14 @@
             // console.log(this.$route.params.id);
             this.my_id = this.$store.state.user_id;
             this.key = this.$route.params.key;
-            //用户页\\图片详情页推荐
-            if (this.$route.params.id !== undefined){
-                if(this.$route.params.type === undefined){
-                		this.get_details_recommend(this.$route.params.id,this.$store.state.user_id);
-                }else{
-                    if(this.$route.params.type === 'channel') this.type = 2;
-                    else if(this.$route.params.type === 'favorite') this.type = 1;
-                    this.get_user(this.$route.params.id,this.type,this.key);
-                }
+            //图片详情页推荐
+            if(this.$route.params.pic !== undefined){
+                this.get_details_recommend(this.$route.params.id,this.$store.state.user_id);
+            }//用户页
+            else if (this.$route.params.id !== undefined){
+                if(this.$route.params.type === 'channel') this.type = 2;
+                else if(this.$route.params.type === 'favorite') this.type = 1;
+                this.get_user(this.$route.params.id,this.type,this.key);
             }
             //搜索、类别页\\用户推荐页
             else {

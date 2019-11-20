@@ -133,8 +133,6 @@
                 username: '游客',
                 profile: '',
                 portrait: '',
-                // profile_new: '',
-                // portrait_new: '',
                 password_old: '',
                 password_new: '',
                 password_confirm: '',
@@ -147,18 +145,16 @@
         methods:{
             load(){
                 this.$api.post('/get_user_info',{email:this.$store.state.user_id}).then(response=>{
-                if(response.data !== 'Not received'){
-                    // console.log(response.data);
-                    this.username = response.data.username;
-                    this.profile = response.data.profile;
-                    this.portrait = response.data.portrait;
+                    if(response.data !== 'Not received'){
+                        // console.log(response.data);
+                        this.username = response.data.username;
+                        this.profile = response.data.profile;
+                        this.portrait = response.data.portrait;
+                    }
+                }),(response)=>{
+                    //console.log("error");
+                    this.$message.error('用户信息获取失败');
                 }
-            }),(response)=>{
-                //console.log("error");
-                this.$message.error('用户信息获取失败');
-            }
-            // this.profile_new = this.profile;
-            // this.portrait_new = this.portrait;
             },
             choose_img(e) {
                 if(e.target.files[0]){
