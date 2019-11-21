@@ -1202,6 +1202,7 @@
 
 /* Icon */
 	.icon {
+    color: white;
 		float: right;
 		text-decoration: none;
 		border-bottom: none;
