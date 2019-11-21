@@ -12,7 +12,7 @@
                 <li><p class="icon style2 fa-star" @click="fav_click($event)" v-bind:class="{ Collected:img.state }" ><span class="label">Collect</span></p></li>
                 <li><p class="icon style2 fa-thumbs-up" @click="thumb_click($event)" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p></li>
 <!--                <li><a href="index.html" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></a></li>-->
-                <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></router-link></li>
+                <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info"><span class="label">ForMore</span></router-link></li>
               </ul>
           </div>
         <div class="labels">
