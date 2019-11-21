@@ -16,17 +16,22 @@ def upload_img(request):
             email = request.POST.get("email")
             classification = request.POST.get("classification")
             tagstr = request.POST.get("tags")
+            print(tagstr, type(tagstr))
             img = request.POST.get("img")
             state = request.POST.get("state")
             user = User.objects.get(email=email)
             print("ttt", state)
-            # print("ok")
+            print("ok")
             img = Image.objects.create(classification=classification, img=img, owner=user)
-            # print("okk")
+            print("okk")
             tags = tagstr.split('#')
-            tags.remove('')
+            print("?", tags)
+            # tags.remove('')
+            print("xx?")
             for tag in tags:
+                print(tag, "okkk")
                 taginfo = Tag.objects.filter(content=tag)
+                # print("okkk")
                 if taginfo.exists():
                     tagobj = taginfo.first()
                     tagobj.frequency += 1
@@ -138,14 +143,11 @@ def delete_image(request):
 
 
 def add_watermark(image_id, username):
-    print("???")
     try:
-        print("in")
         if username == '':
             return HttpResponse("Username not received")
         else:
             image = Image.objects.get(id=image_id)
-            print(image)
             image_url = image.img
             if 'jpeg' in image_url:
                 image_type = 'jpeg'
@@ -161,10 +163,9 @@ def add_watermark(image_id, username):
             with open(pic_path, 'wb') as f:
                 f.write(base64.b64decode(image_url.split(',')[1]))
             image_origin = PImage.open(pic_path)
-            print(pic_path)
             if image_type == 'gif':
                 frames = []
-                for frame in ImageSequence.Iterator(image):
+                for frame in ImageSequence.Iterator(image_origin):
                     text = '@' + username
                     layer = frame.convert('RGBA')
                     text_overlayer = PImage.new('RGBA', layer.size, (255, 255, 255, 0))
@@ -179,6 +180,7 @@ def add_watermark(image_id, username):
                     frame = PImage.open(b)
                     frames.append(frame)
                 frames[0].save(pic_path, save_all=True, append_images=frames[1:])
+                print("gifok")
                 with open(pic_path, 'rb') as f:
                     image_byte = f.read()
                     image_base64 = str(base64.b64encode(image_byte), encoding='utf-8')
@@ -468,7 +470,10 @@ def image_detail(request):
         for tagobj in tagsobj:
             tags += '#' + tagobj.tag.content
         info = {
-            'owner': image.owner,
+            'name': image.owner.username,
+            'portrait': image.owner.portrait,
+            'profile': image.owner.profile,
+            'img': image.img,
             'upload_time': image.upload_time,
             'likes': image.total_likes,
             'thumbs': image.total_thumbs,
@@ -640,10 +645,7 @@ class DHash(object):
 
 
 def get_user_data(user):
-    if user.profile == '':
-        profile = '这个人很懒，什么都没有留下'
-    else:
-        profile = user.profile
+    profile = user.profile
     if user.portrait == '':
         pic_path = './emoji/images/default.jpg'
         with open(pic_path, 'rb') as f:
@@ -682,6 +684,7 @@ def modify_user_info(request):
             user.username = username
             user.profile = profile
             user.portrait = portrait
+            user.save()
             return HttpResponse("success")
         except:
             return HttpResponse("error")

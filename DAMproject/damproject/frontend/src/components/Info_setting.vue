@@ -213,7 +213,7 @@
                     this.password_confirm = '';
                     return;
                 }else{
-                    this.$api.post('/modify_password',{email:this.$store.state.user_id, password_old:this.password_old, password_new:this.password_new}).then(response=>{
+                    this.$api.post('/decide_password',{email:this.$store.state.user_id, password_old:this.password_old, password_new:this.password_new}).then(response=>{
                         if(response.data === 'success'){
                             this.$message.success('成功更改密码');
                         }else if(response.data === 'error'){

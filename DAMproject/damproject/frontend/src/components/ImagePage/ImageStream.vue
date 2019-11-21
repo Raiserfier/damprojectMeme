@@ -68,7 +68,7 @@
             this.key = this.$route.params.key;
             //图片详情页推荐
             if(this.$route.params.pic !== undefined){
-                this.get_details_recommend(this.$route.params.id,this.$store.state.user_id);
+                this.get_details_recommend(this.$route.params.pic,this.$store.state.user_id);
             }//用户页
             else if (this.$route.params.id !== undefined){
                 if(this.$route.params.type === 'channel') this.type = 2;
@@ -116,7 +116,6 @@
                 if (thresold <= 10) {
                     console.log('end');
                     if(this.last){
-                        console.log('2113434233');
                         this.load_more();
                         this.preloading();
                     }
@@ -194,9 +193,8 @@
             get_img(t,k){
                 this.$api.post('/get_user_image',{key:k,email:this.my_id,email_user:this.my_id,type:t}).then(response=>{
                     if(response.data !== 'Not received'){
-                        console.log(response.data);
+                        // console.log(response.data);
                         this.imgList = response.data;
-                        console.log(this.imgList);
                         this.count += response.data.length;
                         this.last += response.data.length;
 
@@ -278,7 +276,6 @@
                     console.log(response.data);
                     if(response.data !== 'Not received'){
                         this.imgList = response.data;
-                        console.log(this.imgList);
                         this.count += response.data.length;
                         this.last += response.data.length;
 

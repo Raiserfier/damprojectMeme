@@ -15,13 +15,13 @@
         <div class="info_window">
           <div class="Uploader">
             <div class="Userpic_window">
-              <a href="" class="User_pic" :src="owner.portrait" @click="to_owner_channel()"
+              <a href="" class="User_pic" :src="portrait" @click="to_owner_channel()"
                  :style="{'background-image':'url'+'(\'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3900046848,1834418761&fm=26&gp=0.jpg\')'}"></a>
-              <h2 class="User_name" @click="to_owner_channel()"><a href="">{{owner.username}}</a></h2>
+              <h2 class="User_name" @click="to_owner_channel()"><a href="">{{name}}</a></h2>
             </div>
             <div>
               <p class="user_introduction">
-                {{owner.profile}}
+                {{profile}}
               </p>
             </div>
           </div>
@@ -99,28 +99,33 @@
                 favorites: 0,
                 test_path: require('../assets/test/1.jpg'),
 
-                owner: [],
-                // username: '游客',
-                // profile: '',
-                // portrait: '',
+                name: '游客',
+                profile: '',
+                portrait: '',
             }
         },
         created() {
-            this.$api.post('/image_detail',{email:this.img_id}).then(response=>{
-                if(response.data !== '没有这张图片') {
-                    this.up_time = response.data.upload_time;
-                    this.collects = response.data.likes;
-                    this.favorites = response.data.thumbs;
-                    this.tags = response.data.tags;
-                    this.img = response.data.img;
+            if(this.$route.params.pic !== undefined){
+                this.img_id = this.$route.params.pic;
+                this.$api.post('/image_detail',{id:this.$route.params.pic}).then(response=>{
+                    console.log(response.data);
+                    if(response.data !== '没有这张图片') {
+                        this.up_time = response.data.upload_time;
+                        this.collects = response.data.likes;
+                        this.favorites = response.data.thumbs;
+                        this.tags = response.data.tags;
+                        this.img = response.data.img;
 
-                    this.owner = response.data.owner;
-                }else{
-                    this.$message.warning('图片信息获取失败');
+                        this.name = response.data.name;
+                        this.portrait = response.data.portrait;
+                        this.profile = response.data.profile;
+                    }else{
+                        this.$message.warning('图片信息获取失败');
+                    }
+                }),(response)=>{
+                    this.$message.error('图片信息获取失败');
                 }
-            }),(response)=>{
-                this.$message.error('图片信息获取失败');
-            }
+            }//用户页
         },
         methods:{
             to_owner_channel(){
