@@ -211,7 +211,7 @@
                     this.$api.post('/upload_image', {
                         img: this.up_img,
                         email: this.$store.state.user_id,
-                        tags: this.labelarr,
+                        tags: JSON.stringify(this.labelarr),
                         classification: this.cate,
                         state: this.isMask,
                     }).then(response => {

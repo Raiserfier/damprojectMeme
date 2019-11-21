@@ -8,6 +8,7 @@ import base64
 import io
 from PIL import Image as PImage, ImageSequence, ImageDraw
 import random
+import json
 
 
 def upload_img(request):
@@ -16,18 +17,12 @@ def upload_img(request):
             email = request.POST.get("email")
             classification = request.POST.get("classification")
             tagstr = request.POST.get("tags")
-            print(tagstr, type(tagstr))
+            tags = json.loads(tagstr)
             img = request.POST.get("img")
             state = request.POST.get("state")
             user = User.objects.get(email=email)
-            print("ttt", state)
-            print("ok")
             img = Image.objects.create(classification=classification, img=img, owner=user)
-            print("okk")
-            tags = tagstr.split('#')
-            print("?", tags)
-            # tags.remove('')
-            print("xx?")
+            #tags = tagstr.split('#')
             for tag in tags:
                 print(tag, "okkk")
                 taginfo = Tag.objects.filter(content=tag)
@@ -462,7 +457,9 @@ def thumb_image(request):
 
 
 def image_detail(request):
+    print("detail")
     try:
+        print("in")
         image_id = request.POST.get("id")
         image = Image.objects.get(id=image_id)
         tagsobj = image.image2tag_set.all()
@@ -479,9 +476,11 @@ def image_detail(request):
             'thumbs': image.total_thumbs,
             'tags': tags
         }
+        print(info)
         return HttpResponse(json.dumps(info))
     except:
         return HttpResponse("没有这张图片")
+
 
 # 猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
 def get_recommend(request):
@@ -510,7 +509,6 @@ def get_recommend(request):
 
 # 表情包详情页推荐
 def detail_recommend(request):
-    print("hi")
     try:
         data = []
         img_id = request.POST.get("id")
@@ -528,11 +526,9 @@ def detail_recommend(request):
 
 # 推荐算法 通过一张图片推荐num张图片id
 def recommend(img_id, num):
-    print("id" + img_id)
     image = Image.objects.get(id=img_id)
     image_url = image.img
     image_type = img_type(image_url)
-    print(image_type)
     pic_path_target = './emoji/images/' + 'target.' + image_type
     with open(pic_path_target, 'wb') as f:
         f.write(base64.b64decode(image_url.split(',')[1]))
@@ -541,8 +537,7 @@ def recommend(img_id, num):
     id_list = []
     Inf = 100000
     for img_com in img_all:
-        if img_com.id == Inf:
-            print("=")
+        if img_com.id == img_id:
             similarity.append(1000)  # 绝对选不到我自己
             id_list.append(img_com.id)
         else:
