@@ -210,14 +210,14 @@ def get_all_info(image, email):
         print("99")
         state = False
         tagsobj = image.image2tag_set.all()
-        tags = ''
+        tags = []
         for tagobj in tagsobj:
-            tags += '#' + tagobj.tag.content
+            tags.append(tagobj.tag.content)
         return {
             'id': image.id,
             'img': image.img,
             'classification': image.classification,
-            'tags': tags,
+            'tags': json.dumps(tags),
             'state': state
         }
     else:
@@ -227,14 +227,14 @@ def get_all_info(image, email):
         else:
             state = False
         tagsobj = image.image2tag_set.all()
-        tags = ''
+        tags = []
         for tagobj in tagsobj:
-            tags += '#' + tagobj.tag.content
+            tags.append(tagobj.tag.content)
         return {
             'id': image.id,
             'img': image.img,
             'classification': image.classification,
-            'tags': tags,
+            'tags': json.dumps(tags),
             'state': state
         }
 
@@ -250,13 +250,13 @@ def get_image_info(image, email):
     except:
         state = False
     tagsobj = image.image2tag_set.all()
-    tags = ''
+    tags = []
     for tagobj in tagsobj:
-        tags += '#' + tagobj.tag.content
+        tags.append(tagobj.tag.content)
     return {
         'id': image.id,
         'img': image.img,
-        'tags': tags,
+        'tags': json.dumps(tags),
         'state': state
     }
 
