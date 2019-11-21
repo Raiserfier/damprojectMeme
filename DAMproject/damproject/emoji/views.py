@@ -640,10 +640,7 @@ class DHash(object):
 
 
 def get_user_data(user):
-    if user.profile == '':
-        profile = '这个人很懒，什么都没有留下'
-    else:
-        profile = user.profile
+    profile = user.profile
     if user.portrait == '':
         pic_path = './emoji/images/default.jpg'
         with open(pic_path, 'rb') as f:
@@ -682,6 +679,7 @@ def modify_user_info(request):
             user.username = username
             user.profile = profile
             user.portrait = portrait
+            user.save()
             return HttpResponse("success")
         except:
             return HttpResponse("error")
