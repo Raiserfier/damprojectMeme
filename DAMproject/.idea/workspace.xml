@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3c10e508-9ea6-4c39-a55b-39ffb5d99bff" name="Default Changelist" comment="">
+    <list default="true" id="3c10e508-9ea6-4c39-a55b-39ffb5d99bff" name="Default Changelist" comment="- tag router&#10;- thumb debug&#10;- slight change on css&#10;- add title">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/damproject/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/emoji/images/compare.gif" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/images/compare.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/damproject/emoji/images/compare.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/images/compare.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/damproject/emoji/images/target.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/images/target.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Channel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Channel.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Home1.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Home1.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Info_setting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Info_setting.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/ImagePage/ImageStream.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/ImagePage/ImageStream.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Nav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Nav.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Title.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Title.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/User/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/User/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/User/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/User/Register.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +110,7 @@
       <workItem from="1574153161973" duration="20658000" />
       <workItem from="1574228829672" duration="4273000" />
       <workItem from="1574237693099" duration="303000" />
-      <workItem from="1574495680106" duration="4442000" />
+      <workItem from="1574495680106" duration="12549000" />
     </task>
     <task id="LOCAL-00001" summary="user settings backend new">
       <created>1574153810095</created>
@@ -155,11 +161,28 @@
       <option name="project" value="LOCAL" />
       <updated>1574497872296</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="test and slight revise">
+      <created>1574505111315</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1574505111315</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -180,7 +203,8 @@
     <MESSAGE value="channel search frontend debug" />
     <MESSAGE value="recommend frontend debug&#10;a little course notes" />
     <MESSAGE value="keke" />
-    <option name="LAST_COMMIT_MESSAGE" value="keke" />
+    <MESSAGE value="test and slight revise" />
+    <option name="LAST_COMMIT_MESSAGE" value="test and slight revise" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

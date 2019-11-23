@@ -76,6 +76,7 @@
   }
 
   #banner {
+    margin-bottom: 2.5em;
     padding: 0;
     /*background-image: url("../assets/images/Veil.jpg");*/
   }
