@@ -45,12 +45,14 @@
                 // }
                 // else{
                     console.log('register function');
-                    this.$api.post('/register', {username:this.name, email: this.email, password: this.password}).then(response => {
+                    this.$api.post('/create_user', {username:this.name, email: this.email, password: this.password}).then(response => {
                         console.log(response.data);
                         if (response.data === 'SUCCESS') {
                             // 更新store登录状态
-                            this.$store.commit("login", {userid:this.email, username:this.name});
-                            this.$message.success('注册并登录成功!');
+                            this.$store.state.login = true;
+                            this.$store.state.user_id = this.email;
+                            this.$store.state.user_name = this.name;
+                            this.$message.success('注册并登录成功！');
                             // 跳转个人页
                             this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all' });
                         }

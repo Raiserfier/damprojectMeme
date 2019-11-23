@@ -114,11 +114,11 @@
         name: "Nav",
         data() {
             return {
-                categories: [{name: '动物', id: 'chrome'},
-                    {name: '食物', id: 'safari'},
-                    {name: '动画', id: 'Edge'},
-                    {name: '游戏', id: 'firefox'},
-                    {name: '人物', id: 'ie8'}],
+                categories: [{name: '动物', id: '动物'},
+                    {name: '食物', id: '食物'},
+                    {name: '动画', id: '动画'},
+                    {name: '游戏', id: '游戏'},
+                    {name: '人物', id: '人物'}],
                 keyw: 'all',
                 my_id: '',
                 isActive: false,

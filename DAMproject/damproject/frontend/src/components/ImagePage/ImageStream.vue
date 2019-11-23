@@ -11,15 +11,16 @@
               <ul @mouseover="enterul($event)" @mouseout="leaveul($event)">
                 <li><p class="icon style2 fa-star" @click="fav_click($event)" v-bind:class="{ Collected:img.state }" ><span class="label">Collect</span></p></li>
                 <li><p class="icon style2 fa-thumbs-up" @click="thumb_click($event)" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p></li>
-<!--                <li><a href="index.html" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></a></li>-->
                 <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info"><span class="label">ForMore</span></router-link></li>
               </ul>
           </div>
         <div class="labels">
           <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul" :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
-            <a class="" href="#">{{'#'+img.classification}}</a>
+            <router-link :to="'/category/'+img.classification">{{'#'+img.classification}}</router-link>
+            <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag">{{'#'+tag}}</router-link>
+<!--            <a class="" href="#">{{'#'+img.classification}}</a>-->
             <!--<a class="" href="#">{{img.tags}}</a>-->
-            <a class="" v-for="tag in JSON.parse(img.tags)" href="#">{{'#'+tag}}</a>
+<!--            <a class="" v-for="tag in JSON.parse(img.tags)" href="#">{{'#'+tag}}</a>-->
           </ul>
         </div>
         <a>
@@ -268,7 +269,7 @@
                     this.$message.error('图片获取失败');
                 }
             },
-            //图片详情页推荐（待接）
+            //图片详情页推荐
             get_details_recommend(pid,id){
                 console.log("details recommend");
                 console.log(pid,id);
@@ -353,15 +354,16 @@
                     e.currentTarget.className = "icon style2 fa-thumbs-up";
                     flag = false;
                 }
-                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
+                this.$api.post('/thumb_image',{
+                    id:e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
                     email:this.my_id,state: flag}).then(response =>{
                     console.log('1111111'+response.data);
                     if(response.data === 'SUCCESS'){
-                        this.$message.success('成功');
+                        this.$message.success('点赞成功！');
                     }
                 }),(response)=>{
                     //console.log("error");
-                    this.$message.error('失败');
+                    this.$message.error('点赞失败！');
                 }
             },
             //收藏
@@ -373,16 +375,17 @@
                     e.currentTarget.className = "icon style2 fa-star";
                     flag = false;
                 }
-                this.$api.post('/like_image ',{id:e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
+                this.$api.post('/like_image ',{
+                    id:e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
                     email:this.my_id,state: flag}).then(response =>{
                     //console.log(response.data);
                     if(response.data === 'SUCCESS'){
                         //改变按钮状态
-                        this.$message.success('成功');
+                        this.$message.success('收藏成功！');
                     }
                 }),(response)=>{
                     //console.log("error");
-                    this.$message.error('失败');
+                    this.$message.error('收藏失败！');
                 }
             },
         }
@@ -390,6 +393,9 @@
 </script>
 
 <style scoped>
+  #main {
+    padding: 1.5em 0 2em 0;
+  }
   .Liked {
     color: rgb(238, 106, 132);
   }

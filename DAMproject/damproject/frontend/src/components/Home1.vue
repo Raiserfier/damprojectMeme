@@ -27,8 +27,8 @@
               <div class="labels"><!-- labels链接 -->
                 <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
                     class="KSVul">
-                    <!--<a class="" href="#">{{img.tags}}</a>-->
-                    <a class="" v-for="tag in JSON.parse(img.tags)" href="#">{{'#'+tag}}</a>
+                    <router-link :to="'/category/'+img.classification">{{'#'+img.classification}}</router-link>
+                    <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag">{{'#'+tag}}</router-link>
                 </ul>
               </div>
               <div class="Img-Iput">
@@ -43,7 +43,7 @@
           <!--点赞数最高的十张图-->
             <div class="Cat">
             <div>
-              <h2 class="Titleeeee" @click="tocate(classname[count-1])" :style="{'padding-top':(count-1)*340+'px'}">{{'流行表情包Top'+pop_num}}</h2>
+              <h2 class="Titleeeee" :style="{'padding-top':340+'px'}">{{'流行表情包Top'+pop_num}}</h2>
             </div>
             <div class="Line">
               <div v-for="(img, index) in popList"
@@ -56,16 +56,15 @@
                   </li>
                   <li><p @click="thumb_click($event)" class="icon style2 fa-thumbs-up" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p>
                   </li>
-                  <li><a class="icon style2 fa-info" data-poptrox="iframe,1200x800" href="index.html"><span class="label">ForMore</span></a>
+                  <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info"><span class="label">ForMore</span></router-link>
                   </li>
                 </ul>
               </div>
               <div class="labels"><!-- labels链接 -->
                 <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
                     class="KSVul">
-                  <a>{{img.classification}}</a>
-                  <!--<a class="" href="#">{{img.tags}}</a>-->
-                  <a class="" v-for="tag in img.tags" href="#">{{'#'+tag}}</a>
+                  <router-link :to="'/category/'+img.classification">{{'#'+img.classification}}</router-link>
+                  <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag">{{'#'+tag}}</router-link>
                 </ul>
               </div>
               <div class="Img-Iput">
@@ -228,17 +227,19 @@
                     e.currentTarget.className = "icon style2 fa-thumbs-up";
                     flag = false;
                 }
+                console.log(e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.getAttribute('id'));
+                console.log(this.my_id);
                 this.$api.post('/thumb_image ', {
-                    id: e.target.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttributeNode('id'),
+                    id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.getAttribute('id'),
                     email: this.my_id, state: flag
                 }).then(response => {
                     //console.log(response.data);
                     if (response.data === 'SUCCESS') {
-                        this.$message.success('成功');
+                        this.$message.success('点赞成功！');
                     }
                 }), (response) => {
                     //console.log("error");
-                    this.$message.error('失败');
+                    this.$message.error('点赞失败！');
                 }
             },
             //收藏
@@ -260,11 +261,11 @@
                     console.log(response.data);
                     if (response.data === 'SUCCESS') {
                         //改变按钮状态
-                        this.$message.success('成功');
+                        this.$message.success('收藏成功！');
                     }
                 }), (response) => {
                     //console.log("error");
-                    this.$message.error('失败');
+                    this.$message.error('收藏失败！');
                 }
             },
         }
@@ -321,6 +322,7 @@
     padding-top: 20px;
   }
   .Titleeeee {
+    cursor: pointer;
     text-decoration: none;
     /*font-family: Serif, serif;*/
     font-family: "Source Sans Pro", sans-serif;

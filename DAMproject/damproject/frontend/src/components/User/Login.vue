@@ -55,7 +55,7 @@
                             // 跳转个人页
                             this.$router.replace({ path: '/favorite/'+this.$store.state.user_id+'/all' });
                         }
-                        else if (response.data === 'ERROR') {
+                        else if (response.data === '密码错误') {
                             this.$message.error('登录失败，请确认您的用户名和密码！');
                         }
                     })
