@@ -18,7 +18,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {path: '/', name: 'Home', component: Home1},
-    {path: '/details/:id', name: 'PicDetail', component: PicDetail},
+    {path: '/details/:pic', name: 'PicDetail', component: PicDetail},
     {path: '/:type/:key', name: 'PageWithTitle', component: Title},
     {path: '/:type/:id/:key', name: 'PageWithSearch', component: Channel},
     {path: '/recommend', name: 'Recommend', component: Recommend},

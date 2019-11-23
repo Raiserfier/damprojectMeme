@@ -9,25 +9,25 @@
       <div class="pic_inf">
         <div class="pic_window">
           <div class="pic_show">
-            <img :src="test_path" alt="" :style="{width:650+'px', height:'auto'}">
+            <img :src="img" alt="" :style="{width:650+'px', height:'auto'}">
           </div>
         </div>
         <div class="info_window">
           <div class="Uploader">
             <div class="Userpic_window">
-              <a href="" class="User_pic"
+              <a href="" class="User_pic" :src="portrait" @click="to_owner_channel()"
                  :style="{'background-image':'url'+'(\'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3900046848,1834418761&fm=26&gp=0.jpg\')'}"></a>
-              <h2 class="User_name"><a href="">TESTER</a></h2>
+              <h2 class="User_name" @click="to_owner_channel()"><a href="">{{name}}</a></h2>
             </div>
             <div>
               <p class="user_introduction">
-                这是用户简介
+                {{profile}}
               </p>
             </div>
           </div>
-          <div class="info_line"><i class="icon fa-clock-o"></i><span>Upload time</span></div>
-          <div class="info_line"><i class="icon fa-heart"></i><span>Favorite</span></div>
-          <div class="info_line"><i class="icon fa-star"></i><span>Collection</span></div>
+          <div class="info_line"><i class="icon fa-clock-o"></i><span>{{up_time}}</span></div>
+          <div class="info_line"><i class="icon fa-heart"></i><span>{{favorites}}</span></div>
+          <div class="info_line"><i class="icon fa-star"></i><span>{{collects}}</span></div>
         </div>
       </div>
     </div>
@@ -35,9 +35,7 @@
       <div>
         <div class="tags">
           <div class="taglist">
-            <a class="TAG" href=""><h3 class="TAG_title">#aaa</h3></a>
-            <a class="TAG" href=""><h3 class="TAG_title">#aaa</h3></a>
-            <a class="TAG" href=""><h3 class="TAG_title">#aaa</h3></a>
+            <a v-for="tag in tags" class="TAG" href=""><h3 class="TAG_title">{{'#'+tag}}</h3></a>
           </div>
         </div>
 
@@ -93,152 +91,45 @@
         },
         data() {
             return {
-                isCollect: false,
-                isLike: false,
+                img_id: 0,
+                img: '',
+                tags: [],
+                up_time: '',
+                collects: 0,
+                favorites: 0,
                 test_path: require('../assets/test/1.jpg'),
-                waterfallList: [],
-                imgArr: [
-                    require('../assets/test/1.jpg'),
-                    require('../assets/test/2.jpg'),
-                    require('../assets/test/3.jpg'),
-                    require('../assets/test/4.jpg'),
-                    require('../assets/test/5.jpg'),
-                    require('../assets/test/6.jpg'),
-                    require('../assets/test/7.jpg'),
-                    require('../assets/test/8.jpg')
-                ],
-                waterfallImgWidth: 350,
-                waterfallImgCol: 3,
-                waterfallImgRight: 10,
-                waterfallImgBottom: 10,
-                waterfallDeviationHeight: [],
-                imgList: [],
+
+                name: '游客',
+                profile: '',
+                portrait: '',
             }
         },
         created() {
-            for (let i = 0; i < 8; i++) {
-                this.imgList.push(this.imgArr[i]);
-            }
-        },
-        mounted() {
-            this.calculationWidth();
+            if(this.$route.params.pic !== undefined){
+                this.img_id = this.$route.params.pic;
+                this.$api.post('/image_detail',{id:this.$route.params.pic}).then(response=>{
+                    console.log(response.data);
+                    if(response.data !== '没有这张图片') {
+                        this.up_time = response.data.upload_time;
+                        this.collects = response.data.likes;
+                        this.favorites = response.data.thumbs;
+                        this.tags = response.data.tags;
+                        this.img = response.data.img;
+
+                        this.name = response.data.name;
+                        this.portrait = response.data.portrait;
+                        this.profile = response.data.profile;
+                    }else{
+                        this.$message.warning('图片信息获取失败');
+                    }
+                }),(response)=>{
+                    this.$message.error('图片信息获取失败');
+                }
+            }//用户页
         },
         methods:{
-            enterpic(e){
-                //icon
-                e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
-                var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
-                var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
-                for(var i=0;i<label_number;i++){
-                    children[i].className = "LabelsOver";
-                }
-            },
-            leavepic(e){
-                //icon
-                e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
-                var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
-                var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
-                for(var i=0;i<label_number;i++){
-                    children[i].className = "LabelsOut";
-                }
-            },
-            enterul(e){
-                e.currentTarget.className = "IconOver";
-                //label
-                var label_number = e.currentTarget.parentElement.nextElementSibling.firstElementChild.childElementCount;
-                var children = e.currentTarget.parentElement.nextElementSibling.firstElementChild.children;
-                for(var i=0;i<label_number;i++){
-                    children[i].className = "LabelsOver";
-                }
-            },
-            leaveul(e){
-                e.currentTarget.className = "IconOut";
-                //label
-                var label_number = e.currentTarget.parentElement.nextElementSibling.firstElementChild.childElementCount;
-                var children = e.currentTarget.parentElement.nextElementSibling.firstElementChild.children;
-                for(var i=0;i<label_number;i++){
-                    children[i].className = "LabelsOut";
-                }
-            },
-            enterul_la(e){
-                var label_number = e.currentTarget.childElementCount;
-                var children = e.currentTarget.children;
-                for(var i=0;i<label_number;i++){
-                    children[i].className = "LabelsOver";
-                }
-                e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
-            },
-            leaveul_la(e){
-                var label_number = e.currentTarget.childElementCount;
-                var children = e.currentTarget.children;
-                for(var i=0;i<label_number;i++){
-                    children[i].className = "LabelsOut";
-                }
-                e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOut";
-            },
-            clickCollect(e){
-                if(e.currentTarget.className === "icon style2 fa-star"){
-                    e.currentTarget.className = "icon style2 fa-star Collected";
-                }
-                else{
-                    e.currentTarget.className = "icon style2 fa-star";
-                }
-            },
-            clickLike(e){
-                 if(e.currentTarget.className === "icon style2 fa-thumbs-up"){
-                    e.currentTarget.className = "icon style2 fa-thumbs-up Liked";
-                }
-                else{
-                    e.currentTarget.className = "icon style2 fa-thumbs-up";
-                }
-            },
-            //计算每个图片的宽度或者是列数
-            calculationWidth(){
-                let domWidth = document.getElementById("v-waterfall").offsetWidth;
-                if (!this.waterfallImgWidth && this.waterfallImgCol){
-                    this.waterfallImgWidth = (domWidth-this.waterfallImgRight*this.waterfallImgCol)/this.waterfallImgCol;
-                }else if(this.waterfallImgWidth && !this.waterfallImgCol){
-                    this.waterfallImgCol = Math.floor(domWidth/(this.waterfallImgWidth+this.waterfallImgRight))
-                }
-                //初始化偏移高度数组
-                this.waterfallDeviationHeight = new Array(this.waterfallImgCol);
-                for (let i = 0;i < this.waterfallDeviationHeight.length;i++){
-                this.waterfallDeviationHeight[i] = 0;
-                }
-                this.imgPreloading()
-            },
-            //图片预加载
-            imgPreloading(){
-                for (let i = 0;i < this.imgList.length;i++){
-                    let aImg = new Image();
-                    aImg.src = this.imgList[i];
-                    aImg.onload = aImg.onerror = (e)=>{
-                        let imgData = {};
-                        imgData.height = this.waterfallImgWidth/aImg.width*aImg.height;
-                        imgData.src = this.imgList[i];
-                        this.waterfallList.push(imgData);
-                        this.rankImg(imgData);
-                    }
-                }
-            },
-            //瀑布流布局
-            rankImg(imgData){
-                let {waterfallImgWidth,waterfallImgRight,waterfallImgBottom,waterfallDeviationHeight,waterfallImgCol} = this;
-                //for (let i = 0;i < this.waterfallList.length;i++){
-                let minIndex = this.filterMin();
-                imgData.top = waterfallDeviationHeight[minIndex];
-                imgData.left = minIndex*(waterfallImgRight+waterfallImgWidth);
-                waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom;
-                //}
-                console.log(imgData);
-            },
-            /**
-             * 找到最短的列并返回下标
-             * @returns {number} 下标
-             */
-            filterMin(){
-                const min = Math.min.apply(null, this.waterfallDeviationHeight);
-                return this.waterfallDeviationHeight.indexOf(min);
+            to_owner_channel(){
+                this.route.replace({path: '/channel/'+ this.owner.email +'/all'});
             }
         }
     }

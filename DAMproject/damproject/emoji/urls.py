@@ -19,5 +19,7 @@ urlpatterns = [
     path('modify_user_info', views.modify_user_info),
     path('decide_password', views.decide_password),
     path('detail_recommend', views.detail_recommend),
-    path('get_recommend', views.get_recommend)
+    path('get_recommend', views.get_recommend),
+    path('image_detail', views.image_detail),
+    path('most_popular', views.most_popular)
 ]

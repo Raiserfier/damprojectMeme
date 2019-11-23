@@ -27,7 +27,8 @@
               <div class="labels"><!-- labels链接 -->
                 <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
                     class="KSVul">
-                  <a>{{img.tags}}</a>
+                    <!--<a class="" href="#">{{img.tags}}</a>-->
+                    <a class="" v-for="tag in JSON.parse(img.tags)" href="#">{{'#'+tag}}</a>
                 </ul>
               </div>
               <div class="Img-Iput">
@@ -63,7 +64,8 @@
                 <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
                     class="KSVul">
                   <a>{{img.classification}}</a>
-                  <a>{{img.tags}}</a>
+                  <!--<a class="" href="#">{{img.tags}}</a>-->
+                  <a class="" v-for="tag in img.tags" href="#">{{'#'+tag}}</a>
                 </ul>
               </div>
               <div class="Img-Iput">
@@ -197,11 +199,14 @@
                 }
             },
             getpop(){
-                this.$api.post('/get_pop', {number: this.pop_num, email: this.my_id}).then(response => {
+                this.$api.post('/most_popular', {number: this.pop_num, email: this.my_id}).then(response => {
                     if(response.data !== 'Not received'){
-                        // console.log(response.data)
+                        console.log(response.data)
                         this.popList = response.data;
-                        // console.log(this.popList);
+                        console.log(this.popList);
+                    }
+                    else{
+                        console.log('emmmm?')
                     }
                 }), (response) => {
                     console.log("error");

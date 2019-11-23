@@ -25,17 +25,18 @@
     </section>
 
     <user-uploads></user-uploads>
+    <!--    <test-images></test-images>-->
+    <!--    <test-images1></test-images1>-->
   </div>
 </template>
 
 <script>
-    // import merge from 'webpack-merge';
     import ImageStream from './ImagePage/ImageStream'
 
     export default {
         name: 'Channel',
         components: {
-            'user-uploads': ImageStream
+            'user-uploads': ImageStream,
         },
         data() {
             return {

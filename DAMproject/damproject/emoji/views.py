@@ -8,6 +8,7 @@ import base64
 import io
 from PIL import Image as PImage, ImageSequence, ImageDraw
 import random
+import json
 
 
 def upload_img(request):
@@ -16,17 +17,16 @@ def upload_img(request):
             email = request.POST.get("email")
             classification = request.POST.get("classification")
             tagstr = request.POST.get("tags")
+            tags = json.loads(tagstr)
             img = request.POST.get("img")
             state = request.POST.get("state")
             user = User.objects.get(email=email)
-            print("ttt", state)
-            # print("ok")
             img = Image.objects.create(classification=classification, img=img, owner=user)
-            # print("okk")
-            tags = tagstr.split('#')
-            tags.remove('')
+            #tags = tagstr.split('#')
             for tag in tags:
+                print(tag, "okkk")
                 taginfo = Tag.objects.filter(content=tag)
+                # print("okkk")
                 if taginfo.exists():
                     tagobj = taginfo.first()
                     tagobj.frequency += 1
@@ -138,14 +138,11 @@ def delete_image(request):
 
 
 def add_watermark(image_id, username):
-    print("???")
     try:
-        print("in")
         if username == '':
             return HttpResponse("Username not received")
         else:
             image = Image.objects.get(id=image_id)
-            print(image)
             image_url = image.img
             if 'jpeg' in image_url:
                 image_type = 'jpeg'
@@ -161,10 +158,9 @@ def add_watermark(image_id, username):
             with open(pic_path, 'wb') as f:
                 f.write(base64.b64decode(image_url.split(',')[1]))
             image_origin = PImage.open(pic_path)
-            print(pic_path)
             if image_type == 'gif':
                 frames = []
-                for frame in ImageSequence.Iterator(image):
+                for frame in ImageSequence.Iterator(image_origin):
                     text = '@' + username
                     layer = frame.convert('RGBA')
                     text_overlayer = PImage.new('RGBA', layer.size, (255, 255, 255, 0))
@@ -179,6 +175,7 @@ def add_watermark(image_id, username):
                     frame = PImage.open(b)
                     frames.append(frame)
                 frames[0].save(pic_path, save_all=True, append_images=frames[1:])
+                print("gifok")
                 with open(pic_path, 'rb') as f:
                     image_byte = f.read()
                     image_base64 = str(base64.b64encode(image_byte), encoding='utf-8')
@@ -213,14 +210,14 @@ def get_all_info(image, email):
         print("99")
         state = False
         tagsobj = image.image2tag_set.all()
-        tags = ''
+        tags = []
         for tagobj in tagsobj:
-            tags += '#' + tagobj.tag.content
+            tags.append(tagobj.tag.content)
         return {
             'id': image.id,
             'img': image.img,
             'classification': image.classification,
-            'tags': tags,
+            'tags': json.dumps(tags),
             'state': state
         }
     else:
@@ -230,14 +227,14 @@ def get_all_info(image, email):
         else:
             state = False
         tagsobj = image.image2tag_set.all()
-        tags = ''
+        tags = []
         for tagobj in tagsobj:
-            tags += '#' + tagobj.tag.content
+            tags.append(tagobj.tag.content)
         return {
             'id': image.id,
             'img': image.img,
             'classification': image.classification,
-            'tags': tags,
+            'tags': json.dumps(tags),
             'state': state
         }
 
@@ -253,13 +250,13 @@ def get_image_info(image, email):
     except:
         state = False
     tagsobj = image.image2tag_set.all()
-    tags = ''
+    tags = []
     for tagobj in tagsobj:
-        tags += '#' + tagobj.tag.content
+        tags.append(tagobj.tag.content)
     return {
         'id': image.id,
         'img': image.img,
-        'tags': tags,
+        'tags': json.dumps(tags),
         'state': state
     }
 
@@ -415,14 +412,23 @@ def most_popular(request):
         email = request.POST.get('email')
         number = request.POST.get('number')
         popular = []
+        id_list = []
         images = Image.objects.all()
-        for image in images:  # 按照id将流行度存入 注意id从1开始 列表从0开始
-            popular += image.total_likes + image.total_thumbs  # 可以在此修改算法
-        # 堆排序获得最大的number张图片并获得id
-        max_index = map(popular.index, heapq.nlargest(number, popular))
-        for i in list(max_index):
-            image = Image.objects.get(id=i + 1)
+        for image in images:
+            id_list.append(image.id)
+            popular.append(image.total_likes + image.total_thumbs)  # 可以在此修改算法
+        temp = []
+        print(popular)
+        for i in range(int(number)):
+            temp.append(popular.index(max(popular)))
+            popular[popular.index(max(popular))] = -1
+        index = []
+        for i in temp:
+            index.append(id_list[i])
+        for i in index:
+            image = Image.objects.get(id=i)
             data.append(get_all_info(image, email))
+        print(index)
         return HttpResponse(json.dumps(data))
     except:
         return HttpResponse('Not received')
@@ -451,25 +457,51 @@ def thumb_image(request):
         return HttpResponse("未收到数据")
 
 
+def image_detail(request):
+    print("detail")
+    try:
+        print("in")
+        image_id = request.POST.get("id")
+        image = Image.objects.get(id=image_id)
+        tagsobj = image.image2tag_set.all()
+        tags = ''
+        for tagobj in tagsobj:
+            tags += '#' + tagobj.tag.content
+        info = {
+            'name': image.owner.username,
+            'portrait': image.owner.portrait,
+            'profile': image.owner.profile,
+            'img': image.img,
+            'upload_time': image.upload_time,
+            'likes': image.total_likes,
+            'thumbs': image.total_thumbs,
+            'tags': tags
+        }
+        print(info)
+        return HttpResponse(json.dumps(info))
+    except:
+        return HttpResponse("没有这张图片")
+
+
 # 猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
 def get_recommend(request):
     try:
-        print("user recommend backend")
         email = request.POST.get("email_user")
-        print(email)
         user = User.objects.get(email=email)
         like_str = user.like_images
         like_list = like_str.split('#')
-        like_list.remove('')
+        for x in range(like_list.count('')):
+            if '' in like_list:
+                like_list.remove('')
         chosen = random.sample(like_list, round(len(like_list) * 0.3))
         recom_list = []
-        num = 3
+        num = 5
         for i in chosen:
             recom_list += list(recommend(i, num))
         recom_list = list(set(recom_list))
         data = []
-        for i in recom_list:
-            image = Image.objects.get(id=i + 1)
+        for img_id in recom_list:
+            image = Image.objects.get(id=img_id)
             data.append(get_all_info(image, email))
         return HttpResponse(json.dumps(data))
     except:
@@ -479,20 +511,15 @@ def get_recommend(request):
 # 表情包详情页推荐
 def detail_recommend(request):
     try:
-        print("detail recommend backend")
         data = []
         img_id = request.POST.get("id")
         number = request.POST.get("number")
         email = request.POST.get("email")
-        print(img_id)
-        print(number)
-        print(email)
         image = Image.objects.get(id=img_id)
-        recom_list = recommend(img_id, number)
-        for i in list(recom_list):
-            print(i)
-            image = Image.objects.get(id=i + 1)
-            data.append(get_all_info(image, email))
+        recom_list = recommend(img_id, int(number))
+        for i in recom_list:
+            img = Image.objects.get(id=i)
+            data.append(get_all_info(img, email))
         return HttpResponse(json.dumps(data))
     except:
         return HttpResponse("没有此图片")
@@ -508,14 +535,22 @@ def recommend(img_id, num):
         f.write(base64.b64decode(image_url.split(',')[1]))
     img_all = Image.objects.all()
     similarity = []
+    id_list = []
+    Inf = 100000
     for img_com in img_all:
-        if img_com.id == id:
-            similarity += 10000000000000  # 绝对选不到我自己
+        if img_com.id == img_id:
+            similarity.append(1000)  # 绝对选不到我自己
+            id_list.append(img_com.id)
         else:
+            #print(img_com.id)
+            id_list.append(img_com.id)
             image_url = img_com.img
             image_type = img_type(image_url)
             pic_path_com = './emoji/images/' + 'compare.' + image_type
+            with open(pic_path_com, 'wb') as f:
+                f.write(base64.b64decode(image_url.split(',')[1]))
             p_similarity = get_similarity(pic_path_target, pic_path_com)
+            #print(p_similarity)
             tags_target = image.image2tag_set.all()
             tags_com = image.image2tag_set.all()
             p_tag = 0
@@ -525,8 +560,15 @@ def recommend(img_id, num):
                         p_tag += 1
                         break
             p_tag = len(tags_target) - p_tag
-            similarity += p_tag * 5 + p_similarity  # 配比随便写的
-    return map(similarity.index, heapq.nsmallest(num, similarity))
+            similarity.append(p_tag * 5 + p_similarity) # 配比随便写的
+    temp = []
+    for i in range(num):
+        temp.append(similarity.index(min(similarity)))
+        similarity[similarity.index(min(similarity))] = Inf
+    index = []
+    for i in temp:
+        index.append(id_list[i])
+    return index
 
 
 # 判断url类型
@@ -599,10 +641,7 @@ class DHash(object):
 
 
 def get_user_data(user):
-    if user.profile == '':
-        profile = '这个人很懒，什么都没有留下'
-    else:
-        profile = user.profile
+    profile = user.profile
     if user.portrait == '':
         pic_path = './emoji/images/default.jpg'
         with open(pic_path, 'rb') as f:
@@ -641,6 +680,7 @@ def modify_user_info(request):
             user.username = username
             user.profile = profile
             user.portrait = portrait
+            user.save()
             return HttpResponse("success")
         except:
             return HttpResponse("error")

@@ -12,13 +12,14 @@
                 <li><p class="icon style2 fa-star" @click="fav_click($event)" v-bind:class="{ Collected:img.state }" ><span class="label">Collect</span></p></li>
                 <li><p class="icon style2 fa-thumbs-up" @click="thumb_click($event)" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p></li>
 <!--                <li><a href="index.html" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></a></li>-->
-                <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></router-link></li>
+                <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info"><span class="label">ForMore</span></router-link></li>
               </ul>
           </div>
         <div class="labels">
           <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul" :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
             <a class="" href="#">{{'#'+img.classification}}</a>
-            <a class="" href="#">{{img.tags}}</a>
+            <!--<a class="" href="#">{{img.tags}}</a>-->
+            <a class="" v-for="tag in JSON.parse(img.tags)" href="#">{{'#'+tag}}</a>
           </ul>
         </div>
         <a>
@@ -65,15 +66,14 @@
             // console.log(this.$route.params.id);
             this.my_id = this.$store.state.user_id;
             this.key = this.$route.params.key;
-            //用户页\\图片详情页推荐
-            if (this.$route.params.id !== undefined){
-                if(this.$route.params.type === undefined){
-                		this.get_details_recommend(this.$route.params.id,this.$store.state.user_id);
-                }else{
-                    if(this.$route.params.type === 'channel') this.type = 2;
-                    else if(this.$route.params.type === 'favorite') this.type = 1;
-                    this.get_user(this.$route.params.id,this.type,this.key);
-                }
+            //图片详情页推荐
+            if(this.$route.params.pic !== undefined){
+                this.get_details_recommend(this.$route.params.pic,this.$store.state.user_id);
+            }//用户页
+            else if (this.$route.params.id !== undefined){
+                if(this.$route.params.type === 'channel') this.type = 2;
+                else if(this.$route.params.type === 'favorite') this.type = 1;
+                this.get_user(this.$route.params.id,this.type,this.key);
             }
             //搜索、类别页\\用户推荐页
             else {
@@ -116,7 +116,6 @@
                 if (thresold <= 10) {
                     console.log('end');
                     if(this.last){
-                        console.log('2113434233');
                         this.load_more();
                         this.preloading();
                     }
@@ -194,9 +193,8 @@
             get_img(t,k){
                 this.$api.post('/get_user_image',{key:k,email:this.my_id,email_user:this.my_id,type:t}).then(response=>{
                     if(response.data !== 'Not received'){
-                        console.log(response.data);
+                        // console.log(response.data);
                         this.imgList = response.data;
-                        console.log(this.imgList);
                         this.count += response.data.length;
                         this.last += response.data.length;
 
@@ -278,7 +276,6 @@
                     console.log(response.data);
                     if(response.data !== 'Not received'){
                         this.imgList = response.data;
-                        console.log(this.imgList);
                         this.count += response.data.length;
                         this.last += response.data.length;
 
