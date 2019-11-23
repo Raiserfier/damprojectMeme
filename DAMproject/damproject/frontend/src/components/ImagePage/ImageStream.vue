@@ -19,7 +19,7 @@
           <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul" :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
             <a class="" href="#">{{'#'+img.classification}}</a>
             <!--<a class="" href="#">{{img.tags}}</a>-->
-            <a class="" v-for="tag in img.tags" href="#">{{'#'+tag}}</a>
+            <a class="" v-for="tag in JSON.parse(img.tags)" href="#">{{'#'+tag}}</a>
           </ul>
         </div>
         <a>

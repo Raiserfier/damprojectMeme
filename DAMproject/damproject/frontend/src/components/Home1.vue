@@ -28,7 +28,7 @@
                 <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
                     class="KSVul">
                     <!--<a class="" href="#">{{img.tags}}</a>-->
-                    <a class="" v-for="tag in img.tags" href="#">{{'#'+tag}}</a>
+                    <a class="" v-for="tag in JSON.parse(img.tags)" href="#">{{'#'+tag}}</a>
                 </ul>
               </div>
               <div class="Img-Iput">
