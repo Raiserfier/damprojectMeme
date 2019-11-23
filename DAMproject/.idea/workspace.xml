@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3c10e508-9ea6-4c39-a55b-39ffb5d99bff" name="Default Changelist" comment="- tag router&#10;- thumb debug&#10;- slight change on css&#10;- add title">
+    <list default="true" id="3c10e508-9ea6-4c39-a55b-39ffb5d99bff" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/damproject/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/emoji/images/compare.gif" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/images/compare.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/emoji/images/compare.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/images/compare.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/emoji/images/target.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/images/target.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Channel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Channel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Home1.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Home1.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/ImagePage/ImageStream.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/ImagePage/ImageStream.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Nav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Nav.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Title.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Title.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/User/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/User/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/User/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/User/Register.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/emoji/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Upload.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Upload.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -110,7 +102,7 @@
       <workItem from="1574153161973" duration="20658000" />
       <workItem from="1574228829672" duration="4273000" />
       <workItem from="1574237693099" duration="303000" />
-      <workItem from="1574495680106" duration="12549000" />
+      <workItem from="1574495680106" duration="15351000" />
     </task>
     <task id="LOCAL-00001" summary="user settings backend new">
       <created>1574153810095</created>
@@ -168,7 +160,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574505111315</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="- tag router&#10;- thumb debug&#10;- slight change on css&#10;- add title&#10;- login &amp; register debug">
+      <created>1574515336238</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1574515336238</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,7 +203,9 @@
     <MESSAGE value="recommend frontend debug&#10;a little course notes" />
     <MESSAGE value="keke" />
     <MESSAGE value="test and slight revise" />
-    <option name="LAST_COMMIT_MESSAGE" value="test and slight revise" />
+    <MESSAGE value="- tag router&#10;- thumb debug&#10;- slight change on css&#10;- add title&#10;- login &amp; register debug" />
+    <MESSAGE value="Merge branch 'master' of https://github.com/Raiserfier/damprojectMeme&#10;&#10; Conflicts:&#10;&#9;DAMproject/damproject/db.sqlite3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/Raiserfier/damprojectMeme&#10;&#10; Conflicts:&#10;&#9;DAMproject/damproject/db.sqlite3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

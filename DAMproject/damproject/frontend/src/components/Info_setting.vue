@@ -21,7 +21,7 @@
         <div class="form_container">
           <div class="setting_title">
             <div>
-              用户设置
+              个人信息
             </div>
           </div>
           <!--username-->
@@ -121,6 +121,12 @@
         </div>
       </form>
     </div>
+  </div>
+  <!-- Footer -->
+  <div>
+    <footer id="footer">
+      <p>&copy; Group 2. All rights reserved.</p>
+    </footer>
   </div>
 </template>
 

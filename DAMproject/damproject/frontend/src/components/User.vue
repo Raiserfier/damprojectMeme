@@ -52,7 +52,7 @@
     /*background-color: #495057;*/
     /*background-color: #202024;*/
     padding-top: 1.5em;
-    padding-bottom: 6em;
+    padding-bottom: 5em;
 }
 #register-tab::after {
     position: absolute;

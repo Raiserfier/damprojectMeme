@@ -79,7 +79,16 @@
       </div>
 
     </section>
+
+    <!-- Footer -->
+    <div style="margin-top: 2000px;">
+      <footer id="footer">
+        <p>&copy; 2019. Group 2. All rights reserved.</p>
+      </footer>
+    </div>
+
   </section>
+
 </template>
 
 <script>
