@@ -203,7 +203,7 @@
                     if(response.data !== 'Not received'){
                         console.log(response.data)
                         this.popList = response.data;
-                        // console.log(this.popList);
+                        console.log(this.popList);
                     }
                     else{
                         console.log('emmmm?')
