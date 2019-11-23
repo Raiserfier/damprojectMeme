@@ -32,8 +32,8 @@
                 </ul>
               </div>
               <div class="Img-Iput">
-                <div class="img_inputBox" @mouseenter="enterpic($event)" @mouseleave="leavepic($event)">
-                  <img :id="img.id" :src="img.img" alt="" class="img-inputer">
+                <div class="img_inputBox">
+                  <img :id="img.id" :src="img.img" alt="" class="img-inputer" @mouseenter="enterpic($event)" @mouseleave="leavepic($event)">
                 </div>
               </div>
             </div>
@@ -69,8 +69,8 @@
                 </ul>
               </div>
               <div class="Img-Iput">
-                <div class="img_inputBox" @mouseenter="enterpic($event)" @mouseleave="leavepic($event)">
-                  <img :id="img.id" :src="img.img" alt="" class="img-inputer">
+                <div class="img_inputBox">
+                  <img :id="img.id" :src="img.img" alt="" class="img-inputer" @mouseenter="enterpic($event)" @mouseleave="leavepic($event)">
                 </div>
               </div>
             </div>
@@ -112,21 +112,23 @@
             },
             enterpic(e) {
                 //icon
-                e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
-                var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
-                var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
+                e.currentTarget.parentElement.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
+                var label_number = e.currentTarget.parentElement.parentElement.previousElementSibling.firstElementChild.childElementCount;
+                var children = e.currentTarget.parentElement.parentElement.previousElementSibling.firstElementChild.children;
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOver";
                 }
+                e.currentTarget.parentElement.className="img_inputBox imgBox"
             },
             leavepic(e) {
                 //icon
-                e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
-                var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
-                var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
+                e.currentTarget.parentElement.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
+                var label_number = e.currentTarget.parentElement.parentElement.previousElementSibling.firstElementChild.childElementCount;
+                var children = e.currentTarget.parentElement.parentElement.previousElementSibling.firstElementChild.children;
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOut";
                 }
+                e.currentTarget.parentElement.className="img_inputBox"
             },
             enterul(e) {
                 e.currentTarget.className = "IconOver";
@@ -136,6 +138,7 @@
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOver";
                 }
+                e.currentTarget.parentElement.nextElementSibling.nextElementSibling.firstElementChild.className="img_inputBox imgBox"
             },
             leaveul(e) {
                 e.currentTarget.className = "IconOut";
@@ -145,6 +148,7 @@
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOut";
                 }
+                e.currentTarget.parentElement.nextElementSibling.nextElementSibling.firstElementChild.className="img_inputBox"
             },
             enterul_la(e) {
                 var label_number = e.currentTarget.childElementCount;
@@ -153,6 +157,7 @@
                     children[i].className = "LabelsOver";
                 }
                 e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
+                e.currentTarget.parentElement.nextElementSibling.firstElementChild.className="img_inputBox imgBox"
             },
             leaveul_la(e) {
                 var label_number = e.currentTarget.childElementCount;
@@ -161,6 +166,7 @@
                     children[i].className = "LabelsOut";
                 }
                 e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOut";
+                e.currentTarget.parentElement.nextElementSibling.nextElementSibling.firstElementChild.className="img_inputBox"
             },
             getcate() {
                 this.$api.post('/get_images', {number: this.each_num, email: this.my_id}).then(response => {
@@ -326,6 +332,7 @@
 
   .Img-Iput {
     top: 0;
+    border: none;
     /*margin-top: 60px;*/
     position: relative;
     display: flex;
@@ -334,10 +341,11 @@
     width: 250px;
     height: 250px;
     border-radius: 5px;
-    background-color: rgba(26, 25, 29, 0.84);
+    /*background-color: rgba(26, 25, 29, 0.84);*/
   }
 
   .img_inputBox {
+    border: none;
     position: relative;
     top: 0;
     bottom: 0;
@@ -351,13 +359,27 @@
     align-items: center;
     justify-content: center;
   }
+  .img_inputBox:hover{
+    transition: all 0.2s ease-in-out;
+    /*background-color: rgba(255, 255, 255, 0.25);*/
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 0.5em 0 #FF6382;
+  }
+  .imgBox{
+    border: none;
+    transition: all 0.2s ease-in-out;
+    background-image:linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+  }
+  .imgBox img{
+    mix-blend-mode:multiply;
+  }
 
   .img-inputer {
     position: relative;
     top: 0;
     z-index: 0;
-    width: auto;
-    height: 100%;
+    width: 250px;
+    height: 250px;
+    /*object-fit: cover;*/
   }
 
   .thumbnails .v-waterfall-content {

@@ -3,31 +3,38 @@
     <section id="main" style="align-content: center;align-items: center">
 					<!-- Thumbnails 使用poptrox-->
     <section class="thumbnails" style="margin-left: 10%; margin-right: 10%">
-    <div class="v-waterfall-content" id="v-waterfall" :style="{left:6+'%'}">
-      <div v-for="img in waterfallList"
-           class="v-waterfall-item"
-           :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">
+      <div class="v-waterfall-content" id="v-waterfall" :style="{left:6+'%'}">
+        <div v-for="img in waterfallList"
+             class="v-waterfall-item"
+             :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">
           <div class="icons"><!-- 三个icon按钮 -->
-              <ul @mouseover="enterul($event)" @mouseout="leaveul($event)">
-                <li><p class="icon style2 fa-star" @click="fav_click($event)" v-bind:class="{ Collected:img.state }" ><span class="label">Collect</span></p></li>
-                <li><p class="icon style2 fa-thumbs-up" @click="thumb_click($event)" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p></li>
-<!--                <li><a href="index.html" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></a></li>-->
-                <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info"><span class="label">ForMore</span></router-link></li>
-              </ul>
+            <ul @mouseover="enterul($event)" @mouseout="leaveul($event)">
+              <li><p class="icon style2 fa-star" @click="fav_click($event)" v-bind:class="{ Collected:img.state }"><span
+                class="label">Collect</span></p></li>
+              <li><p class="icon style2 fa-thumbs-up" @click="thumb_click($event)" v-bind:class="{ Likeded:img.state }">
+                <span class="label">Like</span></p></li>
+              <!--                <li><a href="index.html" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></a></li>-->
+              <li>
+                <router-link :to="'/details/'+img.id" class="icon style2 fa-info"><span class="label">ForMore</span>
+                </router-link>
+              </li>
+            </ul>
           </div>
-        <div class="labels">
-          <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul" :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
-            <a class="" href="#">{{'#'+img.classification}}</a>
-            <!--<a class="" href="#">{{img.tags}}</a>-->
-            <a class="" v-for="tag in img.tags" href="#">{{'#'+tag}}</a>
-          </ul>
+          <div class="labels">
+            <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul"
+                :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
+              <a class="" href="#">{{'#'+img.classification}}</a>
+              <!--<a class="" href="#">{{img.tags}}</a>-->
+              <a class="" v-for="tag in img.tags" href="#">{{'#'+tag}}</a>
+            </ul>
+          </div>
+          <div class="imgHover" :style="{height:img.height+'px'}">
+            <img @mouseenter="enterpic($event)" @mouseleave="leavepic($event)" :id="img.id" :src="img.img" alt=""
+                 style="border-radius: 4px">
+          </div>
         </div>
-        <a>
-          <img @mouseenter="enterpic($event)" @mouseleave="leavepic($event)" :id="img.id" :src="img.img" alt="">
-        </a>
       </div>
-    </div>
-  </section>
+    </section>
 
     </section>
   </div>
@@ -138,6 +145,7 @@
             },
             enterpic(e){
                 //icon
+                e.currentTarget.parentElement.className="imgHover imgBox";
                 e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
                 var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
@@ -147,6 +155,7 @@
             },
             leavepic(e){
                 //icon
+                e.currentTarget.parentElement.className="imgHover";
                 e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
                 var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
@@ -162,6 +171,7 @@
                 for(var i=0;i<label_number;i++){
                     children[i].className = "LabelsOver";
                 }
+                e.currentTarget.parentElement.nextElementSibling.nextElementSibling.className = "imgHover imgBox";
             },
             leaveul(e){
                 e.currentTarget.className = "IconOut";
@@ -179,6 +189,7 @@
                     children[i].className = "LabelsOver";
                 }
                 e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
+                e.currentTarget.parentElement.nextElementSibling.className = "imgBox";
             },
             leaveul_la(e){
                 var label_number = e.currentTarget.childElementCount;
@@ -431,21 +442,8 @@
     -ms-transform: translateY(-100%);
     transform: translateY(-10%) !important;
     -webkit-transition: all 1s ease-in-out;
-    transition: all 0.3s ease-in-out
+    transition: all 0.3s ease-in-out;
   }
-/* 可以设置不同的进入和离开动画 */
-    /* 设置持续时间和动画函数 */
-    .slide_fade-enter-active {
-      transition: all .4s ease;
-    }
-    .slide_fade-leave-active {
-      transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-    }
-    .slide_fade-enter, .slide_fade-leave-to
-   {
-      transform: translateY(-10px);
-      opacity: 0;
-    }
 
 .thumbnails .v-waterfall-content{
     width: 100%;
@@ -460,4 +458,20 @@
     width: 100%;
     height: auto;
 }
+  .imgBox{
+    transition: all 0.2s ease-in-out;
+    background-image:linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+  }
+  .imgBox img{
+    mix-blend-mode:multiply;
+  }
+
+  .imgHover{
+    border-radius: 4px;
+  }
+  .imgHover :hover {
+    transition: all 0.2s ease-in-out;
+    /*background-color: rgba(255, 255, 255, 0.25);*/
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 0.5em 0 #FF6382;
+  }
 </style>
