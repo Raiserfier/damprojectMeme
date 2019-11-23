@@ -1,14 +1,13 @@
 from .models import Image, User, Tag, Image2tag
-from django.shortcuts import redirect
 from django.http import HttpResponse
 import json
 from django.http import JsonResponse
-import heapq
 import base64
 import io
 from PIL import Image as PImage, ImageSequence, ImageDraw
 import random
 import json
+import datetime
 
 
 def upload_img(request):
@@ -44,6 +43,21 @@ def upload_img(request):
             return HttpResponse("不是POST")
     except:
         return HttpResponse("上传图片失败")
+
+
+def download(request):
+    try:
+        img_id = request.POST.get("id")
+        path = request.POST.get("path")
+        image = Image.objects.get(id=img_id)
+        type = img_type(image.img)
+        nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S') #添加时间戳防止命名重复
+        pic_path = path + str(nowTime) + '.' + type
+        with open(pic_path, 'wb') as f:
+            f.write(base64.b64decode(image.img.split(',')[1]))
+        return HttpResponse("SUCCESS")
+    except:
+        return HttpResponse("没有此图片")
 
 
 def create_user(request):
@@ -340,16 +354,26 @@ def get_classification_images(classification, email):
 
 
 # 获取用户喜欢的图片
-def get_user_liked_image(email):
+def get_user_liked_image(email,key):
     user = User.objects.get(email=email)
     images = Image.objects.all()
-    like_image = []
+    data = []
     for image in images:
         imgid = '#' + str(image.id) + '#'
         if imgid in user.like_images:
-            like_image.append(get_all_info(image, email))
+            if key == "all":
+                data.append(get_all_info(image, email))
+                continue
+            if image.classification == key:
+                data.append(get_all_info(image, email))
+                continue
+            tagsobj = image.image2tag_set.all()
+            for tagobj in tagsobj:
+                if tagobj.tag.content == key:
+                    data.append(get_all_info(image, email))
+                    break
     # print(user, like_image)
-    return like_image
+    return data
 
 
 # 全站搜索 同时搜索标签和类别
@@ -385,7 +409,7 @@ def get_user_image(request):
             return HttpResponse(json.dumps(data))
         # 用户收藏图片
         elif type == '1':
-            data = get_user_liked_image(email_user)
+            data = get_user_liked_image(email_user,key)
             return HttpResponse(json.dumps(data))
         # 用户上传图片
         elif type == '2':
