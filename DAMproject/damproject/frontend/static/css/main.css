@@ -574,6 +574,8 @@
 	a {
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		outline: 0;
+    text-decoration: none;
+    color: white;
 	}
 
 
@@ -939,7 +941,6 @@
     position: relative;
     text-align: center;
     margin: 0;
-    width: 10em;
     background-color: transparent;
     cursor: pointer;
   }

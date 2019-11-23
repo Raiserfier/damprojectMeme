@@ -18,14 +18,12 @@
           <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul" :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
             <router-link :to="'/category/'+img.classification">{{'#'+img.classification}}</router-link>
             <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag">{{'#'+tag}}</router-link>
-<!--            <a class="" href="#">{{'#'+img.classification}}</a>-->
-            <!--<a class="" href="#">{{img.tags}}</a>-->
-<!--            <a class="" v-for="tag in JSON.parse(img.tags)" href="#">{{'#'+tag}}</a>-->
           </ul>
         </div>
-        <a>
-          <img @mouseenter="enterpic($event)" @mouseleave="leavepic($event)" :id="img.id" :src="img.img" alt="">
-        </a>
+        <div class="imgHover" :style="{height:img.height+'px'}">
+          <img @mouseenter="enterpic($event)" @mouseleave="leavepic($event)" :id="img.id" :src="img.img" alt=""
+               style="border-radius: 4px">
+        </div>
       </div>
     </div>
   </section>
@@ -139,6 +137,7 @@
             },
             enterpic(e){
                 //icon
+                e.currentTarget.parentElement.className="imgHover imgBox";
                 e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
                 var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
@@ -148,6 +147,7 @@
             },
             leavepic(e){
                 //icon
+                e.currentTarget.parentElement.className="imgHover";
                 e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
                 var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
@@ -163,6 +163,7 @@
                 for(var i=0;i<label_number;i++){
                     children[i].className = "LabelsOver";
                 }
+                e.currentTarget.parentElement.nextElementSibling.nextElementSibling.className = "imgHover imgBox";
             },
             leaveul(e){
                 e.currentTarget.className = "IconOut";
@@ -180,6 +181,7 @@
                     children[i].className = "LabelsOver";
                 }
                 e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
+                e.currentTarget.parentElement.nextElementSibling.className = "imgBox";
             },
             leaveul_la(e){
                 var label_number = e.currentTarget.childElementCount;
@@ -466,4 +468,20 @@
     width: 100%;
     height: auto;
 }
+  .imgBox{
+    transition: all 0.2s ease-in-out;
+    background-image:linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+  }
+  .imgBox img{
+    mix-blend-mode:multiply;
+  }
+
+  .imgHover{
+    border-radius: 4px;
+  }
+  .imgHover :hover {
+    transition: all 0.2s ease-in-out;
+    /*background-color: rgba(255, 255, 255, 0.25);*/
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 0.5em 0 #FF6382;
+  }
 </style>
