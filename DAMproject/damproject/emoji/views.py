@@ -414,20 +414,21 @@ def most_popular(request):
         popular = []
         id_list = []
         images = Image.objects.all()
-        for image in images:  # 按照id将流行度存入 注意id从1开始 列表从0开始
+        for image in images:
             id_list.append(image.id)
-            popular += image.total_likes + image.total_thumbs  # 可以在此修改算法
-        # 堆排序获得最大的number张图片并获得id
+            popular.append(image.total_likes + image.total_thumbs)  # 可以在此修改算法
         temp = []
+        print(popular)
         for i in range(int(number)):
             temp.append(popular.index(max(popular)))
-            popular[popular.index(max(popular))] = 0
+            popular[popular.index(max(popular))] = -1
         index = []
         for i in temp:
             index.append(id_list[i])
         for i in index:
             image = Image.objects.get(id=i)
             data.append(get_all_info(image, email))
+        print(index)
         return HttpResponse(json.dumps(data))
     except:
         return HttpResponse('Not received')
