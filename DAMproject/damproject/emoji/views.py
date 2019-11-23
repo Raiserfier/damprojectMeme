@@ -340,16 +340,26 @@ def get_classification_images(classification, email):
 
 
 # 获取用户喜欢的图片
-def get_user_liked_image(email):
+def get_user_liked_image(email,key):
     user = User.objects.get(email=email)
     images = Image.objects.all()
-    like_image = []
+    data = []
     for image in images:
         imgid = '#' + str(image.id) + '#'
         if imgid in user.like_images:
-            like_image.append(get_all_info(image, email))
+            if key == "all":
+                data.append(get_all_info(image, email))
+                continue
+            if image.classification == key:
+                data.append(get_all_info(image, email))
+                continue
+            tagsobj = image.image2tag_set.all()
+            for tagobj in tagsobj:
+                if tagobj.tag.content == key:
+                    data.append(get_all_info(image, email))
+                    break
     # print(user, like_image)
-    return like_image
+    return data
 
 
 # 全站搜索 同时搜索标签和类别
@@ -385,7 +395,7 @@ def get_user_image(request):
             return HttpResponse(json.dumps(data))
         # 用户收藏图片
         elif type == '1':
-            data = get_user_liked_image(email_user)
+            data = get_user_liked_image(email_user,key)
             return HttpResponse(json.dumps(data))
         # 用户上传图片
         elif type == '2':
