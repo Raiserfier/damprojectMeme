@@ -509,6 +509,7 @@ def image_detail(request):
 
 # 猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
 def get_recommend(request):
+    print("get_recommend")
     try:
         email = request.POST.get("email_user")
         user = User.objects.get(email=email)
@@ -521,7 +522,7 @@ def get_recommend(request):
         recom_list = []
         num = 5
         for i in chosen:
-            recom_list += list(recommend(i, num))
+            recom_list += recommend(int(i), num)
         recom_list = list(set(recom_list))
         data = []
         for img_id in recom_list:
