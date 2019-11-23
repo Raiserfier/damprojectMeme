@@ -43,7 +43,7 @@
           <!--点赞数最高的十张图-->
             <div class="Cat">
             <div>
-              <h2 class="Titleeeee" @click="tocate(classname[count-1])" :style="{'padding-top':(count-1)*340+'px'}">{{'流行表情包Top'+pop_num}}</h2>
+              <h2 class="Titleeeee" :style="{'padding-top':340+'px'}">{{'流行表情包Top'+pop_num}}</h2>
             </div>
             <div class="Line">
               <div v-for="(img, index) in popList"

@@ -196,6 +196,7 @@
                 this.$api.post('/modify_user_info',{email:this.$store.state.user_id, username:this.username, profile:this.profile, portrait:this.portrait}).then(response=>{
                     if(response.data === 'success'){
                         this.$message.success('成功更改个人信息');
+                        this.$store.state.username = this.username;
                     }else{
                         this.$message.warning('更改个人信息失败');
                     }

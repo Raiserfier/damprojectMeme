@@ -4,6 +4,10 @@
     <list default="true" id="3c10e508-9ea6-4c39-a55b-39ffb5d99bff" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/damproject/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/emoji/images/compare.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/images/compare.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/emoji/images/target.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/images/target.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Home1.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Home1.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Info_setting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Info_setting.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +104,7 @@
       <workItem from="1574153161973" duration="20658000" />
       <workItem from="1574228829672" duration="4273000" />
       <workItem from="1574237693099" duration="303000" />
-      <workItem from="1574495680106" duration="708000" />
+      <workItem from="1574495680106" duration="4442000" />
     </task>
     <task id="LOCAL-00001" summary="user settings backend new">
       <created>1574153810095</created>
@@ -144,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574233675765</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="keke">
+      <created>1574497872296</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1574497872296</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +179,8 @@
     <MESSAGE value="upload watermark" />
     <MESSAGE value="channel search frontend debug" />
     <MESSAGE value="recommend frontend debug&#10;a little course notes" />
-    <option name="LAST_COMMIT_MESSAGE" value="recommend frontend debug&#10;a little course notes" />
+    <MESSAGE value="keke" />
+    <option name="LAST_COMMIT_MESSAGE" value="keke" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
