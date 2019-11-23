@@ -1,14 +1,13 @@
 from .models import Image, User, Tag, Image2tag
-from django.shortcuts import redirect
 from django.http import HttpResponse
 import json
 from django.http import JsonResponse
-import heapq
 import base64
 import io
 from PIL import Image as PImage, ImageSequence, ImageDraw
 import random
 import json
+import datetime
 
 
 def upload_img(request):
@@ -44,6 +43,21 @@ def upload_img(request):
             return HttpResponse("不是POST")
     except:
         return HttpResponse("上传图片失败")
+
+
+def download(request):
+    try:
+        img_id = request.POST.get("id")
+        path = request.POST.get("path")
+        image = Image.objects.get(id=img_id)
+        type = img_type(image.img)
+        nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S') #添加时间戳防止命名重复
+        pic_path = path + str(nowTime) + '.' + type
+        with open(pic_path, 'wb') as f:
+            f.write(base64.b64decode(image.img.split(',')[1]))
+        return HttpResponse("SUCCESS")
+    except:
+        return HttpResponse("没有此图片")
 
 
 def create_user(request):
