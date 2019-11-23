@@ -248,7 +248,7 @@
                 for (let i = 0; i < this.up_img.length; i++) {
                     console.log(this.isMask);
                     this.$api.post('/upload_image', {
-                        img: this.up_img,
+                        img: this.up_img[i],
                         email: this.$store.state.user_id,
                         tags: JSON.stringify(this.labelarr),
                         classification: this.cate,
