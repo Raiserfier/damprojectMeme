@@ -10,18 +10,17 @@
       </div>
       <div align="center">
         <div class="gallery">
-          <figure v-for="(img, index) in popList" class="gallery__item" :class="classList[index]">
-            <router-link :to="'/details/'+img.id"><img :id="img.id" :src="img.img" class="gallery__img" alt=""
-                                                       style="z-index:-2"></router-link>
+          <figure v-for="(img, index) in popList" class="gallery__item" :class="classList[index]" style="overflow: hidden">
+            <img :id="img.id" :src="img.img" class="gallery__img Scale" alt=""
+                                                       style="z-index:-2">
             <router-link :to="'/details/'+img.id">
-              <div class="BKW label_Toppp"><!-- labels链接 -->
+              <div class="BKW label_Toppp" @mouseenter="imgScale($event)" @mouseleave="imgScale_la($event)"><!-- labels链接 -->
                 <div class="label_Top">
                   <router-link :to="'/category/'+img.classification">{{'#'+img.classification}}</router-link>
                   <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag">{{'#'+tag}}</router-link>
                 </div>
               </div>
             </router-link>
-
           </figure>
         </div>
       </div>
@@ -147,6 +146,12 @@
         },
 
         methods: {
+            imgScale(e){
+                e.currentTarget.parentElement.previousElementSibling.className="gallery__img Scale_enter";
+            },
+            imgScale_la(e){
+                e.currentTarget.parentElement.previousElementSibling.className="gallery__img Scale";
+            },
             tocate(k){
               this.$router.replace({path:'/category/' + k});
             },
@@ -498,28 +503,28 @@
     grid-column-start: 1;
     grid-column-end: 3;
     grid-row-start: 7;
-    grid-row-end: 9;
+    grid-row-end: 10;
   }
 
   .gallery__item--8 {
     grid-column-start: 3;
     grid-column-end: 5;
     grid-row-start: 7;
-    grid-row-end: 9;
+    grid-row-end: 10;
   }
 
   .gallery__item--9 {
     grid-column-start: 5;
     grid-column-end: 7;
     grid-row-start: 7;
-    grid-row-end: 9;
+    grid-row-end: 10;
   }
 
   .gallery__item--10 {
     grid-column-start: 7;
     grid-column-end: 9;
     grid-row-start: 7;
-    grid-row-end: 9;
+    grid-row-end: 10;
   }
 
   figure {
@@ -542,13 +547,14 @@
   }
 
   .BKW::before {
+    height: 330px;
     border-radius: 4px;
     margin-left: 0;
     width: 100%;
     content: "";
     z-index: -1;
-    top: -217px;
-    left: 0px;
+    top: -296px;
+    left: 0;
     bottom: -10px;
     right: 0px;
     position: absolute;
@@ -562,19 +568,19 @@
   }
 
   .BKW::after {
+    height: 330px;
     border-radius: 4px;
     margin-left: 0;
     width: 100%;
     content: "";
     z-index: -1;
-    top: -217px;
-    left: 0px;
-    bottom: -10px;
+    top: -296px;
+    left: 0;
     right: 0px;
     position: absolute;
     opacity: 0;
     transition: opacity 150ms linear 0s;
-    background: linear-gradient(rgba(0, 0, 0, 0), rgba(255, 102, 102, 0.5), rgba(255, 102, 102, 0.9) 100%);
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(255, 102, 102, 0.2), rgba(255, 102, 102, 0.9) 100%);
   }
 
   .label_Top {
@@ -587,6 +593,18 @@
     color: rgb(255, 255, 255);
     line-height: 1.2;
     user-select: none;
+  }
+  .Scale{
+    width: 100%;
+    height: 100%;
+    transform: scale(1);
+    transition: transform 150ms linear 0s;
+  }
+  .Scale_enter{
+    width: 100%;
+    height: 100%;
+    transform: scale(1.15);
+    transition: transform 150ms linear 0s;
   }
 
 </style>
