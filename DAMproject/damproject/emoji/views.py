@@ -230,8 +230,14 @@ def get_all_info(image, email):
         return {
             'id': image.id,
             'img': image.img,
+            'upload_time':image.upload_time,
             'classification': image.classification,
             'tags': json.dumps(tags),
+            'likes': image.total_likes,
+            'thumbs': image.total_thumbs,
+            'name': image.owner.username,
+            'portrait': image.owner.portrait,
+            'profile': image.owner.profile,
             'state': state
         }
     else:
@@ -245,11 +251,17 @@ def get_all_info(image, email):
         for tagobj in tagsobj:
             tags.append(tagobj.tag.content)
         return {
-            'id': image.id,
-            'img': image.img,
-            'classification': image.classification,
-            'tags': json.dumps(tags),
-            'state': state
+             'id': image.id,
+             'img': image.img,
+             'upload_time':image.upload_time,
+             'classification': image.classification,
+             'tags': json.dumps(tags),
+             'likes': image.total_likes,
+             'thumbs': image.total_thumbs,
+             'name': image.owner.username,
+             'portrait': image.owner.portrait,
+             'profile': image.owner.profile,
+             'state': state
         }
 
 
