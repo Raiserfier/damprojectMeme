@@ -10,7 +10,7 @@
       </div>
       <div align="center">
         <div class="gallery">
-          <figure v-for="(img, index) in popList" class="gallery__item" :class="classList[index]" style="overflow: hidden">
+          <figure v-for="(img, index) in popList" class="gallery__item" :class="classList[index]" style="overflow: hidden;border-radius: 4px;">
             <img :id="img.id" :src="img.img" class="gallery__img Scale" alt=""
                                                        style="z-index:-2">
             <router-link :to="'/details/'+img.id">
