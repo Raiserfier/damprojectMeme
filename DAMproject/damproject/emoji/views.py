@@ -230,11 +230,11 @@ def get_all_info(image, email):
         return {
             'id': image.id,
             'img': image.img,
-            'upload_time':image.upload_time,
+            'upload_time': str(image.upload_time),
             'classification': image.classification,
             'tags': json.dumps(tags),
-            'likes': image.total_likes,
-            'thumbs': image.total_thumbs,
+            'likes': str(image.total_likes),
+            'thumbs': str(image.total_thumbs),
             'name': image.owner.username,
             'portrait': image.owner.portrait,
             'profile': image.owner.profile,
@@ -253,11 +253,11 @@ def get_all_info(image, email):
         return {
              'id': image.id,
              'img': image.img,
-             'upload_time':image.upload_time,
+             'upload_time': str(image.upload_time),
              'classification': image.classification,
              'tags': json.dumps(tags),
-             'likes': image.total_likes,
-             'thumbs': image.total_thumbs,
+             'likes': str(image.total_likes),
+             'thumbs': str(image.total_thumbs),
              'name': image.owner.username,
              'portrait': image.owner.portrait,
              'profile': image.owner.profile,
@@ -508,9 +508,9 @@ def image_detail(request):
             'portrait': image.owner.portrait,
             'profile': image.owner.profile,
             'img': image.img,
-            'upload_time': image.upload_time,
-            'likes': image.total_likes,
-            'thumbs': image.total_thumbs,
+            'upload_time': str(image.upload_time),
+            'likes': str(image.total_likes),
+            'thumbs': str(image.total_thumbs),
             'tags': tags
         }
         print(info)
