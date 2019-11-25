@@ -120,7 +120,6 @@
                     console.log('end');
                     if (this.last) {
                         this.load_more();
-                        this.preloading();
                     }
                 }
                 // console.log('132\n\n'+document.body.scrollHeight,document.body.scrollTop,document.body.clientHeight);
