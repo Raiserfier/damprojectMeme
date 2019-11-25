@@ -13,11 +13,11 @@
           <figure v-for="(img, index) in popList" class="gallery__item" :class="classList[index]" style="overflow: hidden;border-radius: 4px;">
             <img :id="img.id" :src="img.img" class="gallery__img Scale" alt=""
                                                        style="z-index:-2">
-            <router-link :to="'/details/'+img.id">
+            <router-link :to="'/details/'+img.id+'/hot'">
               <div class="BKW label_Toppp" @mouseenter="imgScale($event)" @mouseleave="imgScale_la($event)"><!-- labels链接 -->
                 <div class="label_Top">
-                  <router-link :to="'/category/'+img.classification">{{'#'+img.classification}}</router-link>
-                  <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag">{{'#'+tag}}</router-link>
+                  <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
+                  <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag+' '}}</router-link>
                 </div>
               </div>
             </router-link>
@@ -49,14 +49,14 @@
                   </li>
                   <li><p @click="thumb_click($event)" class="icon style2 fa-thumbs-up" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p>
                   </li>
-                  <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></router-link></li>
+                  <li><router-link :to="'/details/'+img.id+'/hot'" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span class="label">ForMore</span></router-link></li>
                 </ul>
               </div>
               <div class="labels"><!-- labels链接 -->
                 <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
                     class="KSVul">
-                    <router-link :to="'/category/'+img.classification">{{'#'+img.classification}}</router-link>
-                    <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag">{{'#'+tag}}</router-link>
+                    <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
+                    <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag}}</router-link>
                 </ul>
               </div>
               <div class="Img-Iput">
@@ -162,7 +162,7 @@
                 e.currentTarget.parentElement.previousElementSibling.className="gallery__img Scale";
             },
             tocate(k){
-              this.$router.replace({path:'/category/' + k});
+              this.$router.replace({path:'/category/' + k+'/hot'});
             },
             enterpic(e) {
                 //icon

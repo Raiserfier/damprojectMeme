@@ -12,8 +12,8 @@
           </div>
         </div>
       </form>
-      <router-link :to="'/channel/'+this.$store.state.user_id+'/all'" class="column_button"><i class="icon fa-upload"></i><span style="padding-left: 10px">我的上传</span></router-link>
-      <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'" class="column_button"><i class="icon fa-star"></i><span style="padding-left: 10px">我的收藏</span></router-link>
+      <router-link :to="'/channel/'+this.$store.state.user_id+'/all'+'/hot'" class="column_button"><i class="icon fa-upload"></i><span style="padding-left: 10px">我的上传</span></router-link>
+      <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'+'/hot'" class="column_button"><i class="icon fa-star"></i><span style="padding-left: 10px">我的收藏</span></router-link>
     </div>
     <div class="setting_window">
       <!--Items-->

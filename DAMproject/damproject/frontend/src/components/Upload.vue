@@ -258,7 +258,7 @@
                         if (response.data === 'SUCCESS') {
                             this.$message.success('上传成功！');
                             //跳转到个人上传页
-                            this.$router.replace({path: '/channel/' + this.my_id + '/all'});
+                            this.$router.replace({path: '/channel/' + this.my_id + '/all'+'/hot'});
                         } else {
                             this.$message.error('上传图片失败！');
                         }

@@ -18,7 +18,7 @@
                 <li><p class="icon style2 fa-thumbs-up" @click="thumb_click($event)"
                        v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p></li>
                 <li>
-                  <router-link :to="'/details/'+img.id" class="icon style2 fa-info"><span class="label">ForMore</span>
+                  <router-link :to="'/details/'+img.id+'/hot'" class="icon style2 fa-info"><span class="label">ForMore</span>
                   </router-link>
                 </li>
               </ul>
@@ -26,8 +26,8 @@
             <div class="labels">
               <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul"
                   :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
-                <router-link :to="'/category/'+img.classification">{{'#'+img.classification}}</router-link>
-                <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag">{{'#'+tag}}</router-link>
+                <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
+                <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag}}</router-link>
                 <div>{{img.thumbs + '@' + img.likes}}</div>
               </ul>
             </div>
@@ -140,6 +140,7 @@
         },
         methods: {
             By_heat(e){
+                this.$router.push('hot');
                 this.sort_type = 1;
                 if(e.currentTarget.className === "Button_mask_upd unchoosen_upd"){
                     e.currentTarget.className = "Button_mask_upd choosen_upd";
@@ -147,6 +148,7 @@
                 }
             },
             By_time(e){
+                this.$router.push('new');
                 this.sort_type = 2;
                 if(e.currentTarget.className === "Button_mask_upd unchoosen_upd"){
                     e.currentTarget.className = "Button_mask_upd choosen_upd";

@@ -58,12 +58,12 @@
             search_self(e) {
                 this.keyw = e.target.value.trim();
                 if (this.keyw == '') this.keyw = 'all';
-                this.$router.push({name:'PageWithSearch', params:{type:this.$route.params.type,id:this.$route.params.id,key:this.keyw}});
+                this.$router.push({name:'PageWithSearch', params:{type:this.$route.params.type,id:this.$route.params.id,key:this.keyw,rank:'hot'}});
             },
             search(e) {
                 this.keyw = e.target.previousElementSibling.firstElementChild.value.trim();
                 if (this.keyw == '') this.keyw = 'all';
-                this.$router.push({name:'PageWithSearch', params:{type:this.$route.params.type,id:this.$route.params.id,key:this.keyw}});
+                this.$router.push({name:'PageWithSearch', params:{type:this.$route.params.type,id:this.$route.params.id,key:this.keyw,rank:'hot'}});
             },
         }
     }

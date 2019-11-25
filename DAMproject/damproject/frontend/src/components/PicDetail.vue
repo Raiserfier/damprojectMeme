@@ -129,7 +129,7 @@
         },
         methods:{
             to_owner_channel(){
-                this.route.replace({path: '/channel/'+ this.owner.email +'/all'});
+                this.route.replace({path: '/channel/'+ this.owner.email +'/all'+'/hot'});
             }
         }
     }

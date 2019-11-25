@@ -18,10 +18,10 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {path: '/', name: 'Home', component: Home1},
-    {path: '/details/:pic', name: 'PicDetail', component: PicDetail},
-    {path: '/:type/:key', name: 'PageWithTitle', component: Title},
-    {path: '/:type/:id/:key', name: 'PageWithSearch', component: Channel},
-    {path: '/recommend', name: 'Recommend', component: Recommend},
+    {path: '/details/:pic/:rank', name: 'PicDetail', component: PicDetail},
+    {path: '/:type/:key/:rank', name: 'PageWithTitle', component: Title},
+    {path: '/:type/:id/:key/:rank', name: 'PageWithSearch', component: Channel},
+    {path: '/recommend/:rank', name: 'Recommend', component: Recommend},
     {path: '/upload', name: 'Upload', component: Upload},
     {path: '/settings', name: 'Info_setting', component: Info_setting},
     {path: '/login', name: 'Login', component: User,

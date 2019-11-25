@@ -54,7 +54,7 @@
                             this.$store.state.user_name = this.name;
                             this.$message.success('注册并登录成功！');
                             // 跳转个人页
-                            this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all' });
+                            this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all'+'/hot' });
                         }
                         else if (response.data === "EXIST") {
                             this.$message.error('该邮箱已被注册！');

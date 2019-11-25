@@ -7,7 +7,7 @@
         <div class="fnwVXu"><!-- 导航栏 -->
           <ul>
             <li v-for="c in categories" class="topBar">
-              <router-link :to="'/category/'+c.id" class="fnxsKA">{{c.name}}</router-link>
+              <router-link :to="'/category/'+c.id+'/hot'" class="fnxsKA">{{c.name}}</router-link>
             </li>
             <!--            <li class="topBar" >-->
             <!--              <router-link to="/animal" class="fnxsKA">动物</router-link>-->
@@ -37,7 +37,7 @@
 <!--              &lt;!&ndash;              <router-link to="/favorite" class="fnxsKA">我的收藏</router-link>&ndash;&gt;-->
 <!--            </li>-->
             <li class="topBar">
-              <router-link to="/recommend" class="fnxsKA">猜你喜欢</router-link>
+              <router-link to="/recommend/hot" class="fnxsKA">猜你喜欢</router-link>
             </li>
 <!--            <li class="topBar">-->
 <!--              <router-link to="/login" class="fnxsKA">登录</router-link>-->
@@ -90,10 +90,10 @@
         <!-- 导航栏 -->
         <!--        * 根据user_id动态分配路由-->
         <li @click="jump">
-          <router-link :to="'/channel/'+this.$store.state.user_id+'/all'">我的上传</router-link>
+          <router-link :to="'/channel/'+this.$store.state.user_id+'/all'+'/hot'">我的上传</router-link>
         </li>
         <li @click="jump">
-          <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'">我的收藏</router-link>
+          <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'+'/hot'">我的收藏</router-link>
         </li>
         <li @click="jump">
           <router-link to="/settings">个人设置</router-link>
@@ -164,7 +164,7 @@
                 this.keyw = e.target.value.trim();
                 if (this.keyw == '') this.keyw = 'all'
                 e.target.value = '';
-                this.$router.replace({path: '/search/' + this.keyw});
+                this.$router.replace({path: '/search/' + this.keyw + '/hot'});
                 this.$parent.$children.$forceUpdate()
             },
             search(e) {
@@ -172,7 +172,7 @@
                 this.keyw = e.target.previousElementSibling.firstElementChild.value.trim();
                 if (this.keyw == '') this.keyw = 'all'
                 e.target.previousElementSibling.firstElementChild.value = '';
-                this.$router.replace({path: '/search/' + this.keyw});
+                this.$router.replace({path: '/search/' + this.keyw + '/hot'});
                 this.$parent.$children.$forceUpdate()
             },
             //从后端获取类别
