@@ -230,8 +230,14 @@ def get_all_info(image, email):
         return {
             'id': image.id,
             'img': image.img,
+            'upload_time': str(image.upload_time),
             'classification': image.classification,
             'tags': json.dumps(tags),
+            'likes': str(image.total_likes),
+            'thumbs': str(image.total_thumbs),
+            'name': image.owner.username,
+            'portrait': image.owner.portrait,
+            'profile': image.owner.profile,
             'state': state
         }
     else:
@@ -245,11 +251,17 @@ def get_all_info(image, email):
         for tagobj in tagsobj:
             tags.append(tagobj.tag.content)
         return {
-            'id': image.id,
-            'img': image.img,
-            'classification': image.classification,
-            'tags': json.dumps(tags),
-            'state': state
+             'id': image.id,
+             'img': image.img,
+             'upload_time': str(image.upload_time),
+             'classification': image.classification,
+             'tags': json.dumps(tags),
+             'likes': str(image.total_likes),
+             'thumbs': str(image.total_thumbs),
+             'name': image.owner.username,
+             'portrait': image.owner.portrait,
+             'profile': image.owner.profile,
+             'state': state
         }
 
 
@@ -496,9 +508,9 @@ def image_detail(request):
             'portrait': image.owner.portrait,
             'profile': image.owner.profile,
             'img': image.img,
-            'upload_time': image.upload_time,
-            'likes': image.total_likes,
-            'thumbs': image.total_thumbs,
+            'upload_time': str(image.upload_time),
+            'likes': str(image.total_likes),
+            'thumbs': str(image.total_thumbs),
             'tags': tags
         }
         print(info)
@@ -509,6 +521,7 @@ def image_detail(request):
 
 # 猜你喜欢 从用户数据库里随机几个表情包 拿出它的推荐图片
 def get_recommend(request):
+    print("get_recommend")
     try:
         email = request.POST.get("email_user")
         user = User.objects.get(email=email)
@@ -521,7 +534,7 @@ def get_recommend(request):
         recom_list = []
         num = 5
         for i in chosen:
-            recom_list += list(recommend(i, num))
+            recom_list += recommend(int(i), num)
         recom_list = list(set(recom_list))
         data = []
         for img_id in recom_list:
