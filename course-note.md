@@ -178,7 +178,7 @@ Q_{IP} = \eta q\Delta n_{eo}AT_{c}
 &emsp;&emsp;图像分辨率指图像中存储的信息量，是每英寸图像内有多少个像素点，分辨率的单位为 **PPI** *(Pixels Per Inch，像素每英寸)*，包含的数据越多，图形文件的长度就越大，也能表现更丰富的细节。它和图像的宽、高尺寸一起决定了图像文件的大小及图像质量。  
 &emsp;&emsp;图像分辨率的表达方式也为“水平像素数×垂直像素数”，也可以用规格代号来表示。  
 
-<center> <img src="http://i0.sinaimg.cn/IT/h/2008-02-15/6f692725617c09d271eb7b36a650a8b4"/> </center>
+<center> <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575260619&di=7f1cf341ba24a83c18bc70aded68e949&imgtype=jpg&er=1&src=http%3A%2F%2Fi0.sinaimg.cn%2FIT%2Fh%2F2008-02-15%2F6f692725617c09d271eb7b36a650a8b4"/> </center>
 <center> <font  color=gray > 分辨率与规格代号对照表 </font> </center>
 
 &nbsp;
@@ -189,14 +189,14 @@ Q_{IP} = \eta q\Delta n_{eo}AT_{c}
 将图像上的像素点的灰度值设置为0或255，整个图像呈现出明显的只有黑和白的视觉效果，一般用来描述文字或者图形。  
 其优点是占用空间少；缺点是当描述人物或者风景时，只能描述其轮廓，不能描述细节。
 
- ![](https://img2018.cnblogs.com/blog/1103420/201901/1103420-20190123205948807-396067165.png)
+<center> <img src="https://img-blog.csdnimg.cn/20190820234218271.png"/> </center>
 &nbsp;
 
 - **灰度图像**  
 灰度图像是每一个像素的信息由一个量化的灰度级来描述的图像。
 
 &emsp;&emsp;灰度图像没有彩色信息，1字节（8位）可表示256级灰度。用于显示的灰度图像通常用每个采样像素8位的非线性尺度来保存，这样可以有256级灰度（如果用16位，则有65536级）。  
- ![](https://img2018.cnblogs.com/blog/1103420/201901/1103420-20190123205948807-396067165.png)
+<center> <img src="https://img-blog.csdnimg.cn/20190820235501537.png"/> </center>
 
 &emsp;&emsp;当灰度图像的元素是uint8或者uint16时，他们分别具有[0,255]或[0,65535]的整数值。如果图像是double类或single类，值就是浮点数。double或single灰度图像的值通常被归一化标定为[0,1]范围内，但也可以使用其他范围的值。
 &nbsp;
@@ -206,7 +206,7 @@ Q_{IP} = \eta q\Delta n_{eo}AT_{c}
 
 &emsp;&emsp;其中 *R、G、B* 由不同的灰度级来描述，每个分量有 **256** 级灰度，**3字节(24位)** 表示一个像素，可以表示 `$ 2^24＝16,777,216 $` 种不同的颜色。  
 &emsp;&emsp;一个大小为 `$ M*N $` 的真彩图像将被存储为一个 `$ M*N*3 $` 的矩阵，其中三颜色分量存储在矩阵的第三维中。
- ![](https://img2018.cnblogs.com/blog/1103420/201901/1103420-20190123210307452-153044123.png)
+<center> <img src="https://img-blog.csdnimg.cn/20190820235734676.png"/> </center>
 &nbsp;
 
 - **调色板**  
