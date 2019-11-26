@@ -10,7 +10,8 @@ export default new Vuex.Store({
       //登录状态
       login: false,
       user_id: "99",
-      user_name: "Tester"
+      user_name: "Tester",
+      manager: false
     },
 
   //获取属性的状态
@@ -21,15 +22,17 @@ export default new Vuex.Store({
   //改变属性的状态
   mutations:{
       //登录状态更新
-      login(state,userid,username){
+      login(state,userid,username,isManager){
           state.login = true;
           state.user_id = userid;
           state.user_name = username;
+          state.manager = isManager;
       },
       logout(state){
           state.login = false;
           state.user_id = "99";
           state.user_name = "Tester";
+          state.manager = false;
       }
   }
 })

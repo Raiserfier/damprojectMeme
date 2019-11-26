@@ -7,7 +7,9 @@ class User(models.Model):
     email = models.EmailField(max_length=40, default='')
     password = models.CharField(max_length=20)
     like_images = models.TextField(default='')
-    profile = models.CharField(default='', max_length=100)
+    profile = models.CharField(default='', max_length=500)
+    private = models.IntegerField(default=0)
+    manager = models.IntegerField(default=0)
 
 
 class Image(models.Model):
@@ -18,6 +20,7 @@ class Image(models.Model):
     #img = models.FileField(upload_to='media', default='')
     img = models.CharField(default='', max_length=5000000)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default='')
+    private = models.IntegerField(default=0)
 
 
 class Tag(models.Model):
@@ -30,5 +33,9 @@ class Image2tag(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE, default='')
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE, default='')
 
+
+class Report(models.Model):#虽然可以存储id但是存对象可以实时删除
+    image = models.ForeignKey(Image, on_delete=models.CASCADE,default='')
+    reason = models.CharField(default='', max_length=500)
 
 # Create your models here.

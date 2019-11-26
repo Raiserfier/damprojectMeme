@@ -48,6 +48,7 @@
                             this.$store.state.login = true;
                             this.$store.state.user_id = this.email;
                             this.$store.state.user_name = response.data.username;
+                            this.$store.state.manager = response.data.manager;
                             console.log(this.$store.state.login);
                             console.log(this.$store.state.user_id);
                             console.log(this.$store.state.user_name);

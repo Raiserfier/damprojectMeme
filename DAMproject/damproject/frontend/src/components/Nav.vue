@@ -76,6 +76,7 @@
               </button>
             </form>
           </div>
+
           <div class="Menu" v-if="this.$store.state.login">
             <!--            <a href="#menu">菜单</a>-->
             <a href="#menu" @click="dropbox($event,this)">菜单</a>
@@ -85,7 +86,7 @@
     </header>
 
     <!-- Nav -->
-    <nav id="menu" v-if="this.$store.state.login" v-bind:class="{ MENU: isActive }">
+    <nav id="menu" v-if="this.$store.state.login && !this.$store.state.manager" v-bind:class="{ MENU: isActive }">
       <ul class="links">
         <!-- 导航栏 -->
         <!--        * 根据user_id动态分配路由-->
@@ -103,6 +104,20 @@
         </li>
       </ul>
     </nav>
+
+    <nav id="menu" v-if="this.$store.state.login && this.$store.state.manager" v-bind:class="{ MENU: isActive }">
+      <ul class="links">
+        <!-- 导航栏 -->
+        <!--        * 根据user_id动态分配路由-->
+        <li @click="jump">
+          <router-link :to="'/channel/'+this.$store.state.user_id+'/all'+'/hot'">待处理举报图片</router-link>
+        </li>
+        <li @click="logout">
+          <router-link to="/">退出登录</router-link>
+        </li>
+      </ul>
+    </nav>
+
   </div>
   <div>
     <router-view :key="key"></router-view>

@@ -1,4 +1,4 @@
-from .models import Image, User, Tag, Image2tag
+from .models import Image, User, Tag, Image2tag, Report
 from django.http import HttpResponse
 import json
 from django.http import JsonResponse
@@ -19,8 +19,9 @@ def upload_img(request):
             tags = json.loads(tagstr)
             img = request.POST.get("img")
             state = request.POST.get("state")
+            private = request.POST.get("private")
             user = User.objects.get(email=email)
-            img = Image.objects.create(classification=classification, img=img, owner=user)
+            img = Image.objects.create(classification=classification, img=img, owner=user, private=int(private))
             #tags = tagstr.split('#')
             for tag in tags:
                 print(tag, "okkk")
@@ -86,6 +87,7 @@ def login(request):
                 response = {}
                 response['msg'] = 'SUCCESS'
                 response['username'] = user.username
+                response['manager'] = user.manager
                 return JsonResponse(response)
             else:
                 return HttpResponse("密码错误")
@@ -134,6 +136,8 @@ def get_images(request):
             certain_classification = get_number_image(classification_list[index], number)
             images = []
             for image in certain_classification:
+                if image.private:
+                    continue
                 images.append(get_image_info(image, email))
             data.append({classification_list[index]: images})
         return HttpResponse(json.dumps(data), content_type="application/json")
@@ -145,7 +149,7 @@ def get_images(request):
 def delete_image(request):
     try:
         image_id = request.POST.get("id")
-        Image.objects.get(id=image_id).delete()
+        Image.objects.get(id=int(image_id)).delete()
         return HttpResponse("SUCCESS")
     except:
         return HttpResponse("Image not Received")
@@ -294,6 +298,8 @@ def get_by_classification(request):
     images = Image.objects.filter(classification=classification)
     if images:
         for i in images:
+            if i.private:
+                continue
             data.append(i.img.url)
         return HttpResponse(json.dumps(data))
     else:
@@ -305,6 +311,8 @@ def get_classification():
     classfication_list = []
     images = Image.objects.all()
     for image in images:
+        if image.private:
+            continue
         if image.classification not in classfication_list:
             classfication_list.append(image.classification)
     return classfication_list
@@ -315,6 +323,8 @@ def get_number_image(classification, number):
     images = Image.objects.all()
     certain_classification = []
     for image in images:
+        if image.private:
+            continue
         if image.classification == classification and len(certain_classification) < int(number):
             certain_classification.append(image)
     return certain_classification
@@ -393,6 +403,8 @@ def get_key_search(key, email):
     images = Image.objects.all()
     data = []
     for image in images:
+        if image.private:
+            continue
         if key == "all":
             data.append(get_all_info(image, email))
             continue
@@ -425,11 +437,16 @@ def get_user_image(request):
             return HttpResponse(json.dumps(data))
         # 用户上传图片
         elif type == '2':
-            images = Image.objects.all()
             user = User.objects.get(email=email_user)
-            for image in images:
-                if image.owner == user:
-                    data.append(get_all_info(image, email_user))
+            if user.manager:
+                reports = Report.objects.all()
+                for report in reports:
+                    data.append(get_all_info(report.image, "99"))
+            else:
+                images = Image.objects.all()
+                for image in images:
+                    if image.owner == user:
+                        data.append(get_all_info(image, email_user))
             return HttpResponse(json.dumps(data))
         # 搜索某类别图片
         elif type == '3':
@@ -451,6 +468,8 @@ def most_popular(request):
         id_list = []
         images = Image.objects.all()
         for image in images:
+            if image.private:
+                continue
             id_list.append(image.id)
             popular.append(image.total_likes + image.total_thumbs)  # 可以在此修改算法
         temp = []
@@ -500,9 +519,9 @@ def image_detail(request):
         image_id = request.POST.get("id")
         image = Image.objects.get(id=image_id)
         tagsobj = image.image2tag_set.all()
-        tags = ''
+        tags = []
         for tagobj in tagsobj:
-            tags += '#' + tagobj.tag.content
+            tags.append(tagobj.tag.content)
         info = {
             'name': image.owner.username,
             'portrait': image.owner.portrait,
@@ -511,9 +530,8 @@ def image_detail(request):
             'upload_time': str(image.upload_time),
             'likes': str(image.total_likes),
             'thumbs': str(image.total_thumbs),
-            'tags': tags
+            'tags': json.dumps(tags)
         }
-        print(info)
         return HttpResponse(json.dumps(info))
     except:
         return HttpResponse("没有这张图片")
@@ -575,6 +593,8 @@ def recommend(img_id, num):
     id_list = []
     Inf = 100000
     for img_com in img_all:
+        if img_com.private:
+            continue
         if img_com.id == img_id:
             similarity.append(1000)  # 绝对选不到我自己
             id_list.append(img_com.id)
@@ -739,5 +759,17 @@ def decide_password(request):
             return HttpResponse("error")
     except:
         return HttpResponse("Data not received")
+
+
+def report_image(request):
+    try:
+        img_id = request.POST.get("id")
+        reason = request.POST.get("reason")
+        image = Image.objects.get(id=int(img_id))
+        img = Report.objects.create(image=image, reason=reason)
+        return HttpResponse("SUCCESS")
+    except:
+        return HttpResponse("没有此图片")
+
 
 # Create your views here.
