@@ -87,6 +87,7 @@ def login(request):
                 response = {}
                 response['msg'] = 'SUCCESS'
                 response['username'] = user.username
+                response['manager'] = user.manager
                 return JsonResponse(response)
             else:
                 return HttpResponse("密码错误")
@@ -436,11 +437,16 @@ def get_user_image(request):
             return HttpResponse(json.dumps(data))
         # 用户上传图片
         elif type == '2':
-            images = Image.objects.all()
             user = User.objects.get(email=email_user)
-            for image in images:
-                if image.owner == user:
-                    data.append(get_all_info(image, email_user))
+            if user.manager:
+                reports = Report.objects.all()
+                for report in reports:
+                    data.append(get_all_info(report.image, "99"))
+            else:
+                images = Image.objects.all()
+                for image in images:
+                    if image.owner == user:
+                        data.append(get_all_info(image, email_user))
             return HttpResponse(json.dumps(data))
         # 搜索某类别图片
         elif type == '3':
@@ -761,6 +767,7 @@ def report_image(request):
         reason = request.POST.get("reason")
         image = Image.objects.get(id=int(img_id))
         img = Report.objects.create(image=image, reason=reason)
+        return HttpResponse("SUCCESS")
     except:
         return HttpResponse("没有此图片")
 

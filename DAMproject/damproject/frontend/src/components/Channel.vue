@@ -13,8 +13,11 @@
           <div class="container"><!-- 搜索框 -->
             <div class="search bar3">
 <!--              <form>-->
-                <label>
+                <label v-if="!this.$store.state.manager">
                   <input type="text" @keyup.enter="search_self($event)" placeholder="搜索我的上传...">
+                </label>
+                <label v-if="this.$store.state.manager">
+                  <input type="text" @keyup.enter="search_self($event)" placeholder="搜索举报图片...">
                 </label>
                 <button @click="search($event)"></button>
 <!--              </form>-->

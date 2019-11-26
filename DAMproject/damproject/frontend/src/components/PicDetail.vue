@@ -28,6 +28,11 @@
           <div class="info_line"><i class="icon fa-clock-o"></i><span>{{up_time}}</span></div>
           <div class="info_line"><i class="icon fa-heart"></i><span>{{favorites}}</span></div>
           <div class="info_line"><i class="icon fa-star"></i><span>{{collects}}</span></div>
+          <div class="info_line"><i class="icon fa-star"></i><span>
+            <li @click="report">
+          <p>举报</p>
+        </li>
+          </span></div>
         </div>
       </div>
     </div>
@@ -130,6 +135,19 @@
         methods:{
             to_owner_channel(){
                 this.route.replace({path: '/channel/'+ this.owner.email +'/all'+'/hot'});
+            },
+            report(){
+              this.$api.post('/report_image', {
+                    id: this.$route.params.pic,
+                    reason:""
+                }).then(response => {
+                    if (response.data === 'SUCCESS') {
+                        this.$message.success('举报成功！');
+                    }
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('举报失败！');
+                }
             }
         }
     }

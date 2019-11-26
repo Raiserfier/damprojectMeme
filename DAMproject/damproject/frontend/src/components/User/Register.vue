@@ -52,6 +52,7 @@
                             this.$store.state.login = true;
                             this.$store.state.user_id = this.email;
                             this.$store.state.user_name = this.name;
+                            this.$store.state.manager = false;
                             this.$message.success('注册并登录成功！');
                             // 跳转个人页
                             this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all'+'/hot' });

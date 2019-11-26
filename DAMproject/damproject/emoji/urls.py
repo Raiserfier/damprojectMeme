@@ -21,5 +21,6 @@ urlpatterns = [
     path('detail_recommend', views.detail_recommend),
     path('get_recommend', views.get_recommend),
     path('image_detail', views.image_detail),
-    path('most_popular', views.most_popular)
+    path('most_popular', views.most_popular),
+    path('report_image', views.report_image)
 ]
