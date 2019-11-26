@@ -1,5 +1,3 @@
-
-
 **DAM Course Notes - Group 2**
 
 廖钰 / 赵浩钧 / 诸炳帆 / 林馨怡 / 孙文欣
@@ -90,7 +88,11 @@ CCD主要是由一个类似马赛克的网格、聚光镜片以及垫于最底�
 
 CCD的结构就象一排排输送带上并排放满了小桶，光线就象雨滴撒入各个小桶，每个小桶就是一个像素。按下快门拍照的过程，就是按一定的顺序测量一下某一短暂的时间间隔中，小桶中落进了多少“光滴”，并记在文件中。  
 
+
+
+
 <center> <img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1573400195066&amp;di=68a0c12b3fba1b0522593753b4fb352c&amp;imgtype=0&amp;src=http%3A%2F%2Fcimg.163.com%2Fdp%2F050805%2Faaa%2F123di_cfa.gif"/> </center>
+
 每个感光元件对应图像传感器中的一个像素点。
 
 由于感光元件智能感应光的强度，无法捕获色彩信息，因此彩色CCD图像传感器必须在感光元件上方覆盖彩色滤光片。最常用的做法是覆盖RGB红绿蓝三色滤光片，以 **1:2:1** 的构成由四个像素点构成一个彩色像素，即红绿、蓝绿间隔排列（如下图），采取这种比例的原因是人眼对**绿色**较为敏感。
@@ -99,7 +101,12 @@ CCD的结构就象一排排输送带上并排放满了小桶，光线就象雨�
 
 其中，$ \eta $为材料的量子效率，$ q $为电子电荷量，$ \Delta n_{eo} $为入射光的光子流速率，$ A $为光敏源面积，$ T_{c} $为光注入时间。
 
+
+
 <img src="https://img-blog.csdn.net/20160618183649678?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" style="zoom: 67%;" />
+
+
+
 
 - **感光二极管** 
 - **并行信号寄存器**：用于暂时储存感光后产生的电荷
@@ -123,17 +130,31 @@ CCD的结构就象一排排输送带上并排放满了小桶，光线就象雨�
 
 一种是将图像的原点定义为 (x,y) = (0,0)。图像中沿着第 1 行的下一坐标点 (x,y) = (0,1)。符号 (0,1) 用来表示沿着第 1 行的第 2 个取样。下图显示这一坐标约定。x 是从 0 到 M-1 的整数，y 是从 0 到 N-1 的整数。
 
+
+
+
 <img src="https://img-blog.csdn.net/20160912220830104" alt="img" style="zoom:80%;" />
+
+
 
 另外一种是坐标原点为 (x,y) = (1,1)，如在 matlab 的图像处理工具箱中。这种约定如下图所示：
 
+
+
 <img src="https://img-blog.csdn.net/20160912221008621" alt="img" style="zoom:80%;" />
+
+
+
 
 ####  图像的矩阵表示 
 
 根据第一张图的坐标系统，我们可以得到数字图像的下列表示：
 
+
+
 <img src="https://img-blog.csdn.net/20160912221152498" alt="img" style="zoom:80%;" />
+
+
 
  
 
@@ -141,7 +162,12 @@ CCD的结构就象一排排输送带上并排放满了小桶，光线就象雨�
 
 将数字图像表示成 MATLAB 矩阵：
 
+
+
 <img src="https://img-blog.csdn.net/20160912221226450" alt="img" style="zoom:80%;" />
+
+
+
 
 ### 图像分辨率
 
@@ -170,7 +196,7 @@ CCD的结构就象一排排输送带上并排放满了小桶，光线就象雨�
 
 - **索引图像**： 为了节省表示图像RGB信息的空间用调色板存储彩色信息（RGB值），数据区只存储当前象素的色彩在调色板中的位置，这样就省了很多字节。调色板是颜色的索引，多用于8位图像，即可表示256种颜色。如下图，图像仅仅使用了16种颜色，右图是该图像的调色板：
 
-  
+   <div STYLE="page-break-after: always;"></div> 
 
   <img src="https://images0.cnblogs.com/blog/442754/201501/212106376109403.png" style="zoom:80%;" />
 
@@ -184,22 +210,34 @@ CCD的结构就象一排排输送带上并排放满了小桶，光线就象雨�
 
 ### 可见光谱
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/EM_spectrum.svg/1920px-EM_spectrum.svg.png" alt="img" style="zoom: 50%;" /> 
-
+<center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/EM_spectrum.svg/1920px-EM_spectrum.svg.png" alt="img" style="zoom: 50%;" /></center> 
 ### 人眼结构
 
 两种视觉细胞：视杆细胞（rods）和视锥细胞（cones），Rods 数量多于 cones，所以人眼对光线敏感度＞对颜色敏感度。
 
 - rods：~100,000,000，对光线敏感；
+
 - cones：~6,000,000—7,000,000，在强光下工作，对颜色敏感。
+
+  
+
 
 ![](https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_ANVEl.thumb.700_0.png)
 
+
+
 其中有三种视锥细胞，缺失一种都会导致色盲。
+
+ <div STYLE="page-break-after: always;"></div> 
 
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_nfa3C.thumb.700_0.png" style="zoom: 67%;" />
 
+
+
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_YvwRr.thumb.700_0.png" style="zoom: 67%;" />
+
+
+
 
 ### 颜色空间
 
@@ -216,11 +254,19 @@ RGB为加色模型，CMYK为减色模型。
 
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_fKZEs.thumb.700_0.png" style="zoom:50%;" />
 
+ <div STYLE="page-break-after: always;"></div> 
+
+
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_RGk5R.thumb.700_0.png" style="zoom:50%;" />
+
+
 
 ##### CMYK 转 RGB
 
+
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_UrNwk.thumb.700_0.png" style="zoom:80%;" />
+
+
 
 #### CIE XYZ
 
@@ -228,33 +274,59 @@ RGB为加色模型，CMYK为减色模型。
 
 CIE XYZ色彩空间故意设计得Y参数是颜色的明度或亮度的测量。颜色的色度接着通过两个导出参数x和y来指定，它们是所有三个三色刺激值X、Y和Z的函数所规范化的三个值中的两个：
 
+
+
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_UrNwk.thumb.700_0.png" style="zoom:80%;" />
+
+
 
 下面的图象展示了相对色度图。外侧曲线边界是光谱轨迹，波长用纳米标记。注意这个色度图是指定人类眼睛如何体验给定频谱的光的工具。它不能指定物体的颜色（或印刷墨水），因为在观察物体的时候看到的色度还依赖于光源。数学上，x和y是投影坐标，色度图的颜色占据了实投影平面的一个区域。
 
+ <div STYLE="page-break-after: always;"></div> 
+
 <img src="https://qqadapt.qpic.cn/txdocpic/0/1caafd79b205d552828f66bc8295e630/0?_type=png" style="zoom:67%;" />
+
+
 
 在使用CIE RGB颜色匹配函数开发了人类视觉的RGB模型之后，特殊委员会的成员希望开发出与CIE RGB色彩空间有关的另一个色彩空间。它假定 Grassmann 定律成立，这个新空间通过线性变换而有关于CIE RGB空间。新空间将以三个新颜色匹配函数来定义。带有I(λ)的颜色的对应的XYZ 值为给出为：
 
+
+
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_5dnVl.thumb.700_0.png" style="zoom: 80%;" />
+
+
 
 在380 nm到780 nm之间的（间隔5 nm）CIE 1931标准色度观察者XYZ函数：
 
+
+
 <img src="https://qqadapt.qpic.cn/txdocpic/0/2cb9a66f804501b5ef4e79e081cb0f06/0?_type=png" alt="img"  />
+
+
 
  CIE 1931 RGB颜色匹配函数。颜色匹配函数是匹配水平刻度标示的波长的单色测试颜色所需要的原色数量：
 
+ <div STYLE="page-break-after: always;"></div> 
+
 ![img](https://qqadapt.qpic.cn/txdocpic/0/0b63a2b5bf2b4c1d5ee1b9f4b67f3c7a/0?_type=png)
+
+
 
  从CIE RGB空间到XYZ空间的线性变换。CIE特殊委员会确定了标准变换如下：
 
+
+
 ![](https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_jeXdx.thumb.700_0.png)
+
+
+
 
 #### RGB :: CMYK :: XYZ
 
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_drfSV.thumb.700_0.png" style="zoom:50%;" />
 
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125193759_vaffY.thumb.700_0.png" style="zoom: 50%;" />
+
 
 #### YUV
 
@@ -268,7 +340,11 @@ RGB要求人眼对于色彩的感应，YUV则重视视觉对于亮度的敏感�
 
 U 和 V 元件可以被表示成原始的 R，G，和 B（R，G，B 为 γ 预校正后的）:
 
+
+
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125193916_TM3CH.thumb.700_0.png" style="zoom: 67%;" />
+
+
 
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125193916_iFcZQ.thumb.700_0.png" style="zoom: 67%;" />
 
@@ -290,15 +366,28 @@ RLC编码适合的场景是数据本身具有大量连续重复出现的内容�
 
 我们再来看一个简单的例子：编码一个在 5 * 5 方块上使用三种颜色绘制的图像。
 
+ <div STYLE="page-break-after: always;"></div> 
+
 <img src="https://upload-images.jianshu.io/upload_images/1940317-315090fe4811f586.jpg?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp" alt="img" style="zoom: 50%;" />
+
+
 
 根据方块不同的颜色匹配不同的字母。这里使用Y代表黄色，使用G代表绿色，使用B代表蓝色。那么，根据这样的规则，上图的图形编码就变成了 25 个字母，如下图所示。
 
+
+
 <img src="https://upload-images.jianshu.io/upload_images/1940317-2268b9e1cff3a412.jpg?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp" alt="img" style="zoom:50%;" />
+
+
 
 接下来，我们可以通过将第一个 “YYYY” 的部分表示未 “Y4”，这样就可以将其缩短两个字符 。按照这种操作，上图的 25 个字符就能缩短为 20 个字符了。
 
+
+
 <img src="https://upload-images.jianshu.io/upload_images/1940317-e7ac3301c43dc042.gif?imageMogr2/auto-orient/strip|imageView2/2/w/947/format/webp" alt="img" style="zoom: 67%;" />
+
+
+
 
 这样，如果我们知道每行有 5 个方块，原始图像就可以从代码中提取出来了，也就是将图片进行解压。
 
@@ -310,7 +399,12 @@ RLC编码尽管简单并且对于通常的压缩非常低效，但它有的时�
 
 LZW编码首先建立一个字符串表，把每一个第一次出现的字符串放入串表中，并用一个数字来表示，这个数字与此字符串在串表中的位置有关，并将这个数字存入压缩文件中，如果这个字符串再次出现时，即可用表示它的数字来代替，并将这个数字存入文件中。压缩完成后将串表丢弃。下面给出了LZW的具体算法流程：
 
+ <div STYLE="page-break-after: always;"></div> 
+
 <img src="https://img-blog.csdn.net/20151015202955035" alt="这里写图片描述" style="zoom:80%;" />
+
+
+
 
 LZW编码把出现过的字符串映射到记号上，这样就可能用较短的编码来表示长的字符串，从而实现压缩。例如对于字符串 “ABABAB”，可以看到子串AB在后面重复出现了，这样我们可以用一个特殊记号表示AB，例如数字2，这样原来的字符串就可以表示为“AB22”。如果我们规定数字0表示A，数字1表示B，最后得到的压缩后的数据就可以表示为“0122”。这样我们就得到了一个字典：
 
@@ -336,7 +430,12 @@ LZW编码把出现过的字符串映射到记号上，这样就可能用较短�
 
 JPEG标准是一个通用的静止图像压缩标准，可适用于所有连续色调的静止图像压缩和存储。它既可以用于有损压缩，也可以用于无损压缩。JPEG标准的目的在于支持用于大多数连续色调静态图像压缩的各种各样的应用，这些图像可以是任何一个色彩空间，用户可以调制压缩比，并能达到或者接近技术领域中领先的压缩性能，且具有良好的重建质量。这个标准的另一个目标是对普遍实际的应用提供易处理的计算复杂度。在ISO公布的JPEG标准方案中，JPEG包含了两种压缩方式。一种是基于DCT变换的有损压缩编码方式（如下图所示），它包含了基本功能和拓展系统两部分；另一种是基于空间DPCM（差分脉冲编码调制）方法的无损压缩编码方式。
 
+
+
 ![img](https://img-blog.csdn.net/20180323205802733)
+
+
+
 
 而JPEG-2000标准的主要动机是利用基于小波变换的压缩技术提供一套全新的图像编码系统。在中高码率上能够提供很好的压缩图像质量，但随着码率的降低（例如低于0.25bpp），图像的主观质量下降很快。与原来 JPEG 的标准相比，除了采用小波变换外，JPEG-2000增加了一批新功能，使得 JPEG-2000 的应用范围大大扩展，从数码相机、预出版到医用图像。其主要性能和新增功能包括：
 
@@ -363,9 +462,10 @@ JPEG标准是一个通用的静止图像压缩标准，可适用于所有连续�
 
 HDR文件是一种特殊图形文件格式，它的每一个像素除了普通的RGB信息，还有该点的**实际亮度信息**。
 
-保存在高动态范围图像中的数据经常是线性的，这就意味着它们表示亮度或者radiance的相对或者绝对值（gamma 1.0）。高动态范围图像每个颜色通道需要比传统图像更多的数据位，这是因为它的线性编码以及需要表示从 `$ 10^{-4} $` 到 `$ 10^8 $` *(人眼可见亮度范围)* 甚至是更大范围的数值 *(如：CMOS图像传感器能提供高达**120分贝**的动态范围)* 。  
+保存在高动态范围图像中的数据经常是线性的，这就意味着它们表示亮度或者radiance的相对或者绝对值（gamma 1.0）。高动态范围图像每个颜色通道需要比传统图像更多的数据位，这是因为它的线性编码以及需要表示从 $ 10^{-4} $ 到 $ 10^8 $ (人眼可见亮度范围) 甚至是更大范围的数值 (如：CMOS图像传感器能提供高达**120分贝**的动态范围) 。  
 
 在HDR中经常使用 16 位“half precision”或者32位浮点数表示高动态范围像素。但是，如果使用合适的传递函数进行变换，一些应用中的高动态范围像素可以用 **10-12** 位表示亮度 **8** 位表示色度，并且不会带来任何可见的量化误差。
+
 
 <center> <img src="https://img-blog.csdnimg.cn/20190604172903779.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d1anV4S2tvb2xlcnRlcg==,size_16,color_FFFFFF,t_70"/> </center>
 <center> <font  color=gray >HDRI图像示例 </font> </center>
@@ -446,7 +546,6 @@ Exr格式是由 **ILM**（Industrial Light & Magic，工业光魔）给出的HDR
 **Key：** 场景的Key将决定整个场景的亮度倾向，倾向偏亮亦或是偏暗。  
     
 首先我们需要做的是计算出整个场景的平均亮度，有很多种计算平均亮度的方法，目前常用的的是使用log-average亮度来作为场景的平均亮度，通过下面的公式可以计算得到： 
-
 $$
 \overline L_ω = \frac1N e^{ \sum_{x,y} \log(δ+L_ω(x,y)) }
 $$
@@ -490,24 +589,24 @@ HDR就是计算摄像学中的一种办法，拓展的是传统成像中的光�
 #### 历史
 
 - 1987年6月15日，gif在CompuServe公司诞生，取名87A，改进了具有256色的黑白图像传输以及使用图形控制扩展（GCE），通过定时延迟实现了动画效果。
-
 - 起初，gif要解决的问题是：如何使计算机显示图像同时节省内存？gif的设计初衷是用于在计算机之间交换图像，这也是它得名为“图形交换形式”的原因，甚至在线的第一张彩色图片的格式就是gif格式的图片。
-
 - 1995年，Unisys Corp.公司对它拥有的专利，LZW算法，也就是gif实现压缩的核心算法，收取专利费。这一举措导致gif图片一度险些被淘汰（特别是开发人员们绕过LZW算法研究出了PNG格式图片时）。
-
 - 2004年，专利的收费在全球都暂停了，但是gif在静态图片的市场已经被淘汰，但是凭借其革命性的压缩算法，它依旧垄断了动态图像的市场直至今日。
 
-- 第一张火遍互联网的gif：
-
-  ![](https://upload-images.jianshu.io/upload_images/4412858-596a504c11f0561b.gif?imageMogr2/auto-orient/strip|imageView2/2/format/webp)
-
+<center> <img src="https://upload-images.jianshu.io/upload_images/4412858-596a504c11f0561b.gif?imageMogr2/auto-orient/strip|imageView2/2/format/webp"/> </center>
+<center> <font  color=gray >第一张火遍互联网的gif</font> </center>
 #### 格式详解
 
 GIF文件由一系列数据块组成。前两个块是固定长度和固定格式。后面的是可变长度，但可以自我描述。它们由一个标识块类型的字节，一个有效载荷长度字节，一个有效载荷组成。
 
 下图显示了所有不同类型的块以及它们在文件中的位置。（中间箭头循环的部分可以重复多次）
 
+
+
 ![](http://giflib.sourceforge.net/whatsinagif/gif_file_stream.gif)
+
+
+
 
 1. **Header 标头块**
 
@@ -518,8 +617,11 @@ GIF文件由一系列数据块组成。前两个块是固定长度和固定格�
 2. **Logical Screen Descriptor 逻辑屏幕描述符**
 
    该块告诉解码器此图像将占用多少空间。
+   
+   <center> <img src="http://giflib.sourceforge.net/whatsinagif/logical_screen_desc_block.gif"/> </center>
 
-   ![](http://giflib.sourceforge.net/whatsinagif/logical_screen_desc_block.gif)
+
+
 
 3. **Global Color Table 全局色表（可选）**
 
@@ -528,8 +630,9 @@ GIF文件由一系列数据块组成。前两个块是固定长度和固定格�
 4. **Graphic Control Extension 图形控件扩展**
 
    图形控件扩展块用于指定透明度设置和控制动画。
+   
+   <center> <img src="http://giflib.sourceforge.net/whatsinagif/graphic_control_ext.gif"/> </center>
 
-   ![](http://giflib.sourceforge.net/whatsinagif/graphic_control_ext.gif)
 
    - **透明度设置**
 
@@ -576,9 +679,11 @@ GIF文件由一系列数据块组成。前两个块是固定长度和固定格�
 10. **Comment Extension 注释扩展**
 
     可以将ASCII文本嵌入到GIF文件中，并且有时用于包含图像描述，图像信用或其他人类可读的元数据，例如图像捕获的GPS位置。
-
-    ![](http://giflib.sourceforge.net/whatsinagif/comment_ext.gif)
-
+    
+    <img src="http://giflib.sourceforge.net/whatsinagif/comment_ext.gif" />
+    
+    
+    
     第一个字节是扩展介绍者21。下一个字节始终是注释标签FE。数据子块用于注释。最后一个字节 00代表注释到达末尾。
 
 11. **Trailer 尾部**
@@ -606,17 +711,13 @@ GIF文件由一系列数据块组成。前两个块是固定长度和固定格�
 #### 历史
 
 - 动机：前文提及的Unisys凭借LZW压缩算法的专利对支持gif的软件创作者们收取版税。Thomas Boutell领导的非正式互联网工作组致力于设计gif格式的替代品----更好，更小，可扩展且免费
-
 - 1995年1月4日，PNG的第一个草案出炉。当时称其为“便携式位图格式”。一个三字节的签名，使用块号而不是块名称，最大像素深度为8位，并且没有指定的压缩方法。
-
 - 在这之后PNG的草案不断修改与完善。到1995年2月开始，已经制作了七份草案，PNG格式也得到了解决。
-
 - 1996年，Internet工程任务组（IETF）将0.95版发布为Internet草案，10月中旬，互联网编号分配机构（IANA）正式批准将“ image / png”作为正式的互联网媒体类型，将image / gif和image / jpeg合并为Web的非实验图像格式。
 
-- PNG的代表图片。
 
-  <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" style="zoom: 50%;" />
-
+  <center><img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" style="zoom: 50%;" /></center>
+  <center> <font  color=gray >PNG的代表图片</font> </center>
 #### 格式详解
 
 PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG图像仅由块组成。
@@ -625,7 +726,12 @@ PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG�
 
 - 下图为PNG格式文件中的一个块。每个块都具有相同的结构：4字节长度，4字节类型，0到2,147,483,647字节之间的数据和一个4字节的 循环冗余校验值（CRC）
 
+  
+
+
 ![](http://www.libpng.org/pub/png/book/figs/png.0801.png)
+
+
 
 长度字段仅指数据字段的长度，而不是块类型或CRC。块类型（名称）通常是助记符，例如IHDR。数据字段	将在下文描述。CRC覆盖块类型字段和块数据，并且即使没有块数据也始终存在。
 
@@ -633,8 +739,8 @@ PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG�
 
 - 两种简单的PNG格式文件
 
-  ![](http://www.libpng.org/pub/png/book/figs/png.0802.png)
 
+  <center><img src="http://www.libpng.org/pub/png/book/figs/png.0802.png"  /></center>
   这种文件由PNG签名和只有三种块类型组成：图像头块IHDR、图像数据块IDAT、以及图像结尾部分IEND
 
   -  IHDR是PNG图像中的第一个块，包括有关图像类型的所有详细信息：高度和宽度，像素深度，压缩和过滤方法，隔行扫描方法，是否具有alpha（透明）通道，以及它是真彩色，灰度还是彩色映射（调色板）图像。
@@ -643,8 +749,7 @@ PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG�
 
   以上类型足以构建带或不带alpha通道的真彩色和灰度PNG文件，但如果要创建羁于调色板的图像需要如下结构：
 
-  ![](http://www.libpng.org/pub/png/book/figs/png.0803.png)
-
+  <center><img src="http://www.libpng.org/pub/png/book/figs/png.0803.png"  /></center>
   PLTE，调色板块。PLTE仅包含一系列红色，绿色和蓝色值，其中0表示黑色，255表示全强度。
 
   以上被提及的块也被成为关键快，在PNG的发展过程中出现了很多辅助块帮助实现更多功能。
@@ -715,14 +820,14 @@ PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG�
 
   GIF的隔行扫描：首先以非常拉伸的块状外观出现，并逐渐被填充，直到显示全分辨率图像为止。这种方式导致了尽管GIF的第一遍包含图像数据的八分之一，但八倍的因子完全是以垂直分辨率为代价的。在水平方向上，每条线在显示后即达到全分辨率，这意味着第一遍中的每个像素都将拉伸八倍。
 
-  PNG的隔行扫描方法是二维的，并且在一半以上的遍历中根本不涉及拉伸，它们的像素始终显示为正方形
+  PNG的隔行扫描方法是二维的，并且在一半以上的遍历中根本不涉及拉伸，它们的像素始终显示为正方形：
 
-  ![](https://upload.wikimedia.org/wikipedia/commons/2/27/Adam7_passes.gif)
 
+  <center><img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Adam7_passes.gif"  /></center>
   下图将从左到右依次显示GIF，正常PNG，带插值的PNG和具有稀疏显示的PNG的隔行显示的比较。
 
-  ![](http://www.libpng.org/pub/png/book/figs/png.0104.png)
 
+  <center><img src="http://www.libpng.org/pub/png/book/figs/png.0104.png"  /></center>
 - **无损压缩**
 
   PNG的压缩是最好的压缩方法之一，不会丢失图像数据，也无需支付专利或其他许可费用
@@ -733,13 +838,18 @@ PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG�
 
 - 1986年，PEG委员会由CCITT和ISO标准组织成立，旨在为图像压缩设定全球标准。这项工作在1991年初已完成技术上的工作，后来被批准为国际标准组织（ISO）。最初，JPEG是针对全色静止帧应用程序的，其平均压缩比达到15：1。 
 
-<img src="https://www.logaster.com/blog/wp-content/uploads/2015/01/0e87b13effcf0e693c30ffcc9e23af1b-another-copy.jpg" style="zoom:80%;" />
 
+<center><img src="https://www.logaster.com/blog/wp-content/uploads/2015/01/0e87b13effcf0e693c30ffcc9e23af1b-another-copy.jpg" style="zoom:80%;" /></center>
 #### 格式详解
 
-JPEG的文件结构整体如下图所示
+JPEG的文件结构整体如下图所示：
+
+
 
 ![](https://img-blog.csdn.net/20180611135625689)
+
+
+
 
 PEG文件大体上可以分成两个部分：标记码和压缩数据。如图所示，第一行为标记码，下方为压缩数据。
 
@@ -836,12 +946,17 @@ PEG文件大体上可以分成两个部分：标记码和压缩数据。如图�
 
 TIFF图像是靠指针连接来组织数据的，一般来说由四部分组成：文件头、文件目录、目录内容、图像数据。具体结构如下：
 
+
+
 ![](http://www.cppblog.com/images/cppblog_com/windcsn/361/r_tiffstruct.jpg)
+
+
+
 
 - 具体内容详细说明
 
-  <img src="http://www.cppblog.com/images/cppblog_com/windcsn/361/r_tiffile.jpg" style="zoom:80%;" />
 
+  <center><img src="http://www.cppblog.com/images/cppblog_com/windcsn/361/r_tiffile.jpg" style="zoom:80%;" /></center>
 #### 特征
 
 - **色彩空间**
