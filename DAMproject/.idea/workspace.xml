@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3c10e508-9ea6-4c39-a55b-39ffb5d99bff" name="Default Changelist" comment="image stream ranking">
+    <list default="true" id="3c10e508-9ea6-4c39-a55b-39ffb5d99bff" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/emoji/images/compare.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/emoji/images/compare.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Channel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Channel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Home1.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Home1.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/ImagePage/ImageStream.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/ImagePage/ImageStream.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Info_setting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Info_setting.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Nav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Nav.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/PicDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/PicDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/Upload.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/Upload.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/User/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/User/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/components/User/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/components/User/Register.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/damproject/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/damproject/frontend/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../course-note.md" beforeDir="false" afterPath="$PROJECT_DIR$/../course-note.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../设计文档.md" beforeDir="false" afterPath="$PROJECT_DIR$/../设计文档.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +103,8 @@
       <workItem from="1574237693099" duration="303000" />
       <workItem from="1574495680106" duration="15421000" />
       <workItem from="1574668682442" duration="1976000" />
-      <workItem from="1574700930703" duration="9451000" />
+      <workItem from="1574700930703" duration="9882000" />
+      <workItem from="1574786218567" duration="611000" />
     </task>
     <task id="LOCAL-00001" summary="user settings backend new">
       <created>1574153810095</created>
@@ -199,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574707033877</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="image stream ranking refresh">
+      <created>1574714216179</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1574714216179</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,7 +238,8 @@
     <MESSAGE value="footer" />
     <MESSAGE value="image stream ranking" />
     <MESSAGE value="course notes completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="course notes completed" />
+    <MESSAGE value="image stream ranking refresh" />
+    <option name="LAST_COMMIT_MESSAGE" value="image stream ranking refresh" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DAMproject$manage.coverage" NAME="manage Coverage Results" MODIFIED="1572338809663" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/damproject" />
