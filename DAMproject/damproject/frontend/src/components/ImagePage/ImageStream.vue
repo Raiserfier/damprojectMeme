@@ -1,14 +1,20 @@
 <template>
   <div class="ImageStream">
     <div class="buttonGroup_upd">
-      <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 5px 0 0 5px" @click="By_heat($event)">按热度</button>
-      <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="By_time($event)">按时间</button>
+      <div v-if="this.$route.params.rank === 'hot'">
+        <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 5px 0 0 5px" @click="By_heat($event)">按热度</button>
+        <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="By_time($event)">按时间</button>
+      </div>
+      <div v-if="this.$route.params.rank === 'new'">
+        <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 5px 0 0 5px" @click="By_heat($event)">按热度</button>
+        <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="By_time($event)">按时间</button>
+      </div>
     </div>
     <section id="main" style="align-content: center;align-items: center">
       <!-- Thumbnails 使用poptrox-->
       <section class="thumbnails" style="margin-left: 10%; margin-right: 10%">
         <div class="v-waterfall-content" id="v-waterfall" :style="{left:6+'%'}">
-          <div v-for="img in waterfallList_sort" v-bind:key="img.id"
+          <div v-for="img in waterfallList" v-bind:key="img.id"
                class="v-waterfall-item"
                :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">
             <div class="icons"><!-- 三个icon按钮 -->
@@ -28,7 +34,8 @@
                   :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
                 <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
                 <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag}}</router-link>
-                <div>{{img.thumbs + '@' + img.likes}}</div>
+<!--                <div>{{img.thumbs + '@' + img.likes}}</div>-->
+<!--                <div>{{img.upload_time}}</div>-->
               </ul>
             </div>
             <div class="imgHover" :style="{height:img.height+'px'}">
@@ -67,8 +74,6 @@
                 waterfallImgBottom: 10,
                 waterfallDeviationHeight: [],
                 threshold: 20,
-
-                sort_type: 0,//1:by heat  2:by time
             }
         },
         created() {
@@ -103,45 +108,9 @@
         destroyed() {
             window.removeEventListener('scroll', this.scrollEvent, false);
         },
-        computed: {
-            waterfallList_sort: function () {
-                if(this.waterfallList !== ''){
-                    if(this.sort_type === 1){
-                        // return this.waterfallList.sort(key=this.get_heat);
-                        console.log(this.waterfallList);
-                        console.log('1');
-                        return sortByHeat(this.waterfallList);
-                        //return this.waterfallList;
-                        // return this.waterfallList.sort(function (a, b) {
-                        //     var x = parseInt(a['likes']) + parseInt(a['thumbs']);
-                        //     var y = parseInt(b['likes']) + parseInt(b['thumbs']);
-                        //     return y - x
-                        // })
-                    }
-                    else if(this.sort_type === 2){
-                        // return this.waterfallList.sort(key=this.get_time);
-                        console.log(this.waterfallList);
-                        console.log('2');
-                        return sortByTime(this.waterfallList);
-                        //return this.waterfallList;
-                        // return this.waterfallList.sort(function (a, b) {
-                        //     var x = a['upload_time'];
-                        //     var y = b['upload_time'];
-                        //     return y - x
-                        // })
-                    }
-                    else{
-                        console.log(this.waterfallList);
-                        console.log('0');
-                        return this.waterfallList;
-                    }
-                }
-            },
-        },
         methods: {
             By_heat(e){
                 this.$router.push('hot');
-                this.sort_type = 1;
                 if(e.currentTarget.className === "Button_mask_upd unchoosen_upd"){
                     e.currentTarget.className = "Button_mask_upd choosen_upd";
                     e.currentTarget.nextElementSibling.className = "Button_mask_upd unchoosen_upd";
@@ -149,7 +118,6 @@
             },
             By_time(e){
                 this.$router.push('new');
-                this.sort_type = 2;
                 if(e.currentTarget.className === "Button_mask_upd unchoosen_upd"){
                     e.currentTarget.className = "Button_mask_upd choosen_upd";
                     e.currentTarget.previousElementSibling.className = "Button_mask_upd unchoosen_upd";
@@ -388,6 +356,12 @@
                 this.waterfallDeviationHeight = new Array(this.waterfallImgCol);
                 for (let i = 0; i < this.waterfallDeviationHeight.length; i++) {
                     this.waterfallDeviationHeight[i] = 0;
+                }
+                //！！！！！排序
+                if (this.$route.params.rank === 'hot') {
+                    sortByHeat(this.imgArr);
+                } else if (this.$route.params.rank === 'new') {
+                    sortByTime(this.imgArr);
                 }
                 this.preloading();
             },

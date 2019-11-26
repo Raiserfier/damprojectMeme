@@ -58,6 +58,10 @@
             <button type="button" class="Button_mask choosen" style="border-radius: 5px 0 0 5px" @click="noMask($event)">无印良品</button>
             <button type="button" class="Button_mask unchoosen" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="Mask($event)">添加水印</button>
           </div>
+          <div class="buttonGroup">
+            <button type="button" class="Button_mask choosen" style="border-radius: 5px 0 0 5px" @click="user_public($event)">同步到广场</button>
+            <button type="button" class="Button_mask unchoosen" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="user_private($event)">仅自己可见</button>
+          </div>
 
           <div class="uuppp"><!--上传按钮-->
             <form action="" method="post">
@@ -118,6 +122,7 @@
                 up_img: [],
                 img_num: 0,
                 isMask: false,
+                isPrivate: false,
             }
         },
         created() {
@@ -160,6 +165,20 @@
             },
             Mask(e){
                 this.isMask = true;
+                if(e.currentTarget.className === "Button_mask unchoosen"){
+                    e.currentTarget.className = "Button_mask choosen";
+                    e.currentTarget.previousElementSibling.className = "Button_mask unchoosen";
+                }
+            },
+            user_public(e){
+                this.isPrivate = false;
+                if(e.currentTarget.className === "Button_mask unchoosen"){
+                    e.currentTarget.className = "Button_mask choosen";
+                    e.currentTarget.nextElementSibling.className = "Button_mask unchoosen";
+                }
+            },
+            user_private(e){
+                this.isPrivate = true;
                 if(e.currentTarget.className === "Button_mask unchoosen"){
                     e.currentTarget.className = "Button_mask choosen";
                     e.currentTarget.previousElementSibling.className = "Button_mask unchoosen";
@@ -815,7 +834,7 @@
   }
 
   .buttonGroup{
-    padding-top: 10px;
+    padding-top: 20px;
   }
   .Button_mask {
     border: none;

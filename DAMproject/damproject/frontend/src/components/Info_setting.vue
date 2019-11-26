@@ -12,8 +12,8 @@
           </div>
         </div>
       </form>
-      <router-link :to="'/channel/'+this.$store.state.user_id+'/all'+'/hot'" class="column_button"><i class="icon fa-upload"></i><span style="padding-left: 10px">我的上传</span></router-link>
-      <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'+'/hot'" class="column_button"><i class="icon fa-star"></i><span style="padding-left: 10px">我的收藏</span></router-link>
+      <!--      <router-link :to="'/channel/'+this.$store.state.user_id+'/all'+'/hot'" class="column_button"><i class="icon fa-upload"></i><span style="padding-left: 10px">我的上传</span></router-link>-->
+      <!--      <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'+'/hot'" class="column_button"><i class="icon fa-star"></i><span style="padding-left: 10px">我的收藏</span></router-link>-->
     </div>
     <div class="setting_window">
       <!--Items-->
@@ -37,17 +37,17 @@
             </label>
           </div>
           <!--email address-->
-<!--          <div class="form_content">-->
-<!--            <div>-->
-<!--              <div class="item_title">-->
-<!--                <div>邮箱地址</div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <label>-->
-<!--              <input minlength="1" maxlength="30" type="text" name="email" placeholder="email address"-->
-<!--                     class="setting_input" :value="this.$store.state.user_id">-->
-<!--            </label>-->
-<!--          </div>-->
+          <!--          <div class="form_content">-->
+          <!--            <div>-->
+          <!--              <div class="item_title">-->
+          <!--                <div>邮箱地址</div>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <label>-->
+          <!--              <input minlength="1" maxlength="30" type="text" name="email" placeholder="email address"-->
+          <!--                     class="setting_input" :value="this.$store.state.user_id">-->
+          <!--            </label>-->
+          <!--          </div>-->
           <!--introduction-->
           <div class="form_content">
             <div>
@@ -56,9 +56,25 @@
               </div>
             </div>
             <label>
-              <textarea name="introduction" placeholder="这个用户很懒..." class="Introduction_input" v-model="profile"></textarea>
-<!--              <input placeholder="这个用户很懒..." class="Introduction_input" type="text"/>-->
+              <textarea name="introduction" placeholder="这个用户很懒..." class="Introduction_input"
+                        v-model="profile"></textarea>
+              <!--              <input placeholder="这个用户很懒..." class="Introduction_input" type="text"/>-->
             </label>
+          </div>
+          <div class="form_content" style="padding-top: 40px">
+            <div>
+              <div class="item_title" style="padding-top: 5px">
+                <div>主页状态</div>
+              </div>
+            </div>
+            <div class="buttonGroup">
+              <button type="button" class="Button_mask choosen" style="border-radius: 5px 0 0 5px"
+                      @click="user_public($event)">公开
+              </button>
+              <button type="button" class="Button_mask unchoosen" style="border-radius: 0 5px 5px 0;margin-left: -3px;"
+                      @click="user_private($event)">私密
+              </button>
+            </div>
           </div>
           <!--commit button-->
           <div class="setting_buttons">
@@ -108,7 +124,8 @@
               </div>
             </div>
             <label>
-              <input minlength="1" maxlength="30" type="password" name="new_password_confirm" placeholder="New password confirm"
+              <input minlength="1" maxlength="30" type="password" name="new_password_confirm"
+                     placeholder="New password confirm"
                      v-model="password_confirm" class="setting_input">
             </label>
           </div>
@@ -133,37 +150,53 @@
 <script>
     export default {
         name: "Info_setting",
-        data(){
-            return{
-                isRouterAlive:true,
+        data() {
+            return {
+                isRouterAlive: true,
                 username: '游客',
                 profile: '',
                 portrait: '',
                 password_old: '',
                 password_new: '',
                 password_confirm: '',
+
+                isPrivate: false,
             }
 
         },
-        created(){
+        created() {
             this.load();
         },
-        methods:{
-            load(){
-                this.$api.post('/get_user_info',{email:this.$store.state.user_id}).then(response=>{
-                    if(response.data !== 'Not received'){
+        methods: {
+            user_public(e) {
+                this.isPrivate = false;
+                if (e.currentTarget.className === "Button_mask unchoosen") {
+                    e.currentTarget.className = "Button_mask choosen";
+                    e.currentTarget.nextElementSibling.className = "Button_mask unchoosen";
+                }
+            },
+            user_private(e) {
+                this.isPrivate = true;
+                if (e.currentTarget.className === "Button_mask unchoosen") {
+                    e.currentTarget.className = "Button_mask choosen";
+                    e.currentTarget.previousElementSibling.className = "Button_mask unchoosen";
+                }
+            },
+            load() {
+                this.$api.post('/get_user_info', {email: this.$store.state.user_id}).then(response => {
+                    if (response.data !== 'Not received') {
                         // console.log(response.data);
                         this.username = response.data.username;
                         this.profile = response.data.profile;
                         this.portrait = response.data.portrait;
                     }
-                }),(response)=>{
+                }), (response) => {
                     //console.log("error");
                     this.$message.error('用户信息获取失败');
                 }
             },
             choose_img(e) {
-                if(e.target.files[0]){
+                if (e.target.files[0]) {
                     let reader = new FileReader();
                     let that = this;
                     reader.readAsDataURL(e.target.files[0]);
@@ -197,38 +230,47 @@
                 }
                 // this.user_info_update();
             },
-            user_info_update(){
-                console.log(this.$store.state.user_id,this.username,this.profile,this.portrait);
-                this.$api.post('/modify_user_info',{email:this.$store.state.user_id, username:this.username, profile:this.profile, portrait:this.portrait}).then(response=>{
-                    if(response.data === 'success'){
+            user_info_update() {
+                console.log(this.$store.state.user_id, this.username, this.profile, this.portrait);
+                this.$api.post('/modify_user_info', {
+                    email: this.$store.state.user_id,
+                    username: this.username,
+                    profile: this.profile,
+                    portrait: this.portrait
+                }).then(response => {
+                    if (response.data === 'success') {
                         this.$message.success('成功更改个人信息');
                         this.$store.state.username = this.username;
-                    }else{
+                    } else {
                         this.$message.warning('更改个人信息失败');
                     }
-                }),(response)=>{
+                }), (response) => {
                     this.$message.error('更改个人信息失败');
                 }
                 // this.$router.replace({path: '/settings'});
                 // this.load();
             },
-            password_modi(){
+            password_modi() {
                 console.log()
-                if(this.password_new !== this.password_confirm){
+                if (this.password_new !== this.password_confirm) {
                     this.$message.warning('两次输入的新密码不同，请重新确认');
                     this.password_new = '';
                     this.password_confirm = '';
                     return;
-                }else{
-                    this.$api.post('/decide_password',{email:this.$store.state.user_id, password_old:this.password_old, password_new:this.password_new}).then(response=>{
-                        if(response.data === 'success'){
+                } else {
+                    this.$api.post('/decide_password', {
+                        email: this.$store.state.user_id,
+                        password_old: this.password_old,
+                        password_new: this.password_new
+                    }).then(response => {
+                        if (response.data === 'success') {
                             this.$message.success('成功更改密码');
-                        }else if(response.data === 'error'){
+                        } else if (response.data === 'error') {
                             this.$message.warning('用户密码输入错误');
-                        }else{
+                        } else {
                             this.$message.warning('密码更改失败');
                         }
-                    }),(response)=>{
+                    }), (response) => {
                         this.$message.error('密码更改失败');
                     }
                 }
@@ -383,11 +425,12 @@
   .setting_buttons {
     width: 400px;
     margin: 0;
-    padding: 10px;
+    padding: 20px 10px 10px 10px;
     height: auto;
   }
 
   .setting_commit_button {
+    box-shadow: none;
     border-radius: 5px;
     border: none;
     white-space: nowrap;
@@ -413,7 +456,8 @@
     margin-top: 40px;
     transition: all 0.2s ease 0s;
   }
-  .setting_commit_button:hover{
+
+  .setting_commit_button:hover {
     background-color: rgb(255, 255, 255);
     color: rgb(97, 87, 255);
   }
@@ -443,5 +487,48 @@
     border-color: rgb(169, 169, 169);
     border-image: initial;
     padding: 2px;
-}
+  }
+
+  .buttonGroup {
+    /*padding-top: 10px;*/
+  }
+
+  .Button_mask {
+    border: none;
+    height: 33px;
+    width: 200px;
+    flex: 1 1 0%;
+    white-space: nowrap;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 36px;
+    min-width: 36px;
+    text-align: center;
+    user-select: none;
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    outline: none;
+    padding: 0px 15px;
+    transition: all 0.2s;
+    /*background: rgb(0, 255, 153);*/
+  }
+
+  .Button_mask:hover {
+    color: rgb(18, 18, 18);
+    background: rgba(90, 255, 178, 0.85);
+  }
+
+  .choosen {
+    background: #4bee97;
+    color: rgb(18, 18, 18);
+  }
+
+  .unchoosen {
+    background: #2c2c2f;
+    color: white;
+  }
 </style>

@@ -30,7 +30,7 @@
         <div>
           <section v-for="count in cate_num">
             <div class="Cat">
-            <div v-if="count === 1">
+              <div v-if="count === 1">
                 <h2 class="Titleeeee" @click="tocate(classname[count-1])" :style="{'padding-top':0+'px'}">
                   {{classname[count-1][0]}}</h2>
               </div>
@@ -261,7 +261,7 @@
             getpop(){
                 this.$api.post('/most_popular', {number: this.pop_num, email: this.my_id}).then(response => {
                     if(response.data !== 'Not received'){
-                        console.log(response.data)
+                        console.log(response.data);
                         this.popList = response.data;
                         console.log(this.popList);
                     }
@@ -593,7 +593,7 @@
   }
 
   .label_Top {
-    margin-left: 10%;
+    margin-left: 20px;
     font-weight: 600;
     text-align: left;
     font-family: nexablack, sans-serif;
