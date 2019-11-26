@@ -513,9 +513,9 @@ def image_detail(request):
         image_id = request.POST.get("id")
         image = Image.objects.get(id=image_id)
         tagsobj = image.image2tag_set.all()
-        tags = ''
+        tags = []
         for tagobj in tagsobj:
-            tags += '#' + tagobj.tag.content
+            tags.append(tagobj.tag.content)
         info = {
             'name': image.owner.username,
             'portrait': image.owner.portrait,
@@ -524,9 +524,8 @@ def image_detail(request):
             'upload_time': str(image.upload_time),
             'likes': str(image.total_likes),
             'thumbs': str(image.total_thumbs),
-            'tags': tags
+            'tags': json.dumps(tags)
         }
-        print(info)
         return HttpResponse(json.dumps(info))
     except:
         return HttpResponse("没有这张图片")

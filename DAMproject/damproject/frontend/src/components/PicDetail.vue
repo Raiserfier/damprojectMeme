@@ -35,7 +35,7 @@
       <div>
         <div class="tags">
           <div class="taglist">
-            <a v-for="tag in tags" class="TAG" href=""><h3 class="TAG_title">{{'#'+tag}}</h3></a>
+            <a v-for="tag in JSON.parse(tags)" class="TAG" href=""><h3 class="TAG_title">{{'#'+tag}}</h3></a>
           </div>
         </div>
 
