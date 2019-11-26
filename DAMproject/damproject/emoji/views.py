@@ -1,4 +1,4 @@
-from .models import Image, User, Tag, Image2tag
+from .models import Image, User, Tag, Image2tag, Report
 from django.http import HttpResponse
 import json
 from django.http import JsonResponse
@@ -148,7 +148,7 @@ def get_images(request):
 def delete_image(request):
     try:
         image_id = request.POST.get("id")
-        Image.objects.get(id=image_id).delete()
+        Image.objects.get(id=int(image_id)).delete()
         return HttpResponse("SUCCESS")
     except:
         return HttpResponse("Image not Received")
@@ -753,5 +753,16 @@ def decide_password(request):
             return HttpResponse("error")
     except:
         return HttpResponse("Data not received")
+
+
+def report_image(request):
+    try:
+        img_id = request.POST.get("id")
+        reason = request.POST.get("reason")
+        image = Image.objects.get(id=int(img_id))
+        img = Report.objects.create(image=image, reason=reason)
+    except:
+        return HttpResponse("没有此图片")
+
 
 # Create your views here.
