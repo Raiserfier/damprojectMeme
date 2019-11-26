@@ -8,6 +8,7 @@ class User(models.Model):
     password = models.CharField(max_length=20)
     like_images = models.TextField(default='')
     profile = models.CharField(default='', max_length=100)
+    private = models.IntegerField(default=0)
 
 
 class Image(models.Model):
@@ -18,6 +19,7 @@ class Image(models.Model):
     #img = models.FileField(upload_to='media', default='')
     img = models.CharField(default='', max_length=5000000)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default='')
+    private = models.IntegerField(default=0)
 
 
 class Tag(models.Model):

@@ -19,8 +19,9 @@ def upload_img(request):
             tags = json.loads(tagstr)
             img = request.POST.get("img")
             state = request.POST.get("state")
+            private = request.POST.get("private")
             user = User.objects.get(email=email)
-            img = Image.objects.create(classification=classification, img=img, owner=user)
+            img = Image.objects.create(classification=classification, img=img, owner=user, private=int(private))
             #tags = tagstr.split('#')
             for tag in tags:
                 print(tag, "okkk")
@@ -134,6 +135,8 @@ def get_images(request):
             certain_classification = get_number_image(classification_list[index], number)
             images = []
             for image in certain_classification:
+                if image.private:
+                    continue
                 images.append(get_image_info(image, email))
             data.append({classification_list[index]: images})
         return HttpResponse(json.dumps(data), content_type="application/json")
@@ -294,6 +297,8 @@ def get_by_classification(request):
     images = Image.objects.filter(classification=classification)
     if images:
         for i in images:
+            if i.private:
+                continue
             data.append(i.img.url)
         return HttpResponse(json.dumps(data))
     else:
@@ -305,6 +310,8 @@ def get_classification():
     classfication_list = []
     images = Image.objects.all()
     for image in images:
+        if image.private:
+            continue
         if image.classification not in classfication_list:
             classfication_list.append(image.classification)
     return classfication_list
@@ -315,6 +322,8 @@ def get_number_image(classification, number):
     images = Image.objects.all()
     certain_classification = []
     for image in images:
+        if image.private:
+            continue
         if image.classification == classification and len(certain_classification) < int(number):
             certain_classification.append(image)
     return certain_classification
@@ -393,6 +402,8 @@ def get_key_search(key, email):
     images = Image.objects.all()
     data = []
     for image in images:
+        if image.private:
+            continue
         if key == "all":
             data.append(get_all_info(image, email))
             continue
@@ -451,6 +462,8 @@ def most_popular(request):
         id_list = []
         images = Image.objects.all()
         for image in images:
+            if image.private:
+                continue
             id_list.append(image.id)
             popular.append(image.total_likes + image.total_thumbs)  # 可以在此修改算法
         temp = []
@@ -575,6 +588,8 @@ def recommend(img_id, num):
     id_list = []
     Inf = 100000
     for img_com in img_all:
+        if img_com.private:
+            continue
         if img_com.id == img_id:
             similarity.append(1000)  # 绝对选不到我自己
             id_list.append(img_com.id)
