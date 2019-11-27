@@ -22,5 +22,7 @@ urlpatterns = [
     path('get_recommend', views.get_recommend),
     path('image_detail', views.image_detail),
     path('most_popular', views.most_popular),
-    path('report_image', views.report_image)
+    path('report_image', views.report_image),
+    path('delete_report', views.delete_report),
+    path('delete_image', views.delete_image)
 ]

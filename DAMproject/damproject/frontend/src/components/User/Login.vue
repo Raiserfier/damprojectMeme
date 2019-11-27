@@ -54,7 +54,10 @@
                             console.log(this.$store.state.user_name);
                             this.$message.success('登录成功！');
                             // 跳转个人页
-                            this.$router.replace({ path: '/favorite/'+this.$store.state.user_id+'/all'+'/hot' });
+                            if(this.$store.state.manager)
+                                this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all'+'/hot' });
+                            else
+                                this.$router.replace({ path: '/favorite/'+this.$store.state.user_id+'/all'+'/hot' });
                         }
                         else if (response.data === '密码错误') {
                             this.$message.error('登录失败，请确认您的用户名和密码！');

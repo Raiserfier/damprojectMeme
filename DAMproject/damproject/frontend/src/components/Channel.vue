@@ -23,6 +23,11 @@
 <!--              </form>-->
             </div>
           </div>
+          <div class="info_line" v-if="this.$store.state.manager">
+            <li @click="delete_all">
+          <p>一键清除</p>
+        </li>
+          </div>
         </header>
       </div>
     </section>
@@ -68,6 +73,17 @@
                 if (this.keyw == '') this.keyw = 'all';
                 this.$router.push({name:'PageWithSearch', params:{type:this.$route.params.type,id:this.$route.params.id,key:this.keyw,rank:'hot'}});
             },
+            delete_all(){
+              this.$api.post('/delete_report', {}).then(response => {
+                    if (response.data === 'SUCCESS') {
+                        this.$message.success('清除成功！');
+                        this.$router.replace({ path: '/' });
+                    }
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('清除失败！');
+                }
+            }
         }
     }
 </script>

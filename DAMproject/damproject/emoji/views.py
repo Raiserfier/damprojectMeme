@@ -150,6 +150,12 @@ def delete_image(request):
     try:
         image_id = request.POST.get("id")
         Image.objects.get(id=int(image_id)).delete()
+        users = User.objects.all()
+        deletech = '#' + image_id + '#'
+        for user in users:
+            if deletech in user.like_images:
+                user.like_images = user.like_images.replace('#' + image_id + '#', '')
+                user.save()
         return HttpResponse("SUCCESS")
     except:
         return HttpResponse("Image not Received")
@@ -287,7 +293,8 @@ def get_image_info(image, email):
         'id': image.id,
         'img': image.img,
         'tags': json.dumps(tags),
-        'state': state
+        'state': state,
+        'classification': image.classification
     }
 
 
@@ -333,7 +340,6 @@ def get_number_image(classification, number):
 # 从用户上传的图片中每一类别获取一张图片
 def get_user_classification(email):
     classfication_list = []
-    print("x", email)
     user = User.objects.get(email=email)
     images = Image.objects.all()
     for image in images:
@@ -473,7 +479,6 @@ def most_popular(request):
             id_list.append(image.id)
             popular.append(image.total_likes + image.total_thumbs)  # 可以在此修改算法
         temp = []
-        print(popular)
         for i in range(int(number)):
             temp.append(popular.index(max(popular)))
             popular[popular.index(max(popular))] = -1
@@ -483,7 +488,6 @@ def most_popular(request):
         for i in index:
             image = Image.objects.get(id=i)
             data.append(get_all_info(image, email))
-        print(index)
         return HttpResponse(json.dumps(data))
     except:
         return HttpResponse('Not received')
@@ -513,9 +517,7 @@ def thumb_image(request):
 
 
 def image_detail(request):
-    print("detail")
     try:
-        print("in")
         image_id = request.POST.get("id")
         image = Image.objects.get(id=image_id)
         tagsobj = image.image2tag_set.all()
@@ -527,10 +529,11 @@ def image_detail(request):
             'portrait': image.owner.portrait,
             'profile': image.owner.profile,
             'img': image.img,
-            'upload_time': str(image.upload_time),
+            'upload_time': str(image.upload_time)[0:19],
             'likes': str(image.total_likes),
             'thumbs': str(image.total_thumbs),
-            'tags': json.dumps(tags)
+            'tags': json.dumps(tags),
+            'classfication': image.classification
         }
         return HttpResponse(json.dumps(info))
     except:
@@ -770,6 +773,16 @@ def report_image(request):
         return HttpResponse("SUCCESS")
     except:
         return HttpResponse("没有此图片")
+
+
+def delete_report(request):
+    try:
+        reports = Report.objects.all()
+        for report in reports:
+            report.delete()
+        return HttpResponse("SUCCESS")
+    except:
+        return HttpResponse("没删着啊大兄弟")
 
 
 # Create your views here.
