@@ -110,7 +110,7 @@
         <!-- 导航栏 -->
         <!--        * 根据user_id动态分配路由-->
         <li @click="jump">
-          <router-link :to="'/channel/'+this.$store.state.user_id+'/all'+'/hot'">待处理举报图片</router-link>
+          <router-link :to="'/channel/'+this.$store.state.user_id+'/all'+'/hot'">处理举报</router-link>
         </li>
         <li @click="logout">
           <router-link to="/">退出登录</router-link>

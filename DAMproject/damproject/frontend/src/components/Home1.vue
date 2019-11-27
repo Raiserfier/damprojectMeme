@@ -44,7 +44,7 @@
                  :style="{top:140+ (count-1)*400+ 'px',left:30+(index)*300+'px',width:250+'px',height:250+'px','padding-right':10+'px'}">
               <div class="icons"> <!-- 三个icon按钮 -->
                 <ul @mouseout="leaveul($event)" @mouseover="enterul($event)"
-                    :style="{top:imgheight-395+'px',right:3+'%'}">
+                    :style="{top:imgheight-395+'px',left:3+'%'}">
                   <li><p @click="fav_click($event)" class="icon style2 fa-star" v-bind:class="{ Collected:img.state }"><span class="label">Collect</span></p>
                   </li>
                   <li><p @click="thumb_click($event)" class="icon style2 fa-thumbs-up" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p>

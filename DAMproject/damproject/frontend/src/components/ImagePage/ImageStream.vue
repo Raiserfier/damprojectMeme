@@ -4,10 +4,12 @@
       <div v-if="this.$route.params.rank === 'hot'">
         <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 5px 0 0 5px" @click="By_heat($event)">按热度</button>
         <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="By_time($event)">按时间</button>
+        <button v-if="this.$store.state.manager" type="button" class="Button_mask_del" style="border-radius: 5px;margin-left: 20px;" @click="delete_all($event)">一键清除</button>
       </div>
       <div v-if="this.$route.params.rank === 'new'">
         <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 5px 0 0 5px" @click="By_heat($event)">按热度</button>
         <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="By_time($event)">按时间</button>
+        <button v-if="this.$store.state.manager" type="button" class="Button_mask_del" style="border-radius: 5px;margin-left: 20px;" @click="delete_all($event)">一键清除</button>
       </div>
     </div>
     <section id="main" style="align-content: center;align-items: center">
@@ -115,6 +117,17 @@
             window.removeEventListener('scroll', this.scrollEvent, false);
         },
         methods: {
+            delete_all(){
+              this.$api.post('/delete_report', {}).then(response => {
+                    if (response.data === 'SUCCESS') {
+                        this.$message.success('清除成功！');
+                        this.$router.replace({ path: '/' });
+                    }
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('清除失败！');
+                }
+            },
             user_delete(e){
 
             },
@@ -375,6 +388,7 @@
                 } else if (this.$route.params.rank === 'new') {
                     sortByTime(this.imgArr);
                 }
+                sortByHeat(this.imgArr);
                 this.preloading();
             },
             //按图片流格式预处理获得图片位置
@@ -598,5 +612,36 @@
   .unchoosen_upd{
     background: #2c2c2f;
     color: white;
+  }
+
+  .Button_mask_del {
+    border: none;
+    height: 33px;
+    width: 100px;
+    flex: 1 1 0%;
+    white-space: nowrap;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 36px;
+    min-width: 36px;
+    text-align: center;
+    user-select: none;
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    outline: none;
+    padding: 0px 15px;
+    transition: all 0.2s;
+    background: #2c2c2f;
+    color: white;
+    /*background: rgb(0, 255, 153);*/
+  }
+
+  .Button_mask_del:hover {
+    color: rgb(18, 18, 18);
+    background: rgba(255, 102, 102, 0.85);
   }
 </style>
