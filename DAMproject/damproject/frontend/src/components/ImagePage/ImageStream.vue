@@ -19,6 +19,14 @@
                :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">
             <div class="icons"><!-- 三个icon按钮 -->
               <ul @mouseover="enterul($event)" @mouseout="leaveul($event)">
+                <li
+                  v-if="$route.params.type==='channel' && !$store.state.manager && $store.state.user_id===$route.params.id">
+                  <p class="icon style2 fa-trash" @click="user_delete($event)">
+                    <span class="label">Delete</span></p></li>
+                <li v-if="$route.params.type==='channel' && $store.state.manager"><p
+                  class="icon style2 fa-trash-o" @click="manager_delete($event)"
+                >
+                  <span class="label">Delete</span></p></li>
                 <li><p class="icon style2 fa-star" @click="fav_click($event)" v-bind:class="{ Collected:img.state }">
                   <span class="label">Collect</span></p></li>
                 <li><p class="icon style2 fa-thumbs-up" @click="thumb_click($event)"
@@ -109,6 +117,12 @@
             window.removeEventListener('scroll', this.scrollEvent, false);
         },
         methods: {
+            user_delete(e){
+
+            },
+            manager_delete(e){
+
+            },
             By_heat(e){
                 this.$router.push('hot');
                 if(e.currentTarget.className === "Button_mask_upd unchoosen_upd"){
