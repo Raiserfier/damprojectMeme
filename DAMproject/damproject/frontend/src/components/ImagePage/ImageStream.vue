@@ -2,12 +2,26 @@
   <div class="ImageStream">
     <div class="buttonGroup_upd">
       <div v-if="this.$route.params.rank === 'hot'">
-        <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 5px 0 0 5px" @click="By_heat($event)">按热度</button>
-        <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="By_time($event)">按时间</button>
+        <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 5px 0 0 5px"
+                @click="By_heat($event)">按热度
+        </button>
+        <button type="button" class="Button_mask_upd unchoosen_upd"
+                style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="By_time($event)">按时间
+        </button>
+        <button v-if="this.$store.state.manager && this.$route.params.type==='channel'" type="button"
+                class="Button_mask_del" style="border-radius: 5px;margin-left: 20px;" @click="delete_all($event)">一键清除
+        </button>
       </div>
       <div v-if="this.$route.params.rank === 'new'">
-        <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 5px 0 0 5px" @click="By_heat($event)">按热度</button>
-        <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="By_time($event)">按时间</button>
+        <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 5px 0 0 5px"
+                @click="By_heat($event)">按热度
+        </button>
+        <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -3px;"
+                @click="By_time($event)">按时间
+        </button>
+        <button v-if="this.$store.state.manager && this.$route.params.type==='channel'" type="button"
+                class="Button_mask_del" style="border-radius: 5px;margin-left: 20px;" @click="delete_all($event)">一键清除
+        </button>
       </div>
     </div>
     <section id="main" style="align-content: center;align-items: center">
@@ -19,18 +33,20 @@
                :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">
             <div class="icons"><!-- 三个icon按钮 -->
               <ul @mouseover="enterul($event)" @mouseout="leaveul($event)">
-                <li v-if="$route.params.type==='channel' && !$store.state.manager && $store.state.user_id===$route.params.id">
+                <li
+                  v-if="$route.params.type==='channel' && !$store.state.manager && $store.state.user_id===$route.params.id">
                   <p class="icon style3 fa-trash" @click="user_delete($event)">
                     <span class="label">Delete</span></p></li>
                 <li v-if="$route.params.type==='channel' && $store.state.manager">
-                  <p class="icon style3 fa-trash-o" @click="manager_delete($event)" >
+                  <p class="icon style3 fa-trash-o" @click="manager_delete($event)">
                     <span class="label">Delete</span></p></li>
                 <li><p class="icon style2 fa-star" @click="fav_click($event)" v-bind:class="{ Collected:img.state }">
                   <span class="label">Collect</span></p></li>
                 <li><p class="icon style2 fa-thumbs-up" @click="thumb_click($event)"
                        v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p></li>
                 <li>
-                  <router-link :to="'/details/'+img.id+'/hot'" class="icon style2 fa-info"><span class="label">ForMore</span>
+                  <router-link :to="'/details/'+img.id+'/hot'" class="icon style2 fa-info"><span
+                    class="label">ForMore</span>
                   </router-link>
                 </li>
               </ul>
@@ -40,8 +56,8 @@
                   :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
                 <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
                 <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag}}</router-link>
-<!--                <div>{{img.thumbs + '@' + img.likes}}</div>-->
-<!--                <div>{{img.upload_time}}</div>-->
+                <!--                <div>{{img.thumbs + '@' + img.likes}}</div>-->
+                <!--                <div>{{img.upload_time}}</div>-->
               </ul>
             </div>
             <div class="imgHover" :style="{height:img.height+'px'}">
@@ -115,22 +131,33 @@
             window.removeEventListener('scroll', this.scrollEvent, false);
         },
         methods: {
-            user_delete(e){
+            delete_all() {
+                this.$api.post('/delete_report', {}).then(response => {
+                    if (response.data === 'SUCCESS') {
+                        this.$message.success('清除成功！');
+                        this.$router.replace({path: '/'});
+                    }
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('清除失败！');
+                }
+            },
+            user_delete(e) {
 
             },
-            manager_delete(e){
+            manager_delete(e) {
 
             },
-            By_heat(e){
+            By_heat(e) {
                 this.$router.push('hot');
-                if(e.currentTarget.className === "Button_mask_upd unchoosen_upd"){
+                if (e.currentTarget.className === "Button_mask_upd unchoosen_upd") {
                     e.currentTarget.className = "Button_mask_upd choosen_upd";
                     e.currentTarget.nextElementSibling.className = "Button_mask_upd unchoosen_upd";
                 }
             },
-            By_time(e){
+            By_time(e) {
                 this.$router.push('new');
-                if(e.currentTarget.className === "Button_mask_upd unchoosen_upd"){
+                if (e.currentTarget.className === "Button_mask_upd unchoosen_upd") {
                     e.currentTarget.className = "Button_mask_upd choosen_upd";
                     e.currentTarget.previousElementSibling.className = "Button_mask_upd unchoosen_upd";
                 }
@@ -256,8 +283,7 @@
                             }
                         }
                         this.calculationWidth();
-                    }
-                    else{
+                    } else {
                         console.log('error get_img?')
                     }
                 }), (response) => {
@@ -290,8 +316,7 @@
                             this.imgArr.push(this.imgList[this.last]);
                         }
                         this.calculationWidth();
-                    }
-                    else{
+                    } else {
                         console.log('error get_user?')
                     }
                 }), (response) => {
@@ -375,6 +400,7 @@
                 } else if (this.$route.params.rank === 'new') {
                     sortByTime(this.imgArr);
                 }
+                sortByHeat(this.imgArr);
                 this.preloading();
             },
             //按图片流格式预处理获得图片位置
@@ -465,6 +491,7 @@
             return ((x < y) ? 1 : ((x > y) ? -1 : 0));
         })
     }
+
     function sortByTime(array) {
         return array.sort(function (a, b) {
             var x = a['upload_time'];
@@ -560,9 +587,10 @@
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 0.5em 0 #FF6382;
   }
 
-  .buttonGroup_upd{
+  .buttonGroup_upd {
     padding: 10px 0 10px 225px;
   }
+
   .Button_mask_upd {
     border: none;
     height: 33px;
@@ -591,12 +619,45 @@
     color: rgb(18, 18, 18);
     background: rgba(90, 255, 178, 0.85);
   }
-  .choosen_upd{
+
+  .choosen_upd {
     background: #4bee97;
     color: rgb(18, 18, 18);
   }
-  .unchoosen_upd{
+
+  .unchoosen_upd {
     background: #2c2c2f;
     color: white;
+  }
+
+  .Button_mask_del {
+    border: none;
+    height: 33px;
+    width: 100px;
+    flex: 1 1 0%;
+    white-space: nowrap;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 36px;
+    min-width: 36px;
+    text-align: center;
+    user-select: none;
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    outline: none;
+    padding: 0px 15px;
+    transition: all 0.2s;
+    background: #2c2c2f;
+    color: white;
+    /*background: rgb(0, 255, 153);*/
+  }
+
+  .Button_mask_del:hover {
+    color: rgb(18, 18, 18);
+    background: rgba(255, 102, 102, 0.85);
   }
 </style>

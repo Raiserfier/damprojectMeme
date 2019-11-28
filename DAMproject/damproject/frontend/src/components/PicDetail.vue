@@ -26,13 +26,17 @@
             </div>
           </div>
           <div class="info_line"><i class="icon fa-clock-o"></i><span>{{up_time}}</span></div>
-          <div class="info_line"><i class="icon fa-heart"></i><span>{{favorites}}</span></div>
-          <div class="info_line"><i class="icon fa-star"></i><span>{{collects}}</span></div>
-          <div class="info_line"><i class="icon fa-star"></i><span>
-            <li @click="report">
-          <p>举报</p>
-        </li>
-          </span></div>
+<!--          <div class="info_line"><i class="icon fa-heart"></i><span>{{favorites}}</span></div>-->
+<!--          <div class="info_line"><i class="icon fa-star"></i><span>{{collects}}</span></div>-->
+          <!--          <div class="info_line"><i class="icon fa-star"></i><span>-->
+          <!--            <li @click="report">-->
+          <!--              <p>举报</p>-->
+          <!--            </li>-->
+          <!--          </span></div>-->
+          <div><a href="#" class="hvr-sweep-to-right button11" :class="{Liked_b:isLike}" @click="thumb_click($event)"><i class="icon fa-thumbs-up"></i>{{favorites}}</a></div>
+          <div><a href="#" class="hvr-sweep-to-right button11" :class="{Collected_b:isCollect}" @click="fav_click($event)"><i class="icon fa-star"></i>{{collects}}</a></div>
+          <div><a href="#" class="hvr-sweep-to-right button11" @click="download" style="padding-top: 10px;">下载</a></div>
+          <div><a href="#" class="hvr-sweep-to-right button11" @click="report" style="padding-top: 10px;">举报</a></div>
         </div>
       </div>
     </div>
@@ -47,41 +51,41 @@
         <!-- 推荐图片瀑布流-->
         <details-recommend></details-recommend>
 
-<!--        <section id="main" style="align-content: center;align-items: center">-->
-<!--          <div>-->
-<!--            <h2 class="Title">相似表情包</h2>-->
-<!--          </div>-->
-<!--          &lt;!&ndash; Thumbnails 使用poptrox&ndash;&gt;-->
-<!--          <section class="thumbnails" style="margin-left: 10%; margin-right: 10%">-->
-<!--            <div class="v-waterfall-content" id="v-waterfall">-->
-<!--              <div v-for="img in waterfallList"-->
-<!--                   class="v-waterfall-item"-->
-<!--                   :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">-->
-<!--                <div class="icons">&lt;!&ndash; 三个icon按钮 &ndash;&gt;-->
-<!--                  <ul @mouseover="enterul($event)" @mouseout="leaveul($event)" :style="{right: 25+'%'}">-->
-<!--                    <li><p class="icon style2 fa-star" @click="clickCollect($event)"-->
-<!--                           v-bind:class="{ Collected:isCollect }"><span class="label">Collect</span></p></li>-->
-<!--                    <li><p class="icon style2 fa-thumbs-up" @click="clickLike($event)"-->
-<!--                           v-bind:class="{ Likeded:isLike }"><span class="label">Like</span></p></li>-->
-<!--                    <li><a href="" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span-->
-<!--                      class="label">ForMore</span></a></li>-->
-<!--                  </ul>-->
-<!--                </div>-->
-<!--                <div class="labels">&lt;!&ndash; labels链接 &ndash;&gt;-->
-<!--                  <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul"-->
-<!--                      :style="{top:img.height*0.8-10+'px'}">-->
-<!--                    <a class="" href="#">#AAA</a>-->
-<!--                    <a class="" href="#">#AAA</a>-->
-<!--                    <a class="" href="#">#AAA</a>-->
-<!--                  </ul>-->
-<!--                </div>-->
-<!--                <a>-->
-<!--                  <img @mouseenter="enterpic($event)" @mouseleave="leavepic($event)" :src="img.src" alt="">-->
-<!--                </a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </section>-->
-<!--        </section>-->
+        <!--        <section id="main" style="align-content: center;align-items: center">-->
+        <!--          <div>-->
+        <!--            <h2 class="Title">相似表情包</h2>-->
+        <!--          </div>-->
+        <!--          &lt;!&ndash; Thumbnails 使用poptrox&ndash;&gt;-->
+        <!--          <section class="thumbnails" style="margin-left: 10%; margin-right: 10%">-->
+        <!--            <div class="v-waterfall-content" id="v-waterfall">-->
+        <!--              <div v-for="img in waterfallList"-->
+        <!--                   class="v-waterfall-item"-->
+        <!--                   :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">-->
+        <!--                <div class="icons">&lt;!&ndash; 三个icon按钮 &ndash;&gt;-->
+        <!--                  <ul @mouseover="enterul($event)" @mouseout="leaveul($event)" :style="{right: 25+'%'}">-->
+        <!--                    <li><p class="icon style2 fa-star" @click="clickCollect($event)"-->
+        <!--                           v-bind:class="{ Collected:isCollect }"><span class="label">Collect</span></p></li>-->
+        <!--                    <li><p class="icon style2 fa-thumbs-up" @click="clickLike($event)"-->
+        <!--                           v-bind:class="{ Likeded:isLike }"><span class="label">Like</span></p></li>-->
+        <!--                    <li><a href="" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span-->
+        <!--                      class="label">ForMore</span></a></li>-->
+        <!--                  </ul>-->
+        <!--                </div>-->
+        <!--                <div class="labels">&lt;!&ndash; labels链接 &ndash;&gt;-->
+        <!--                  <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul"-->
+        <!--                      :style="{top:img.height*0.8-10+'px'}">-->
+        <!--                    <a class="" href="#">#AAA</a>-->
+        <!--                    <a class="" href="#">#AAA</a>-->
+        <!--                    <a class="" href="#">#AAA</a>-->
+        <!--                  </ul>-->
+        <!--                </div>-->
+        <!--                <a>-->
+        <!--                  <img @mouseenter="enterpic($event)" @mouseleave="leavepic($event)" :src="img.src" alt="">-->
+        <!--                </a>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </section>-->
+        <!--        </section>-->
       </div>
     </div>
   </div>
@@ -89,9 +93,10 @@
 
 <script>
     import ImageStream from './ImagePage/ImageStream'
+
     export default {
         name: "PicDetail",
-        components:{
+        components: {
             'details-recommend': ImageStream
         },
         data() {
@@ -103,43 +108,92 @@
                 collects: 0,
                 favorites: 0,
                 test_path: require('../assets/test/1.jpg'),
-
                 name: '游客',
                 profile: '',
                 portrait: '',
+
+                isLike: false,
+                isCollect: false,
             }
         },
         created() {
-            if(this.$route.params.pic !== undefined){
+            if (this.$route.params.pic !== undefined) {
                 this.img_id = this.$route.params.pic;
-                this.$api.post('/image_detail',{id:this.$route.params.pic}).then(response=>{
+                this.$api.post('/image_detail', {id: this.$route.params.pic}).then(response => {
                     console.log(response.data);
-                    if(response.data !== '没有这张图片') {
+                    if (response.data !== '没有这张图片') {
                         this.up_time = response.data.upload_time;
                         this.collects = response.data.likes;
                         this.favorites = response.data.thumbs;
                         this.tags = response.data.tags;
                         this.img = response.data.img;
-
                         this.name = response.data.name;
                         this.portrait = response.data.portrait;
                         this.profile = response.data.profile;
-                    }else{
+                    } else {
                         this.$message.warning('图片信息获取失败');
                     }
-                }),(response)=>{
+                }), (response) => {
                     this.$message.error('图片信息获取失败');
                 }
             }//用户页
         },
-        methods:{
-            to_owner_channel(){
-                this.route.replace({path: '/channel/'+ this.owner.email +'/all'+'/hot'});
+        methods: {
+            download(){
+
             },
-            report(){
-              this.$api.post('/report_image', {
+            //点赞
+            thumb_click(e) {
+                let flag = true;
+                if (!this.isLike) {
+                    this.isLike = true;
+                } else {
+                    this.isLike = false;
+                    flag = false;
+                }
+                // this.$api.post('/thumb_image', {
+                //     id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
+                //     email: this.my_id, state: flag
+                // }).then(response => {
+                //     console.log('1111111' + response.data);
+                //     if (response.data === 'SUCCESS') {
+                //         this.$message.success('点赞成功！');
+                //     }
+                // }), (response) => {
+                //     //console.log("error");
+                //     this.$message.error('点赞失败！');
+                // }
+            },
+            //收藏
+            fav_click(e) {
+                let flag = true;
+                if (!this.isCollect) {
+                    this.isCollect = true;
+                } else {
+                    this.isCollect = false;
+                    flag = false;
+                }
+                // this.$api.post('/like_image ', {
+                //     id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
+                //     email: this.my_id, state: flag
+                // }).then(response => {
+                //     //console.log(response.data);
+                //     if (response.data === 'SUCCESS') {
+                //         //改变按钮状态
+                //         this.$message.success('收藏成功！');
+                //     }
+                // }), (response) => {
+                //     //console.log("error");
+                //     this.$message.error('收藏失败！');
+                // }
+            },
+            to_owner_channel() {
+                this.route.replace({path: '/channel/' + this.owner.email + '/all' + '/hot'});
+            },
+            report() {
+                this.$api.post('/report_image', {
                     id: this.$route.params.pic,
-                    reason:""
+                    reason: ""
                 }).then(response => {
                     if (response.data === 'SUCCESS') {
                         this.$message.success('举报成功！');
@@ -164,7 +218,7 @@
 
   .pic_inf {
     color: #fff;
-    margin: 0 0 16px;
+    margin: 0 25px 16px;
     padding-top: 24px;
     position: relative;
     text-align: left;
@@ -202,10 +256,10 @@
   }
 
   .info_line {
-    cursor: pointer;
+    cursor: text;
     display: block;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 400;
     height: 36px;
     line-height: 36px;
   }
@@ -223,7 +277,7 @@
 
   .taglist {
     text-align: left;
-    margin-left: 200px;
+    margin-left: 225px;
   }
 
   .TAG {
@@ -307,13 +361,22 @@
     text-decoration: none;
   }
 
-
   .Liked {
     color: rgb(238, 106, 132);
+    transition: all 0.2s ease-in-out;
+  }
+  .Liked_b{
+    background: rgb(238, 106, 132);
+    transition: all 0.5s ease-in-out;
   }
 
   .Collected {
     color: rgb(238, 203, 106);
+    transition: all 0.2s ease-in-out;
+  }
+  .Collected_b{
+    background: rgb(238, 203, 106);
+    transition: all 0.5s ease-in-out;
   }
 
   .LabelsOver {
@@ -334,6 +397,7 @@
     -webkit-transition: all 1s ease-in-out;
     transition: all 0.3s ease-in-out;
   }
+
   .IconOver {
     visibility: visible;
     opacity: 1;
@@ -341,6 +405,7 @@
     transform: translate(0, 25%) !important;
     transition: all 0.3s ease-in-out;
   }
+
   .IconOut {
     visibility: hidden;
     opacity: 0;
@@ -351,6 +416,7 @@
     -webkit-transition: all 1s ease-in-out;
     transition: all 0.3s ease-in-out
   }
+
   .thumbnails .v-waterfall-content {
     width: 90%;
     height: 90%;
@@ -366,7 +432,8 @@
     width: 90%;
     height: auto;
   }
-  .icons .icon{
+
+  .icons .icon {
     float: right;
     margin-right: 0;
   }
@@ -379,7 +446,8 @@
     margin-left: 200px;
     margin-bottom: 15px;
   }
-  .user_introduction{
+
+  .user_introduction {
     color: #b2b2b2;
     font-size: 12px;
     line-height: 19px;
@@ -391,6 +459,76 @@
     box-shadow: none;
     text-align: left;
     margin: 0 0 15%;
+  }
+
+  a.hvr-sweep-to-right {
+    border-radius: 0 5px 5px 0;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    /*background: #3598dc;*/
+    /*background: #202024;*/
+    color: #fff;
+  }
+
+  a.button11 {
+    /* display: inline-block; */
+    /* vertical-align: middle; */
+    border-radius: 0 5px 5px 0;
+    margin-right: 6px;
+    padding: 0.4em 1em 1em 1em;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1.2em;
+    color: #fff;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    height: 50px;
+    width: 160px;
+    text-align: center;
+  }
+
+  a.hvr-sweep-to-right:hover:before{
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+
+  a.hvr-sweep-to-right:hover, a.hvr-sweep-to-right:focus, a.hvr-sweep-to-right:active {
+    color: white;
+  }
+
+  a.hvr-sweep-to-right:before {
+    border-radius: 0 5px 5px 0;
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(97, 87, 255, 0.8);
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
   }
 
 </style>

@@ -23,11 +23,11 @@
 <!--              </form>-->
             </div>
           </div>
-          <div class="info_line" v-if="this.$store.state.manager">
-            <li @click="delete_all">
-          <p>一键清除</p>
-        </li>
-          </div>
+<!--          <div class="info_line" v-if="this.$store.state.manager">-->
+<!--            <li @click="delete_all">-->
+<!--          <p>一键清除</p>-->
+<!--        </li>-->
+<!--          </div>-->
         </header>
       </div>
     </section>
