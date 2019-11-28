@@ -14,8 +14,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "ajv": "^5.0.0",
     "element-ui": "^2.12.0",
-    "qs": "latest",
+    "file-saver": "^2.0.2",
+    "qs": "^6.9.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

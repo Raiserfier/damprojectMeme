@@ -93,7 +93,6 @@
 
 <script>
     import ImageStream from './ImagePage/ImageStream'
-
     export default {
         name: "PicDetail",
         components: {
@@ -114,6 +113,9 @@
 
                 isLike: false,
                 isCollect: false,
+
+                path:'',
+                filename:'',
             }
         },
         created() {
@@ -140,7 +142,31 @@
         },
         methods: {
             download(){
-
+                let FileSaver = require('file-saver');
+                this.$api.post('/download', {
+                    id:this.$route.params.pic,
+                    email:this.$store.state.user_id
+                }).then(response => {
+                    this.filename=response.data.filename;
+                    const regex = new RegExp('^data:([^/]+/([^;]+));base64');
+                    const b64Data = this.img.replace(regex, '$1,$2').split(',');
+                    const contentType = b64Data[0];
+                    // 解码
+                    const raw = window.atob(b64Data[2]);
+                    const rawLength = raw.length;
+                    //const fileName = `文件名.${b64Data[1]}`;
+                    let uInt8Array = new Uint8Array(rawLength);
+                    console.log("hello");
+                    for (let i = 0; i < rawLength; ++i)
+                        uInt8Array[i] = raw.charCodeAt(i);
+                    const blob = new Blob([uInt8Array], {type: contentType});
+                    console.log(this.filename,contentType)
+                    FileSaver.saveAs(blob, this.filename);
+                    this.$message.success('下载成功！');
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('下载失败！');
+                }
             },
             //点赞
             thumb_click(e) {

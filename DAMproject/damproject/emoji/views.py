@@ -49,14 +49,16 @@ def upload_img(request):
 def download(request):
     try:
         img_id = request.POST.get("id")
-        path = request.POST.get("path")
+        email = request.POST.get("email")
+        user = User.objects.get(email=email)
         image = Image.objects.get(id=img_id)
         type = img_type(image.img)
         nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S') #添加时间戳防止命名重复
-        pic_path = path + str(nowTime) + '.' + type
-        with open(pic_path, 'wb') as f:
-            f.write(base64.b64decode(image.img.split(',')[1]))
-        return HttpResponse("SUCCESS")
+        print(str(nowTime) + '.' + type)
+        data = {
+            'filename': str(nowTime) + '.' + type
+         }
+        return HttpResponse(json.dumps(data))
     except:
         return HttpResponse("没有此图片")
 
@@ -717,7 +719,8 @@ def get_user_data(user):
         'username': user.username,
         'email': user.email,
         'profile': profile,
-        'portrait': portrait
+        'portrait': portrait,
+        'path': user.path
     }
 
 
@@ -737,11 +740,13 @@ def modify_user_info(request):
         username = request.POST.get("username")
         profile = request.POST.get("profile")
         portrait = request.POST.get("portrait")
+        path = request.POST.get("path")
         user = User.objects.get(email=email)
         try:
             user.username = username
             user.profile = profile
             user.portrait = portrait
+            user.path = path
             user.save()
             return HttpResponse("success")
         except:
