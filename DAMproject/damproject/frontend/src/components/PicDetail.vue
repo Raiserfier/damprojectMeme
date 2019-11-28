@@ -86,7 +86,10 @@
         created() {
             if (this.$route.params.pic !== undefined) {
                 this.img_id = this.$route.params.pic;
-                this.$api.post('/image_detail', {id: this.$route.params.pic}).then(response => {
+                this.$api.post('/image_detail', {
+                  id: this.$route.params.pic,
+                  email:this.$store.state.user_id
+                  }).then(response => {
                     console.log(response.data);
                     if (response.data !== '没有这张图片') {
                         this.up_time = response.data.upload_time;
@@ -100,7 +103,7 @@
                         this.owner_email = response.data.owner_email;
                         this.isLike = response.data.state;
                         this.isCollect = response.data.state;
-                        console.log(this.owner);
+                        console.log(this.isLike);
                     } else {
                         this.$message.warning('图片信息获取失败');
                     }
@@ -158,6 +161,8 @@
                 this.$api.post('/like_image ', {
                     id: this.$route.params.pic,
                     state: this.isCollect,
+                    email: this.$store.state.user_id,
+
                 }).then(response => {
                     console.log('2222222' + response.data);
                     if (response.data === 'SUCCESS') {

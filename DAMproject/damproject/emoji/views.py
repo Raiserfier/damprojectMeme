@@ -523,11 +523,18 @@ def thumb_image(request):
 def image_detail(request):
     try:
         image_id = request.POST.get("id")
+        email = request.POST.get("email")
         image = Image.objects.get(id=image_id)
+        user = User.objects.get(email=email)
         tagsobj = image.image2tag_set.all()
         tags = []
         for tagobj in tagsobj:
             tags.append(tagobj.tag.content)
+        like = '#' + image_id + '#'
+        if like in user.like_images:
+            state = 1
+        else:
+            state = 0
         info = {
             'name': image.owner.username,
             'portrait': image.owner.portrait,
@@ -538,7 +545,8 @@ def image_detail(request):
             'thumbs': str(image.total_thumbs),
             'tags': json.dumps(tags),
             'classfication': image.classification,
-            'owner_email': image.owner.email
+            'owner_email': image.owner.email,
+            'state': state
         }
         return HttpResponse(json.dumps(info))
     except:
