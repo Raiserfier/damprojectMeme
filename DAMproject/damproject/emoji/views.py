@@ -147,7 +147,9 @@ def get_images(request):
 
 # 删除图片
 def delete_image(request):
+    print("delete")
     try:
+        print("here")
         image_id = request.POST.get("id")
         Image.objects.get(id=int(image_id)).delete()
         users = User.objects.all()
