@@ -19,10 +19,14 @@ def upload_img(request):
             tags = json.loads(tagstr)
             img = request.POST.get("img")
             state = request.POST.get("state")
+            private = request.POST.get("private")
+            if private == "true":
+                pri = 1
+            else:
+                pri = 0
             user = User.objects.get(email=email)
-            img = Image.objects.create(classification=classification, img=img, owner=user)
+            img = Image.objects.create(classification=classification, img=img, private=pri, owner=user)
             for tag in tags:
-                print(tag, "okkk")
                 taginfo = Tag.objects.filter(content=tag)
                 if taginfo.exists():
                     tagobj = taginfo.first()
@@ -366,6 +370,8 @@ def get_user_upload(classification, email):
     images = Image.objects.all()
     certain_classification = []
     for image in images:
+        if image.private:
+            continue
         if image.classification == classification and image.owner == user:
             certain_classification.append(image)
     return certain_classification
@@ -376,6 +382,8 @@ def get_classification_images(classification, email):
     images = Image.objects.all()
     certain_classification = []
     for image in images:
+        if image.private:
+            continue
         if image.classification == classification:
             certain_classification.append(get_all_info(image, email))
     return certain_classification

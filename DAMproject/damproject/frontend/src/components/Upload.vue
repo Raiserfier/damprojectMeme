@@ -272,12 +272,13 @@
                         tags: JSON.stringify(this.labelarr),
                         classification: this.cate,
                         state: this.isMask,
+                        private:this.isPrivate,
                     }).then(response => {
                         //console.log(response.data);
                         if (response.data === 'SUCCESS') {
                             this.$message.success('上传成功！');
                             //跳转到个人上传页
-                            this.$router.replace({path: '/channel/' + this.my_id + '/all'+'/hot'});
+                            this.$router.replace({path: '/channel/' + this.$store.state.user_id + '/all'+'/hot'});
                         } else {
                             this.$message.error('上传图片失败！');
                         }
