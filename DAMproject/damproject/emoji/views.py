@@ -537,7 +537,8 @@ def image_detail(request):
             'likes': str(image.total_likes),
             'thumbs': str(image.total_thumbs),
             'tags': json.dumps(tags),
-            'classfication': image.classification
+            'classfication': image.classification,
+            'owner_email': image.owner.email
         }
         return HttpResponse(json.dumps(info))
     except:
@@ -753,6 +754,19 @@ def modify_user_info(request):
             return HttpResponse("error")
     except:
         return HttpResponse("Email not received")
+
+
+def modify_user_privaty(request):
+    try:
+        isprivate = request.POST.get("private")
+        print(isprivate)
+        email = request.POST.get("email")
+        user = User.objects.get(email=email)
+        user.private = isprivate
+        user.save()
+        return HttpResponse('SUCCESS')
+    except:
+        return HttpResponse("???")
 
 
 def decide_password(request):

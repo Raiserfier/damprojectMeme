@@ -15,7 +15,7 @@
         <div class="info_window">
           <div class="Uploader">
             <div class="Userpic_window">
-              <a href="" class="User_pic" :src="portrait" @click="to_owner_channel()"
+              <a href="" class="User_pic" :src="portrait" @click="to_owner_channel"
                  :style="{'background-image':'url'+'(\'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3900046848,1834418761&fm=26&gp=0.jpg\')'}"></a>
               <h2 class="User_name" @click="to_owner_channel()"><a href="">{{name}}</a></h2>
             </div>
@@ -116,6 +116,7 @@
 
                 path:'',
                 filename:'',
+                owner_email:'',
             }
         },
         created() {
@@ -132,6 +133,8 @@
                         this.name = response.data.name;
                         this.portrait = response.data.portrait;
                         this.profile = response.data.profile;
+                        this.owner_email = response.data.owner_email;
+                        console.log(this.owner);
                     } else {
                         this.$message.warning('图片信息获取失败');
                     }
@@ -214,7 +217,8 @@
                 // }
             },
             to_owner_channel() {
-                this.route.replace({path: '/channel/' + this.owner.email + '/all' + '/hot'});
+               console.log("router",this.owner_email);
+                this.$router.replace({path: '/channel/' + this.owner_email + '/all' + '/hot'});
             },
             report() {
                 this.$api.post('/report_image', {

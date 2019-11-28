@@ -174,6 +174,17 @@
                     e.currentTarget.className = "Button_mask choosen";
                     e.currentTarget.nextElementSibling.className = "Button_mask unchoosen";
                 }
+                this.$api.post('/get_user_info', {email: this.$store.state.user_id}).then(response => {
+                    if (response.data !== 'Not received') {
+                        // console.log(response.data);
+                        this.username = response.data.username;
+                        this.profile = response.data.profile;
+                        this.portrait = response.data.portrait;
+                    }
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('用户信息获取失败');
+                }
             },
             user_private(e) {
                 this.isPrivate = true;
