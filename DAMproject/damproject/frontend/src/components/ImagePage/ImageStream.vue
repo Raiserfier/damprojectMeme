@@ -468,7 +468,7 @@
                 }
                 this.$api.post('/thumb_image', {
                     id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
-                    email: this.my_id, state: flag
+                    state: flag
                 }).then(response => {
                     console.log('1111111' + response.data);
                     if (response.data === 'SUCCESS') {
