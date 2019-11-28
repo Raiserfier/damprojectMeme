@@ -21,9 +21,9 @@
               </p>
             </div>
           </div>
-<!--          <div class="info_line"><i class="icon fa-clock-o"></i><span>{{up_time}}</span></div>-->
-<!--          <div class="info_line"><i class="icon fa-heart"></i><span>{{favorites}}</span></div>-->
-<!--          <div class="info_line"><i class="icon fa-star"></i><span>{{collects}}</span></div>-->
+          <!--          <div class="info_line"><i class="icon fa-clock-o"></i><span>{{up_time}}</span></div>-->
+          <!--          <div class="info_line"><i class="icon fa-heart"></i><span>{{favorites}}</span></div>-->
+          <!--          <div class="info_line"><i class="icon fa-star"></i><span>{{collects}}</span></div>-->
           <!--          <div class="info_line"><i class="icon fa-star"></i><span>-->
           <!--            <li @click="report">-->
           <!--              <p>举报</p>-->
@@ -46,52 +46,17 @@
         <div class="commend_title">
           <span>相似推荐</span>
         </div>
-
         <!-- 推荐图片瀑布流-->
         <details-recommend></details-recommend>
-
-        <!--        <section id="main" style="align-content: center;align-items: center">-->
-        <!--          <div>-->
-        <!--            <h2 class="Title">相似表情包</h2>-->
-        <!--          </div>-->
-        <!--          &lt;!&ndash; Thumbnails 使用poptrox&ndash;&gt;-->
-        <!--          <section class="thumbnails" style="margin-left: 10%; margin-right: 10%">-->
-        <!--            <div class="v-waterfall-content" id="v-waterfall">-->
-        <!--              <div v-for="img in waterfallList"-->
-        <!--                   class="v-waterfall-item"-->
-        <!--                   :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">-->
-        <!--                <div class="icons">&lt;!&ndash; 三个icon按钮 &ndash;&gt;-->
-        <!--                  <ul @mouseover="enterul($event)" @mouseout="leaveul($event)" :style="{right: 25+'%'}">-->
-        <!--                    <li><p class="icon style2 fa-star" @click="clickCollect($event)"-->
-        <!--                           v-bind:class="{ Collected:isCollect }"><span class="label">Collect</span></p></li>-->
-        <!--                    <li><p class="icon style2 fa-thumbs-up" @click="clickLike($event)"-->
-        <!--                           v-bind:class="{ Likeded:isLike }"><span class="label">Like</span></p></li>-->
-        <!--                    <li><a href="" class="icon style2 fa-info" data-poptrox="iframe,1200x800"><span-->
-        <!--                      class="label">ForMore</span></a></li>-->
-        <!--                  </ul>-->
-        <!--                </div>-->
-        <!--                <div class="labels">&lt;!&ndash; labels链接 &ndash;&gt;-->
-        <!--                  <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul"-->
-        <!--                      :style="{top:img.height*0.8-10+'px'}">-->
-        <!--                    <a class="" href="#">#AAA</a>-->
-        <!--                    <a class="" href="#">#AAA</a>-->
-        <!--                    <a class="" href="#">#AAA</a>-->
-        <!--                  </ul>-->
-        <!--                </div>-->
-        <!--                <a>-->
-        <!--                  <img @mouseenter="enterpic($event)" @mouseleave="leavepic($event)" :src="img.src" alt="">-->
-        <!--                </a>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--          </section>-->
-        <!--        </section>-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
     import ImageStream from './ImagePage/ImageStream'
+
     export default {
         name: "PicDetail",
         components: {
@@ -113,9 +78,9 @@
                 isLike: false,
                 isCollect: false,
 
-                path:'',
-                filename:'',
-                owner_email:'',
+                path: '',
+                filename: '',
+                owner_email: '',
             }
         },
         created() {
@@ -143,12 +108,12 @@
             }//用户页
         },
         methods: {
-            download(){
+            download() {
                 let FileSaver = require('file-saver');
                 this.$api.post('/download', {
-                    id:this.$route.params.pic,
+                    id: this.$route.params.pic,
                 }).then(response => {
-                    this.filename=response.data.filename;
+                    this.filename = response.data.filename;
                     const regex = new RegExp('^data:([^/]+/([^;]+));base64');
                     const b64Data = this.img.replace(regex, '$1,$2').split(',');
                     const contentType = b64Data[0];
@@ -161,7 +126,7 @@
                     for (let i = 0; i < rawLength; ++i)
                         uInt8Array[i] = raw.charCodeAt(i);
                     const blob = new Blob([uInt8Array], {type: contentType});
-                    console.log(this.filename,contentType)
+                    console.log(this.filename, contentType)
                     FileSaver.saveAs(blob, this.filename);
                     this.$message.success('下载成功！');
                 }), (response) => {
@@ -173,12 +138,15 @@
                 let flag = true;
                 if (!this.isLike) {
                     this.isLike = true;
+                    this.favorites = parseInt(this.favorites) + 1;
                 } else {
                     this.isLike = false;
+                    this.favorites = parseInt(this.favorites) - 1;
                     flag = false;
                 }
                 this.$api.post('/thumb_image', {
-                    id:this.$route.params.pic,
+                    id: this.$route.params.pic,
+                    state: flag,
                 }).then(response => {
                     console.log('1111111' + response.data);
                     if (response.data === 'SUCCESS') {
@@ -194,14 +162,17 @@
                 let flag = true;
                 if (!this.isCollect) {
                     this.isCollect = true;
+                    this.collects = parseInt(this.collects) + 1;
                 } else {
                     this.isCollect = false;
+                    this.collects = parseInt(this.collects) - 1;
                     flag = false;
                 }
                 this.$api.post('/like_image ', {
-                    id:this.$route.params.pic,
+                    id: this.$route.params.pic,
+                    state: flag,
                 }).then(response => {
-                    //console.log(response.data);
+                    console.log('2222222' + response.data);
                     if (response.data === 'SUCCESS') {
                         //改变按钮状态
                         this.$message.success('收藏成功！');
@@ -212,15 +183,15 @@
                 }
             },
             to_owner_channel() {
-               console.log("router",this.owner_email);
+                console.log("router", this.owner_email);
                 this.$api.post('/is_private', {
-                    email:this.owner_email
+                    email: this.owner_email
                 }).then(response => {
                     if (response.data !== "no such user") {
-                        if(response.data !== 1)
-                           this.$router.replace({path: '/channel/' + this.owner_email + '/all' + '/hot'});
+                        if (response.data !== 1)
+                            this.$router.replace({path: '/channel/' + this.owner_email + '/all' + '/hot'});
                         else
-                           this.$message.error('对方主页不开放');
+                            this.$message.error('对方主页不开放');
                     }
                 }), (response) => {
                     this.$message.error('举报失败！');
@@ -308,7 +279,7 @@
   }
 
   .tags {
-    margin-bottom: 26px;
+    margin-bottom: 60px;
   }
 
   .taglist {
@@ -402,7 +373,8 @@
     color: rgb(238, 106, 132);
     transition: all 0.2s ease-in-out;
   }
-  .Liked_b{
+
+  .Liked_b {
     background: rgb(238, 106, 132);
     transition: all 0.5s ease-in-out;
   }
@@ -411,7 +383,8 @@
     color: rgb(238, 203, 106);
     transition: all 0.2s ease-in-out;
   }
-  .Collected_b{
+
+  .Collected_b {
     background: rgb(238, 203, 106);
     transition: all 0.5s ease-in-out;
   }
@@ -537,7 +510,7 @@
     text-align: center;
   }
 
-  a.hvr-sweep-to-right:hover:before{
+  a.hvr-sweep-to-right:hover:before {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
   }
@@ -567,7 +540,8 @@
     -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
   }
-  .commend_title{
+
+  .commend_title {
     margin-left: 225px;
     font-family: inherit;
     font-size: 20px;
