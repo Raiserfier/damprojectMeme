@@ -160,7 +160,7 @@
                 password_new: '',
                 password_confirm: '',
 
-                isPrivate: false,
+                isPrivate: 0,
             }
 
         },
@@ -169,25 +169,14 @@
         },
         methods: {
             user_public(e) {
-                this.isPrivate = false;
+                this.isPrivate = 0;
                 if (e.currentTarget.className === "Button_mask unchoosen") {
                     e.currentTarget.className = "Button_mask choosen";
                     e.currentTarget.nextElementSibling.className = "Button_mask unchoosen";
                 }
-                this.$api.post('/get_user_info', {email: this.$store.state.user_id}).then(response => {
-                    if (response.data !== 'Not received') {
-                        // console.log(response.data);
-                        this.username = response.data.username;
-                        this.profile = response.data.profile;
-                        this.portrait = response.data.portrait;
-                    }
-                }), (response) => {
-                    //console.log("error");
-                    this.$message.error('用户信息获取失败');
-                }
             },
             user_private(e) {
-                this.isPrivate = true;
+                this.isPrivate = 1;
                 if (e.currentTarget.className === "Button_mask unchoosen") {
                     e.currentTarget.className = "Button_mask choosen";
                     e.currentTarget.previousElementSibling.className = "Button_mask unchoosen";
@@ -200,6 +189,8 @@
                         this.username = response.data.username;
                         this.profile = response.data.profile;
                         this.portrait = response.data.portrait;
+                        this.isPrivate = response.data.private;
+                        console.log(this.isPrivate)
                     }
                 }), (response) => {
                     //console.log("error");
@@ -247,7 +238,8 @@
                     email: this.$store.state.user_id,
                     username: this.username,
                     profile: this.profile,
-                    portrait: this.portrait
+                    portrait: this.portrait,
+                    private:this.isPrivate,
                 }).then(response => {
                     if (response.data === 'success') {
                         this.$message.success('成功更改个人信息');

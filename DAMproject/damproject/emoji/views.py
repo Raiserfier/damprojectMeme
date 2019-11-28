@@ -721,7 +721,7 @@ def get_user_data(user):
         'email': user.email,
         'profile': profile,
         'portrait': portrait,
-        'path': user.path
+        'private': user.private
     }
 
 
@@ -741,32 +741,19 @@ def modify_user_info(request):
         username = request.POST.get("username")
         profile = request.POST.get("profile")
         portrait = request.POST.get("portrait")
-        path = request.POST.get("path")
+        private = request.POST.get("private")
         user = User.objects.get(email=email)
         try:
             user.username = username
             user.profile = profile
             user.portrait = portrait
-            user.path = path
+            user.private = private
             user.save()
             return HttpResponse("success")
         except:
             return HttpResponse("error")
     except:
         return HttpResponse("Email not received")
-
-
-def modify_user_privaty(request):
-    try:
-        isprivate = request.POST.get("private")
-        print(isprivate)
-        email = request.POST.get("email")
-        user = User.objects.get(email=email)
-        user.private = isprivate
-        user.save()
-        return HttpResponse('SUCCESS')
-    except:
-        return HttpResponse("???")
 
 
 def decide_password(request):
