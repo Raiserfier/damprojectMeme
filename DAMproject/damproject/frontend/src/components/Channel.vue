@@ -7,7 +7,7 @@
           <!-- 用户头像 -->
           <span class="avatar"><img src="../assets/images/avatar.jpg" alt=""/></span>
           <!-- 用户名 调state -->
-          <h1>{{this.$store.state.user_name}}</h1>
+          <h1>{{this.username}}</h1>
           <!--					<p>A responsive video gallery template with a functional lightbox<br />-->
           <!--						designed by Templated and released under the Creative Commons License.</p>-->
           <div class="container"><!-- 搜索框 -->
@@ -50,7 +50,22 @@
             return {
                 msg: "在图库中搜索...",
                 keyw: 'all',
+                username:'Test',
             };
+        },
+        created(){
+             if (this.$route.params.id !== undefined) {
+                this.$api.post('/get_username', {email: this.$route.params.id}).then(response => {
+                    console.log(response.data);
+                    if (response.data !== 'no such user') {
+                        this.username = response.data;
+                    } else {
+                        this.$message.warning('主页加载错误');
+                    }
+                }), (response) => {
+                    this.$message.error('主页加载错误');
+                }
+            }//用户页
         },
         methods: {
             // search_user(e) {

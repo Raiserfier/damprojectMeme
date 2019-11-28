@@ -25,5 +25,7 @@ urlpatterns = [
     path('report_image', views.report_image),
     path('delete_report', views.delete_report),
     path('delete_image', views.delete_image),
-    path('download', views.download)
+    path('download', views.download),
+    path('is_private', views.is_private),
+    path('get_username', views.get_username)
 ]
