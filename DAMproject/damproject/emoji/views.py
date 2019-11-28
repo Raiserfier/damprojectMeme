@@ -49,8 +49,6 @@ def upload_img(request):
 def download(request):
     try:
         img_id = request.POST.get("id")
-        email = request.POST.get("email")
-        user = User.objects.get(email=email)
         image = Image.objects.get(id=img_id)
         type = img_type(image.img)
         nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S') #添加时间戳防止命名重复
@@ -504,13 +502,11 @@ def most_popular(request):
 # 点赞
 def thumb_image(request):
     try:
-        email = request.POST.get("email")
         # print(email)
         image_id = request.POST.get("id")
         # print(image_id)
         state = request.POST.get("state")
         image = Image.objects.get(id=image_id)
-        user = User.objects.get(email=email)
         # print(image_id, email, state)
         if state == "true":
             image.total_thumbs += 1

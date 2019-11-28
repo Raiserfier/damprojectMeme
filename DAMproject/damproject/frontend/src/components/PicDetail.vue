@@ -148,7 +148,6 @@
                 let FileSaver = require('file-saver');
                 this.$api.post('/download', {
                     id:this.$route.params.pic,
-                    email:this.$store.state.user_id
                 }).then(response => {
                     this.filename=response.data.filename;
                     const regex = new RegExp('^data:([^/]+/([^;]+));base64');
