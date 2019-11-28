@@ -1,9 +1,4 @@
 <template>
-  <!--  <div>-->
-  <!--    <h2>pic_path</h2>-->
-  <!--    <p>{{pic_path}}</p>-->
-  <!--  </div>-->
-
   <div>
     <div class="main_window">
       <div class="pic_inf">
@@ -18,6 +13,7 @@
               <a class="User_pic" :src="portrait" @click="to_owner_channel"
                  :style="{'background-image':'url'+'(\'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3900046848,1834418761&fm=26&gp=0.jpg\')'}"></a>
               <h2 class="User_name" @click="to_owner_channel">{{name}}</h2>
+              <h5 style="font-size: 10px;padding-top: 10px;color: gray;">上传于：{{up_time}}</h5>
             </div>
             <div>
               <p class="user_introduction">
@@ -25,7 +21,7 @@
               </p>
             </div>
           </div>
-          <div class="info_line"><i class="icon fa-clock-o"></i><span>{{up_time}}</span></div>
+<!--          <div class="info_line"><i class="icon fa-clock-o"></i><span>{{up_time}}</span></div>-->
 <!--          <div class="info_line"><i class="icon fa-heart"></i><span>{{favorites}}</span></div>-->
 <!--          <div class="info_line"><i class="icon fa-star"></i><span>{{collects}}</span></div>-->
           <!--          <div class="info_line"><i class="icon fa-star"></i><span>-->
@@ -46,6 +42,9 @@
           <div class="taglist">
             <a v-for="tag in JSON.parse(tags)" class="TAG" href=""><h3 class="TAG_title">{{'#'+tag}}</h3></a>
           </div>
+        </div>
+        <div class="commend_title">
+          <span>相似推荐</span>
         </div>
 
         <!-- 推荐图片瀑布流-->
@@ -179,18 +178,17 @@
                     this.isLike = false;
                     flag = false;
                 }
-                // this.$api.post('/thumb_image', {
-                //     id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
-                //     email: this.my_id, state: flag
-                // }).then(response => {
-                //     console.log('1111111' + response.data);
-                //     if (response.data === 'SUCCESS') {
-                //         this.$message.success('点赞成功！');
-                //     }
-                // }), (response) => {
-                //     //console.log("error");
-                //     this.$message.error('点赞失败！');
-                // }
+                this.$api.post('/thumb_image', {
+                    id:this.$route.params.pic,
+                }).then(response => {
+                    console.log('1111111' + response.data);
+                    if (response.data === 'SUCCESS') {
+                        this.$message.success('点赞成功！');
+                    }
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('点赞失败！');
+                }
             },
             //收藏
             fav_click(e) {
@@ -201,19 +199,18 @@
                     this.isCollect = false;
                     flag = false;
                 }
-                // this.$api.post('/like_image ', {
-                //     id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
-                //     email: this.my_id, state: flag
-                // }).then(response => {
-                //     //console.log(response.data);
-                //     if (response.data === 'SUCCESS') {
-                //         //改变按钮状态
-                //         this.$message.success('收藏成功！');
-                //     }
-                // }), (response) => {
-                //     //console.log("error");
-                //     this.$message.error('收藏失败！');
-                // }
+                this.$api.post('/like_image ', {
+                    id:this.$route.params.pic,
+                }).then(response => {
+                    //console.log(response.data);
+                    if (response.data === 'SUCCESS') {
+                        //改变按钮状态
+                        this.$message.success('收藏成功！');
+                    }
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('收藏失败！');
+                }
             },
             to_owner_channel() {
                console.log("router",this.owner_email);
@@ -395,6 +392,7 @@
     font-weight: 900;
     line-height: 1.1;
     width: 100%;
+    cursor: pointer;
   }
 
   .User_name a {
@@ -569,6 +567,13 @@
     transition-duration: 0.3s;
     -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
+  }
+  .commend_title{
+    margin-left: 225px;
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 15px;
   }
 
 </style>
