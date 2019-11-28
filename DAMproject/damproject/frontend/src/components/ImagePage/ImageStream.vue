@@ -31,7 +31,7 @@
           <div v-for="img in waterfallList" v-bind:key="img.id"
                class="v-waterfall-item"
                :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height+20+'px'}">
-            <div class="icons"><!-- 三个icon按钮 -->
+            <div class="icons" v-if="$store.state.user_id !== '99'"><!-- 三个icon按钮 -->
               <ul @mouseover="enterul($event)" @mouseout="leaveul($event)">
                 <li
                   v-if="$route.params.type==='channel' && !$store.state.manager && $store.state.user_id===$route.params.id">
@@ -227,7 +227,8 @@
             enterpic(e) {
                 //icon
                 e.currentTarget.parentElement.className = "imgHover imgBox";
-                e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
+                if(this.$store.state.user_id !== '99')
+                  e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
                 var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
                 for (var i = 0; i < label_number; i++) {
@@ -237,7 +238,8 @@
             leavepic(e) {
                 //icon
                 e.currentTarget.parentElement.className = "imgHover";
-                e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
+                if(this.$store.state.user_id !== '99')
+                  e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
                 var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
                 for (var i = 0; i < label_number; i++) {
@@ -269,7 +271,8 @@
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOver";
                 }
-                e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
+                if(this.$store.state.user_id !== '99')
+                  e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
                 e.currentTarget.parentElement.nextElementSibling.className = "imgBox";
             },
             leaveul_la(e) {
@@ -278,7 +281,8 @@
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOut";
                 }
-                e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOut";
+                if(this.$store.state.user_id !== '99')
+                  e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOut";
             },
 
             //搜索结果
