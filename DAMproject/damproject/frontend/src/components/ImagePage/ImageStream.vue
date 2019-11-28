@@ -149,7 +149,7 @@
                     if (response.data === 'SUCCESS') {
                         this.$message.success('删除成功！');
                         this.$router.replace({path: '/'});
-                        this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all'+'/hot' });
+                        this.$router.replace({path: '/channel/' + this.$store.state.user_id + '/all' + '/hot'});
                     }
                 }), (response) => {
                     //console.log("error");
@@ -163,7 +163,7 @@
                     if (response.data === 'SUCCESS') {
                         this.$message.success('删除成功！');
                         this.$router.replace({path: '/'});
-                        this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all'+'/hot' });
+                        this.$router.replace({path: '/channel/' + this.$store.state.user_id + '/all' + '/hot'});
                     }
                 }), (response) => {
                     this.$message.error('删除失败！');
@@ -227,8 +227,8 @@
             enterpic(e) {
                 //icon
                 e.currentTarget.parentElement.className = "imgHover imgBox";
-                if(this.$store.state.user_id !== '99')
-                  e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
+                if (this.$store.state.user_id !== '99')
+                    e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
                 var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
                 for (var i = 0; i < label_number; i++) {
@@ -238,8 +238,8 @@
             leavepic(e) {
                 //icon
                 e.currentTarget.parentElement.className = "imgHover";
-                if(this.$store.state.user_id !== '99')
-                  e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
+                if (this.$store.state.user_id !== '99')
+                    e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
                 var label_number = e.currentTarget.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.previousElementSibling.firstElementChild.children;
                 for (var i = 0; i < label_number; i++) {
@@ -271,8 +271,8 @@
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOver";
                 }
-                if(this.$store.state.user_id !== '99')
-                  e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
+                if (this.$store.state.user_id !== '99')
+                    e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
                 e.currentTarget.parentElement.nextElementSibling.className = "imgBox";
             },
             leaveul_la(e) {
@@ -281,8 +281,8 @@
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOut";
                 }
-                if(this.$store.state.user_id !== '99')
-                  e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOut";
+                if (this.$store.state.user_id !== '99')
+                    e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOut";
             },
 
             //搜索结果
@@ -472,9 +472,9 @@
                 }
                 this.$api.post('/thumb_image', {
                     id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
-                    state: flag
+                    email: this.my_id, state: flag
                 }).then(response => {
-                    console.log('1111111' + response.data);
+                    // console.log('1111111' + response.data);
                     if (response.data === 'SUCCESS') {
                         this.$message.success('点赞成功！');
                     }
@@ -499,7 +499,10 @@
                     //console.log(response.data);
                     if (response.data === 'SUCCESS') {
                         //改变按钮状态
-                        this.$message.success('收藏成功！');
+                        if (flag)
+                            this.$message.success('收藏成功！');
+                        else
+                            this.$message.success('取消收藏成功！');
                     }
                 }), (response) => {
                     //console.log("error");

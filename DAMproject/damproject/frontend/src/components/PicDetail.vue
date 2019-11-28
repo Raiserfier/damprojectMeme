@@ -29,8 +29,10 @@
           <!--              <p>举报</p>-->
           <!--            </li>-->
           <!--          </span></div>-->
-          <div><a href="#" class="hvr-sweep-to-right button11" :class="{Liked_b:isLike}" @click="thumb_click($event)"><i class="icon fa-thumbs-up"></i>{{favorites}}</a></div>
-          <div><a href="#" class="hvr-sweep-to-right button11" :class="{Collected_b:isCollect}" @click="fav_click($event)"><i class="icon fa-star"></i>{{collects}}</a></div>
+          <div><a href="#" class="hvr-sweep-to-right button11" :class="{Liked_b:isLike}" @click="thumb_click($event)"><i
+            class="icon fa-thumbs-up"></i>{{favorites}}</a></div>
+          <div><a href="#" class="hvr-sweep-to-right button11" :class="{Collected_b:isCollect}"
+                  @click="fav_click($event)"><i class="icon fa-star"></i>{{collects}}</a></div>
           <div><a href="#" class="hvr-sweep-to-right button11" @click="download" style="padding-top: 10px;">下载</a></div>
           <div><a href="#" class="hvr-sweep-to-right button11" @click="report" style="padding-top: 10px;">举报</a></div>
         </div>
@@ -77,6 +79,7 @@
 
                 isLike: false,
                 isCollect: false,
+                like_count: 0,
 
                 path: '',
                 filename: '',
@@ -87,9 +90,9 @@
             if (this.$route.params.pic !== undefined) {
                 this.img_id = this.$route.params.pic;
                 this.$api.post('/image_detail', {
-                  id: this.$route.params.pic,
-                  email:this.$store.state.user_id
-                  }).then(response => {
+                    id: this.$route.params.pic,
+                    email: this.$store.state.user_id
+                }).then(response => {
                     console.log(response.data);
                     if (response.data !== '没有这张图片') {
                         this.up_time = response.data.upload_time;
@@ -148,7 +151,11 @@
                     console.log('1111111' + response.data);
                     if (response.data === 'SUCCESS') {
                         this.favorites = parseInt(this.favorites) + 1;
-                        this.$message.success('点赞成功！');
+                        this.like_count += 1;
+                        if (this.like_count < 3)
+                            this.$message.success('点赞成功！');
+                        else
+                            this.$message.success('感谢刷赞！');
                     }
                 }), (response) => {
                     //console.log("error");
@@ -167,13 +174,13 @@
                     console.log('2222222' + response.data);
                     if (response.data === 'SUCCESS') {
                         //改变按钮状态
-                        if(this.isCollect){
+                        if (this.isCollect) {
                             this.collects = parseInt(this.collects) + 1;
-                        }
-                        else{
+                            this.$message.success('收藏成功！');
+                        } else {
                             this.collects = parseInt(this.collects) - 1;
+                            this.$message.success('取消收藏成功！');
                         }
-                        this.$message.success('收藏成功！');
                     }
                 }), (response) => {
                     //console.log("error");

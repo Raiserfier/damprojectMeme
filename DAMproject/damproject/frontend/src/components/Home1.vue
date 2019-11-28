@@ -251,8 +251,8 @@
                     e.currentTarget.className = "icon style2 fa-thumbs-up";
                     flag = false;
                 }
-                console.log(e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.getAttribute('id'));
-                console.log(this.my_id);
+                // console.log(e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.getAttribute('id'));
+                // console.log(this.my_id);
                 this.$api.post('/thumb_image ', {
                     id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.getAttribute('id'),
                     email: this.my_id, state: flag
@@ -285,7 +285,10 @@
                     console.log(response.data);
                     if (response.data === 'SUCCESS') {
                         //改变按钮状态
-                        this.$message.success('收藏成功！');
+                        if (flag)
+                            this.$message.success('收藏成功！');
+                        else
+                            this.$message.success('取消收藏成功！');
                     }
                 }), (response) => {
                     //console.log("error");
