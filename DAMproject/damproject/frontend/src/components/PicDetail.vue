@@ -15,9 +15,9 @@
         <div class="info_window">
           <div class="Uploader">
             <div class="Userpic_window">
-              <a href="" class="User_pic" :src="portrait" @click="to_owner_channel"
+              <a class="User_pic" :src="portrait" @click="to_owner_channel"
                  :style="{'background-image':'url'+'(\'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3900046848,1834418761&fm=26&gp=0.jpg\')'}"></a>
-              <h2 class="User_name" @click="to_owner_channel"><a href="">{{name}}</a></h2>
+              <h2 class="User_name" @click="to_owner_channel">{{name}}</h2>
             </div>
             <div>
               <p class="user_introduction">
@@ -167,7 +167,6 @@
                     FileSaver.saveAs(blob, this.filename);
                     this.$message.success('下载成功！');
                 }), (response) => {
-                    //console.log("error");
                     this.$message.error('下载失败！');
                 }
             },
@@ -218,7 +217,18 @@
             },
             to_owner_channel() {
                console.log("router",this.owner_email);
-                this.$router.replace({path: '/channel/' + this.owner_email + '/all' + '/hot'});
+                this.$api.post('/is_private', {
+                    email:this.owner_email
+                }).then(response => {
+                    if (response.data !== "no such user") {
+                        if(response.data !== 1)
+                           this.$router.replace({path: '/channel/' + this.owner_email + '/all' + '/hot'});
+                        else
+                           this.$message.error('对方主页不开放');
+                    }
+                }), (response) => {
+                    this.$message.error('举报失败！');
+                }
             },
             report() {
                 this.$api.post('/report_image', {

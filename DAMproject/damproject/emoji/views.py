@@ -19,14 +19,11 @@ def upload_img(request):
             tags = json.loads(tagstr)
             img = request.POST.get("img")
             state = request.POST.get("state")
-            private = request.POST.get("private")
             user = User.objects.get(email=email)
-            img = Image.objects.create(classification=classification, img=img, owner=user, private=int(private))
-            #tags = tagstr.split('#')
+            img = Image.objects.create(classification=classification, img=img, owner=user)
             for tag in tags:
                 print(tag, "okkk")
                 taginfo = Tag.objects.filter(content=tag)
-                # print("okkk")
                 if taginfo.exists():
                     tagobj = taginfo.first()
                     tagobj.frequency += 1
@@ -36,7 +33,6 @@ def upload_img(request):
                 tagobj = Tag.objects.get(content=tag)  # 再取一遍为了让数据库添加default项目
                 imgobj = Image.objects.get(id=img.id)
                 Image2tag.objects.create(image=imgobj, tag=tagobj)
-            # state = True
             if state == "true":
                 add_watermark(img.id, user.username)
             return HttpResponse("SUCCESS")
@@ -433,7 +429,7 @@ def get_user_image(request):
     try:
         data = []
         type = request.POST.get('type')
-        email = request.POST.get('email', default='')
+        email = request.POST.get('email')
         email_user = request.POST.get('email_user')
         key = request.POST.get('key', default='all')
         print(type)
@@ -447,7 +443,7 @@ def get_user_image(request):
             return HttpResponse(json.dumps(data))
         # 用户上传图片
         elif type == '2':
-            user = User.objects.get(email=email_user)
+            user = User.objects.get(email=email)
             if user.manager:
                 reports = Report.objects.all()
                 for report in reports:
@@ -791,6 +787,24 @@ def delete_report(request):
         return HttpResponse("SUCCESS")
     except:
         return HttpResponse("没删着啊大兄弟")
+
+
+def is_private(request):
+    try:
+        email = request.POST.get("email")
+        user = User.objects.get(email=email)
+        return HttpResponse(user.private)
+    except:
+        return HttpResponse("no such user")
+
+
+def get_username(request):
+    try:
+        email = request.POST.get("email")
+        user = User.objects.get(email=email)
+        return HttpResponse(user.username)
+    except:
+        return HttpResponse("no such user")
 
 
 # Create your views here.

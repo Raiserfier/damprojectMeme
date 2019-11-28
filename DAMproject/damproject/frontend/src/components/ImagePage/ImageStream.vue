@@ -166,7 +166,6 @@
                         this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all'+'/hot' });
                     }
                 }), (response) => {
-                    //console.log("error");
                     this.$message.error('删除失败！');
                 }
             },
