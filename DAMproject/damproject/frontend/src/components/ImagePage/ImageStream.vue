@@ -143,10 +143,32 @@
                 }
             },
             user_delete(e) {
-
+                this.$api.post('/delete_image', {
+                    id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
+                }).then(response => {
+                    if (response.data === 'SUCCESS') {
+                        this.$message.success('删除成功！');
+                        this.$router.replace({path: '/'});
+                        this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all'+'/hot' });
+                    }
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('删除失败！');
+                }
             },
             manager_delete(e) {
-
+                this.$api.post('/delete_image', {
+                    id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.getAttribute('id'),
+                }).then(response => {
+                    if (response.data === 'SUCCESS') {
+                        this.$message.success('删除成功！');
+                        this.$router.replace({path: '/'});
+                        this.$router.replace({ path: '/channel/'+this.$store.state.user_id+'/all'+'/hot' });
+                    }
+                }), (response) => {
+                    //console.log("error");
+                    this.$message.error('删除失败！');
+                }
             },
             By_heat(e) {
                 this.$router.push('hot');

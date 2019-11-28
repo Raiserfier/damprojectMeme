@@ -158,7 +158,7 @@ def delete_image(request):
             if deletech in user.like_images:
                 user.like_images = user.like_images.replace('#' + image_id + '#', '')
                 user.save()
-        return HttpResponse("SUCCESS")
+        return HttpResponse('SUCCESS')
     except:
         return HttpResponse("Image not Received")
 
