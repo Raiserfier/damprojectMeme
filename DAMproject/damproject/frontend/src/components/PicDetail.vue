@@ -98,6 +98,8 @@
                         this.portrait = response.data.portrait;
                         this.profile = response.data.profile;
                         this.owner_email = response.data.owner_email;
+                        this.isLike = response.data.state;
+                        this.isCollect = response.data.state;
                         console.log(this.owner);
                     } else {
                         this.$message.warning('图片信息获取失败');
@@ -135,21 +137,14 @@
             },
             //点赞
             thumb_click(e) {
-                let flag = true;
-                if (!this.isLike) {
-                    this.isLike = true;
-                    this.favorites = parseInt(this.favorites) + 1;
-                } else {
-                    this.isLike = false;
-                    this.favorites = parseInt(this.favorites) - 1;
-                    flag = false;
-                }
+                this.isLike = !this.isLike;
                 this.$api.post('/thumb_image', {
                     id: this.$route.params.pic,
-                    state: flag,
+                    state: this.isLike,
                 }).then(response => {
                     console.log('1111111' + response.data);
                     if (response.data === 'SUCCESS') {
+                        this.favorites = parseInt(this.favorites) + 1;
                         this.$message.success('点赞成功！');
                     }
                 }), (response) => {
@@ -159,22 +154,20 @@
             },
             //收藏
             fav_click(e) {
-                let flag = true;
-                if (!this.isCollect) {
-                    this.isCollect = true;
-                    this.collects = parseInt(this.collects) + 1;
-                } else {
-                    this.isCollect = false;
-                    this.collects = parseInt(this.collects) - 1;
-                    flag = false;
-                }
+                this.isCollect = !this.isCollect;
                 this.$api.post('/like_image ', {
                     id: this.$route.params.pic,
-                    state: flag,
+                    state: this.isCollect,
                 }).then(response => {
                     console.log('2222222' + response.data);
                     if (response.data === 'SUCCESS') {
                         //改变按钮状态
+                        if(this.isCollect){
+                            this.collects = parseInt(this.collects) + 1;
+                        }
+                        else{
+                            this.collects = parseInt(this.collects) - 1;
+                        }
                         this.$message.success('收藏成功！');
                     }
                 }), (response) => {
