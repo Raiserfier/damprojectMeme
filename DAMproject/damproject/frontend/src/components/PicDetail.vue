@@ -105,10 +105,10 @@
                         this.isCollect = response.data.state;
                         console.log(this.isLike);
                     } else {
-                        this.$message.warning('图片信息获取失败');
+                        this.$message.warning('宁还没有登录，请登录/注册(=w=)');
                     }
                 }), (response) => {
-                    this.$message.error('图片信息获取失败');
+                    this.$message.error('宁还没有登录，请登录/注册(=w=)');
                 }
             }//用户页
         },
