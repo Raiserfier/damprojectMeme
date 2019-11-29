@@ -42,7 +42,7 @@
               <div v-for="(img, index) in imgList[count-1]"
                  class="v-waterfall-item"
                  :style="{top:140+ (count-1)*400+ 'px',left:30+(index)*300+'px',width:250+'px',height:250+'px','padding-right':10+'px'}">
-              <div class="icons"> <!-- 三个icon按钮 -->
+              <div class="icons" v-if="$store.state.user_id !== '99'"> <!-- 三个icon按钮 -->
                 <ul @mouseout="leaveul($event)" @mouseover="enterul($event)"
                     :style="{top:imgheight-395+'px',left:3+'%'}">
                   <li><p @click="fav_click($event)" class="icon style2 fa-star" v-bind:class="{ Collected:img.state }"><span class="label">Collect</span></p>
@@ -68,41 +68,6 @@
             </div>
           </div>
           </section>
-<!--          &lt;!&ndash;点赞数最高的十张图&ndash;&gt;-->
-<!--            <div class="Cat">-->
-<!--            <div>-->
-<!--              <h2 class="Titleeeee" :style="{'padding-top':340+'px'}">{{'流行表情包Top'+pop_num}}</h2>-->
-<!--            </div>-->
-<!--            <div class="Line">-->
-<!--              <div v-for="(img, index) in popList"-->
-<!--                 class="v-waterfall-item"-->
-<!--                 :style="{top:140+(cate_num)*400+index/4+ 'px',left:30+(index%4)*300+'px',width:250+'px',height:250+'px','padding-right':10+'px'}">-->
-<!--              <div class="icons"> &lt;!&ndash; 三个icon按钮 &ndash;&gt;-->
-<!--                <ul @mouseout="leaveul($event)" @mouseover="enterul($event)"-->
-<!--                    :style="{top:imgheight-395+'px',right:3+'%'}">-->
-<!--                  <li><p @click="fav_click($event)" class="icon style2 fa-star" v-bind:class="{ Collected:img.state }"><span class="label">Collect</span></p>-->
-<!--                  </li>-->
-<!--                  <li><p @click="thumb_click($event)" class="icon style2 fa-thumbs-up" v-bind:class="{ Likeded:img.state }"><span class="label">Like</span></p>-->
-<!--                  </li>-->
-<!--                  <li><router-link :to="'/details/'+img.id" class="icon style2 fa-info"><span class="label">ForMore</span></router-link>-->
-<!--                  </li>-->
-<!--                </ul>-->
-<!--              </div>-->
-<!--              <div class="labels">&lt;!&ndash; labels链接 &ndash;&gt;-->
-<!--                <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"-->
-<!--                    class="KSVul">-->
-<!--                  <router-link :to="'/category/'+img.classification">{{'#'+img.classification}}</router-link>-->
-<!--                  <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag">{{'#'+tag}}</router-link>-->
-<!--                </ul>-->
-<!--              </div>-->
-<!--              <div class="Img-Iput">-->
-<!--                <div class="img_inputBox">-->
-<!--                  <img :id="img.id" :src="img.img" alt="" class="img-inputer" @mouseenter="enterpic($event)" @mouseleave="leavepic($event)">-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            </div>-->
-<!--          </div>-->
         </div>
       </div>
 
@@ -166,7 +131,8 @@
             },
             enterpic(e) {
                 //icon
-                e.currentTarget.parentElement.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
+                if(this.$store.state.user_id !== '99')
+                  e.currentTarget.parentElement.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOver";
                 var label_number = e.currentTarget.parentElement.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.parentElement.previousElementSibling.firstElementChild.children;
                 for (var i = 0; i < label_number; i++) {
@@ -176,7 +142,8 @@
             },
             leavepic(e) {
                 //icon
-                e.currentTarget.parentElement.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
+                if(this.$store.state.user_id !== '99')
+                  e.currentTarget.parentElement.parentElement.previousElementSibling.previousElementSibling.firstElementChild.className = "IconOut";
                 var label_number = e.currentTarget.parentElement.parentElement.previousElementSibling.firstElementChild.childElementCount;
                 var children = e.currentTarget.parentElement.parentElement.previousElementSibling.firstElementChild.children;
                 for (var i = 0; i < label_number; i++) {
@@ -210,7 +177,8 @@
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOver";
                 }
-                e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
+                if(this.$store.state.user_id !== '99')
+                  e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOver";
                 e.currentTarget.parentElement.nextElementSibling.firstElementChild.className="img_inputBox imgBox"
             },
             leaveul_la(e) {
@@ -219,8 +187,9 @@
                 for (var i = 0; i < label_number; i++) {
                     children[i].className = "LabelsOut";
                 }
-                e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOut";
-                e.currentTarget.parentElement.nextElementSibling.nextElementSibling.firstElementChild.className="img_inputBox"
+                if(this.$store.state.user_id !== '99')
+                  e.currentTarget.parentElement.previousElementSibling.firstElementChild.className = "IconOut";
+                e.currentTarget.parentElement.nextElementSibling.firstElementChild.className="img_inputBox"
             },
             getcate() {
                 this.$api.post('/get_images', {number: this.each_num, email: this.my_id}).then(response => {
@@ -282,8 +251,8 @@
                     e.currentTarget.className = "icon style2 fa-thumbs-up";
                     flag = false;
                 }
-                console.log(e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.getAttribute('id'));
-                console.log(this.my_id);
+                // console.log(e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.getAttribute('id'));
+                // console.log(this.my_id);
                 this.$api.post('/thumb_image ', {
                     id: e.target.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.getAttribute('id'),
                     email: this.my_id, state: flag
@@ -316,7 +285,10 @@
                     console.log(response.data);
                     if (response.data === 'SUCCESS') {
                         //改变按钮状态
-                        this.$message.success('收藏成功！');
+                        if (flag)
+                            this.$message.success('收藏成功！');
+                        else
+                            this.$message.success('取消收藏成功！');
                     }
                 }), (response) => {
                     //console.log("error");
