@@ -255,7 +255,7 @@
   }
 
   a, span, input {
-    font-family: HYZhengYuan-75S, 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+    font-family: HYYakuHei-75W, HYZhengYuan-75S, 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
   }
 
   /* Header */
@@ -510,7 +510,7 @@
     padding: 0;
     background: #494A5F;
     font-weight: 500;
-    font-family: "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
+    font-family: HYYakuHei-55W, HYZhengYuan-55W, "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
   }
 
   form {

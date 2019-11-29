@@ -9,7 +9,7 @@
 		padding: 0;
 		border: 0;
 		font-size: 100%;
-    font-family: HYZhengYuan-55W, sans-serif;
+    font-family: HYYakuHei-55W, HYZhengYuan-55W, sans-serif;
     vertical-align: baseline;
 
 	}
@@ -96,7 +96,7 @@
 		margin: 0;
 		padding: 0 1em 0 1em;
 		font-weight: 500;
-		font-family: HYZhengYuan-55W, "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
+		font-family: HYYakuHei-55W, HYZhengYuan-55W, "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
 		transition:all 0.3s;
 		transition-duration: 0.2s;
 		text-align: center;
@@ -157,7 +157,7 @@
 
 	body, input, select, textarea {
 		color: rgba(255, 255, 255, 1);
-		font-family: HYZhengYuan-55W, "Source Sans Pro", sans-serif;
+		font-family: HYYakuHei-55W, HYZhengYuan-55W, "Source Sans Pro", sans-serif;
 		font-size: 14pt;
 		font-weight: 300;
 		line-height: 1.65;
@@ -338,7 +338,7 @@
 			color: #fff;
 			font-size: 5em;
 			font-weight: 400;
-			font-family: HYZhengYuan-75W, 'Passion One', cursive;
+			font-family: HYYakuHei-75W, HYZhengYuan-75W, 'Passion One', cursive;
 			margin: 0;
 		}
 

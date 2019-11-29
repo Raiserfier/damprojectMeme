@@ -60,7 +60,7 @@
           </div>
           <div class="buttonGroup">
             <button type="button" class="Button_mask choosen" style="border-radius: 5px 0 0 5px" @click="user_public($event)">同步到广场</button>
-            <button type="button" class="Button_mask unchoosen" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="user_private($event)">仅自己可见</button>
+            <button type="button" class="Button_mask unchoosen" style="border-radius: 0 5px 5px 0;margin-left: -6px;" @click="user_private($event)">仅自己可见</button>
           </div>
 
           <div class="uuppp"><!--上传按钮-->
@@ -649,7 +649,7 @@
     font-weight: 400;
     margin: 0;
     text-transform: none;
-    font-family: nexablack, sans-serif;
+    font-family: HYZhengYuan-55W, nexablack, sans-serif;
     line-height: 1.45;
   }
 
@@ -684,7 +684,7 @@
     margin: 0;
     padding: 1% 1em 0 1em;
     font-weight: 500;
-    font-family: "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
+    font-family: HYZhengYuan-55W, "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
     transition: all 0.3s;
     transition-duration: 0.2s;
     text-align: center;
@@ -709,7 +709,7 @@
 
   /*Select*/
   select.selectTT {
-    font-family: "微软雅黑", serif;
+    font-family: HYZhengYuan-55W, "微软雅黑", serif;
     background: rgba(44, 44, 47, 1);
     width: 300px;
     height: 40px;

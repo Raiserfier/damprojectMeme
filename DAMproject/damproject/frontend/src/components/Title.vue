@@ -18,7 +18,7 @@
 <style scoped>
 .Titleeeee {
     padding-top: 90px;
-    padding-left: 16%;
+    padding-left: 223px;;
     /*cursor: pointer;*/
     text-decoration: none;
     font-family: HYZhengYuan-75W, sans-serif;
