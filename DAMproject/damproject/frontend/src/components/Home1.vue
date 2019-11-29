@@ -16,8 +16,8 @@
             <router-link :to="'/details/'+img.id+'/hot'">
               <div class="BKW label_Toppp" @mouseenter="imgScale($event)" @mouseleave="imgScale_la($event)"><!-- labels链接 -->
                 <div class="label_Top">
-                  <router-link :to="'/category/'+img.classification+'/hot'" style="font-family: HYZhengYuan-85W,serif;">{{'#'+img.classification}}</router-link>
-                  <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'" style="font-family: HYZhengYuan-85W,serif;">{{'#'+tag+' '}}</router-link>
+                  <router-link :to="'/category/'+img.classification+'/hot'" style="font-family: HYZhengYuan-75W, serif;">{{'#'+img.classification}}</router-link>
+                  <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'" style="font-family: HYZhengYuan-75W, serif;">{{'#'+tag+' '}}</router-link>
                 </div>
               </div>
             </router-link>
@@ -352,7 +352,7 @@
     cursor: pointer;
     text-decoration: none;
     /*font-family: Serif, serif;*/
-    font-family: HYZhengYuan-75W, sans-serif;
+    font-family: HYZhengYuan-75W, "Source Sans Pro", sans-serif;
     font-size: 35px;
     font-weight: 300;
     margin: 0;

@@ -372,7 +372,7 @@
   }
 
   .setting_title {
-    font-family: nexablack, sans-serif;
+    font-family:  HYZhengYuan-75W, "nexablack", serif;
     -webkit-font-smoothing: antialiased;
     font-size: 36px;
     margin-bottom: 40px;
@@ -531,7 +531,7 @@
   }
 
   .unchoosen {
-    background: #2c2c2f;
+    background: rgb(60, 60, 60);
     color: white;
   }
 </style>
