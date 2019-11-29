@@ -70,6 +70,7 @@ def create_user(request):
         if userinfo:
             return HttpResponse("Exist")
         else:
+            print(userinfo)
             User.objects.create(username=username, email=email, password=password)
             return HttpResponse("SUCCESS")
     except:
@@ -103,8 +104,6 @@ def like_image(request):
         email = request.POST.get("email")
         # print(email)
         image_id = request.POST.get("id")
-        # print(image_id)
-        # email = request.POST.get("email")
         state = request.POST.get("state")
         image = Image.objects.get(id=image_id)
         user = User.objects.get(email=email)
@@ -810,11 +809,24 @@ def is_private(request):
         return HttpResponse("no such user")
 
 
-def get_username(request):
+def get_user_channel(request):
     try:
         email = request.POST.get("email")
         user = User.objects.get(email=email)
-        return HttpResponse(user.username)
+        if user.portrait == '' or user.portrait =='manager':
+            pic_path = './emoji/images/default.jpg'
+            with open(pic_path, 'rb') as f:
+                image_byte = f.read()
+                image_base64 = str(base64.b64encode(image_byte), encoding='utf-8')
+            portrait = 'data:image/jpg;base64' + ',' + image_base64
+
+        else:
+            portrait = user.portrait
+        data = {
+            'username': user.username,
+            'portrait': portrait
+        }
+        return HttpResponse(json.dumps(data))
     except:
         return HttpResponse("no such user")
 
