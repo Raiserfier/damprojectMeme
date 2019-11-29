@@ -5,7 +5,7 @@
       <div class="inner">
         <header>
           <!-- 用户头像 -->
-          <span class="avatar"><img src="../assets/images/avatar.jpg" alt=""/></span>
+          <span class="avatar"><img :src="portrait" alt=""/></span>
           <!-- 用户名 调state -->
           <h1>{{this.username}}</h1>
           <!--					<p>A responsive video gallery template with a functional lightbox<br />-->
@@ -51,14 +51,16 @@
                 msg: "在图库中搜索...",
                 keyw: 'all',
                 username:'Test',
+                portrait: '',
             };
         },
         created(){
              if (this.$route.params.id !== undefined) {
-                this.$api.post('/get_username', {email: this.$route.params.id}).then(response => {
+                this.$api.post('/get_user_channel', {email: this.$route.params.id}).then(response => {
                     console.log(response.data);
                     if (response.data !== 'no such user') {
-                        this.username = response.data;
+                        this.username = response.data.username;
+                        this.portrait = response.data.portrait;
                     } else {
                         this.$message.warning('主页加载错误');
                     }
