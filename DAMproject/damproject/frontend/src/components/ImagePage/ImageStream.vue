@@ -6,7 +6,7 @@
                 @click="By_heat($event)">按热度
         </button>
         <button type="button" class="Button_mask_upd unchoosen_upd"
-                style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="By_time($event)">按时间
+                style="border-radius: 0 5px 5px 0;margin-left: -6px;" @click="By_time($event)">按时间
         </button>
         <button v-if="this.$store.state.manager && this.$route.params.type==='channel'" type="button"
                 class="Button_mask_del" style="border-radius: 5px;margin-left: 20px;" @click="delete_all($event)">一键清除
@@ -53,9 +53,9 @@
             </div>
             <div class="labels">
               <ul @mouseover="enterul_la($event)" @mouseout="leaveul_la($event)" class="KSVul"
-                  :style="{top:img.height-40+'px', left:3+'%'}"><!-- labels链接 -->
+                  :style="{top:img.height-40+'px', left:10+'px'}"><!-- labels链接 -->
                 <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
-                <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag}}</router-link>
+                <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag+' '}}</router-link>
                 <!--                <div>{{img.thumbs + '@' + img.likes}}</div>-->
                 <!--                <div>{{img.upload_time}}</div>-->
               </ul>

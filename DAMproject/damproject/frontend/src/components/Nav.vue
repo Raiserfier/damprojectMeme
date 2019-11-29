@@ -2,46 +2,16 @@
   <div class="top-nav">
     <!-- Header -->
     <header id="header" class="hello">
-      <router-link to="/" class="logo"><strong>MEEEEME</strong></router-link>
+      <router-link to="/" class="logo"><strong class="LOGO">MEEEEME</strong></router-link>
       <nav>
         <div class="fnwVXu"><!-- 导航栏 -->
           <ul>
             <li v-for="c in categories" class="topBar">
-              <router-link :to="'/category/'+c.id+'/hot'" class="fnxsKA">{{c.name}}</router-link>
+              <router-link :to="'/category/'+c.id+'/hot'" class="fnxsKA" style="color: white">{{c.name}}</router-link>
             </li>
-            <!--            <li class="topBar" >-->
-            <!--              <router-link to="/animal" class="fnxsKA">动物</router-link>-->
-            <!--            </li>-->
-            <!--            <li class="topBar" >-->
-            <!--              <router-link to="/food" class="fnxsKA">食物</router-link>-->
-            <!--            </li>-->
-            <!--            <li class="topBar" >-->
-            <!--              <router-link to="/anime" class="fnxsKA">动画</router-link>-->
-            <!--            </li>-->
-            <!--            <li class="topBar" >-->
-            <!--              <router-link to="/game" class="fnxsKA">游戏</router-link>-->
-            <!--            </li>-->
-            <!--            <li class="topBar" >-->
-            <!--              <router-link to="/people" class="fnxsKA">人物</router-link>-->
-            <!--            </li>-->
-
-            <!--            * 测试-->
-<!--            <li class="topBar">-->
-<!--              <router-link to="/upload" class="fnxsKA">测试:上传</router-link>-->
-<!--            </li>-->
-<!--            <li class="topBar">-->
-<!--              <router-link :to="'/channel/'+this.$store.state.user_id+'/all'" class="fnxsKA">我的上传</router-link>-->
-<!--            </li>-->
-<!--            <li class="topBar">-->
-<!--              <router-link :to="'/favorite/'+this.$store.state.user_id+'/all'" class="fnxsKA">我的收藏</router-link>-->
-<!--              &lt;!&ndash;              <router-link to="/favorite" class="fnxsKA">我的收藏</router-link>&ndash;&gt;-->
-<!--            </li>-->
-            <li class="topBar">
-              <router-link to="/recommend/hot" class="fnxsKA">猜你喜欢</router-link>
+            <li class="topBar" v-if="this.$store.state.login">
+              <router-link to="/recommend/hot" class="fnxsKA" style="color: white">猜你喜欢</router-link>
             </li>
-<!--            <li class="topBar">-->
-<!--              <router-link to="/login" class="fnxsKA">登录</router-link>-->
-<!--            </li>-->
           </ul>
         </div>
         <div class="container"><!-- 搜索框 -->
@@ -65,7 +35,8 @@
 
           <div v-if="!this.$store.state.login"><!--注册按钮-->
             <form>
-              <button class="upload register"><span><router-link class="upload-button" to="/register">注册</router-link></span>
+              <button class="upload register"><span><router-link class="upload-button"
+                                                                 to="/register">注册</router-link></span>
               </button>
             </form>
           </div>
@@ -142,9 +113,9 @@
         created() {
             // this.get_categories();
         },
-        mounted(){
+        mounted() {
             this.my_id = this.$store.state.user_id;
-            console.log('create :  '+this.$store.state.user_id);
+            console.log('create :  ' + this.$store.state.user_id);
         },
         computed: {
             key() {
@@ -210,45 +181,57 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  #header .logo{
+  #header .logo {
+    font-family: gilroy-blackitalic-7, serif;
     padding-left: 20px;
   }
-  #menu{
+
+  #menu {
     right: 30px;
   }
-  .Menu{
+
+  .Menu {
     left: 468px;
   }
+
   form {
     margin: 0 0 -6.15em;
   }
+
   div.search {
     padding: 0 175px 0 0;
   }
-  button.login{
-   left: 350px;
+
+  button.login {
+    left: 350px;
   }
-  button.register{
+
+  button.register {
     left: 470px;
     background: rgb(89, 89, 89);
   }
-  button.upp{
-   left: 350px;
+
+  button.upp {
+    left: 350px;
   }
-  button.register:hover{
-		color: rgb(89, 89, 89);
+
+  button.register:hover {
+    color: rgb(89, 89, 89);
     background: white;
-	}
+  }
+
   .fnwVXu {
     margin: 0 18em 0 14em;
   }
+
   #header nav a:not(.upload-button .Menu) {
     padding: 0 1.5em;
   }
 
-  .bar1 button{
+  .bar1 button {
     left: 290px;
   }
+
   .MENU {
     /*top:225px !important;*/
     visibility: visible !important;
@@ -272,7 +255,7 @@
   }
 
   a, span, input {
-    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+    font-family: HYZhengYuan-75S, 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
   }
 
   /* Header */
@@ -575,7 +558,7 @@
   }
 
   .bar1 button {
-    top: 60px;
+    top: 59px;
     right: 0;
     background: rgb(238, 106, 132);
     border-radius: 0 5px 5px 0;
@@ -674,5 +657,11 @@
       height: 15%;
       width: 15%;
     }
+  }
+
+  .LOGO {
+    font-family: gilroy-blackitalic-7, serif;
+    font-size: 25px;
+    margin-left: -20px;
   }
 </style>

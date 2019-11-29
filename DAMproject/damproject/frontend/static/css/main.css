@@ -9,8 +9,9 @@
 		padding: 0;
 		border: 0;
 		font-size: 100%;
-		font: inherit;
-		vertical-align: baseline;
+    font-family: HYZhengYuan-55W, sans-serif;
+    vertical-align: baseline;
+
 	}
 
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -62,7 +63,7 @@
 	}
 
 	.fnxsKA {
-		font-family: '苹方', serif;
+		font-family: HYZhengYuan-75W, serif;
 		width: 100%;
 		text-align: center;
 		font-size: 15px;
@@ -78,196 +79,6 @@
 		-webkit-box-pack: center;
 		justify-content: center;
 	}
-
-/*!* Header *!*/
-
-/*	body {*/
-/*		padding-top: 4.125em;*/
-/*	}*/
-
-/*	#header {*/
-/*		background: #1c1c1c;*/
-/*		color: rgba(255, 255, 255, 0.75);*/
-/*		cursor: default;*/
-/*		height: 4.25em;*/
-/*		left: 0;*/
-/*		line-height: 4.25em;*/
-/*		position: fixed;*/
-/*		text-align: right;*/
-/*		top: 0;*/
-/*		width: 100%;*/
-/*		z-index: 10001;*/
-/*	}*/
-
-/*		#header .logo {*/
-/*			display: inline-block;*/
-/*			height: inherit;*/
-/*			left: 1.25em;*/
-/*			line-height: inherit;*/
-/*			margin: 0;*/
-/*			padding: 0;*/
-/*			position: absolute;*/
-/*			top: 0;*/
-/*			color: #fff;*/
-/*			font-size: 1.25em;*/
-/*			text-decoration: none;*/
-/*		}*/
-
-/*			#header .logo strong {*/
-/*				color: inherit;*/
-/*				font-weight: 700;*/
-/*			}*/
-
-/*			!* topBar*!*/
-/*			#header .topBar {*/
-/*				line-height: inherit;*/
-/*				margin: 0;*/
-/*				padding: 0;*/
-/*				top: 0;*/
-/*				text-decoration: none;*/
-/*				cursor: pointer;*/
-/*				float: left;*/
-/*				height: 4.25em;*/
-/*				position: relative;*/
-/*				display: flex;*/
-/*				-webkit-box-flex: 1;*/
-/*				flex-grow: 1;*/
-/*				-webkit-box-align: center;*/
-/*				align-items: center;*/
-/*			}*/
-
-/*				a.fnxsKA:hover  {*/
-/*					color: rgb(255, 255, 255);*/
-/*				}*/
-
-/*				@media screen and (max-width: 1280px) {*/
-/*					.fnxsKA {*/
-/*						font-size: 15px;*/
-/*					}*/
-/*					.fnwVXu {*/
-/*						width: 496px;*/
-/*						margin: 0 18em 0 15em;*/
-/*					}*/
-/*				}*/
-
-/*				@media screen and (max-width: 980px) {*/
-/*					.fnxsKA {*/
-/*						font-size: 10px;*/
-/*					}*/
-/*					.fnwVXu {*/
-/*						width: 496px;*/
-/*						margin: 0 12em 0 15em;*/
-/*					}*/
-/*				}*/
-
-/*				@media screen and (max-width: 736px) {*/
-/*					.fnxsKA {*/
-/*						font-size: 5px;*/
-/*					}*/
-/*					.fnwVXu {*/
-/*						width: 496px;*/
-/*						margin: 0 9em 0 10em;*/
-/*					}*/
-/*				}*/
-
-/*		#header nav a {*/
-/*			-moz-transition: color 0.2s ease-in-out;*/
-/*			-webkit-transition: color 0.2s ease-in-out;*/
-/*			-ms-transition: color 0.2s ease-in-out;*/
-/*			transition: color 0.2s ease-in-out;*/
-/*			display: inline-block;*/
-/*			padding: 0 0.75em;*/
-/*			color: inherit;*/
-/*			text-decoration: none;*/
-/*		}*/
-
-/*			#header nav a:hover {*/
-/*				color: #fff;*/
-/*			}*/
-
-/*			#header nav a[href="#menu"] {*/
-/*				text-decoration: none;*/
-/*				-webkit-tap-highlight-color: transparent;*/
-/*			}*/
-
-/*				#header ul {*/
-/*					box-sizing: border-box;*/
-/*					-webkit-font-smoothing: antialiased;*/
-/*					text-decoration: none;*/
-/*					list-style: none;*/
-/*					margin-block-start: 0;*/
-/*					margin-block-end: 0;*/
-/*					margin-inline-start: 0;*/
-/*					margin-inline-end: 0;*/
-/*					padding-inline-start: 0;*/
-/*				}*/
-
-/*				#header nav a[href="#menu"]:before {*/
-/*					content: "";*/
-/*					-moz-osx-font-smoothing: grayscale;*/
-/*					-webkit-font-smoothing: antialiased;*/
-/*					font-family: FontAwesome, serif;*/
-/*					font-style: normal;*/
-/*					font-weight: normal;*/
-/*					text-transform: none !important;*/
-/*				}*/
-
-/*				#header nav a[href="#menu"]:before {*/
-/*					margin: 0 0.5em 0 0;*/
-/*				}*/
-
-/*			#header nav a + a[href="#menu"]:last-child {*/
-/*				border-left: solid 1px rgba(255, 255, 255, 0.25);*/
-/*				padding-left: 1.25em;*/
-/*				margin-left: 0.5em;*/
-/*			}*/
-
-/*			#header nav a:last-child {*/
-/*				padding-right: 2em;*/
-/*			}*/
-
-/*			@media screen and (max-width: 736px) {*/
-
-/*				#header nav a {*/
-/*					padding: 0 0.5em;*/
-/*				}*/
-
-/*					#header nav a + a[href="#menu"]:last-child {*/
-/*						padding-left: 1em;*/
-/*						margin-left: 0.25em;*/
-/*					}*/
-
-/*					#header nav a:last-child {*/
-/*						padding-right: 1em;*/
-/*					}*/
-
-/*			}*/
-
-/*	@media screen and (max-width: 980px) {*/
-
-/*		body {*/
-/*			padding-top: 44px;*/
-/*		}*/
-
-/*		#header {*/
-/*			height: 44px;*/
-/*			line-height: 44px;*/
-/*		}*/
-
-/*			#header .logo {*/
-/*				left: 1em;*/
-/*				font-size: 1em;*/
-/*			}*/
-
-/*	}*/
-
-/*	@media screen and (max-width: 480px) {*/
-
-/*		#header {*/
-/*			min-width: 320px;*/
-/*		}*/
-
-/*	}*/
 
 /* Upload */
 	button.upload {
@@ -285,7 +96,7 @@
 		margin: 0;
 		padding: 0 1em 0 1em;
 		font-weight: 500;
-		font-family: "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
+		font-family: HYZhengYuan-55W, "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
 		transition:all 0.3s;
 		transition-duration: 0.2s;
 		text-align: center;
@@ -341,191 +152,12 @@
 				width: 80px;
 			}
 		}
-/*!* Search *!*/
-/*.container {*/
-/*		bottom: 0;*/
-/*		height: 107px;*/
-/*		position: absolute;*/
-/*		line-height: 150px;*/
-/*		right: 120px;*/
-/*		width: 500px;*/
-/*		margin: 0 auto;*/
-/*	}*/
-
-/*	button.container {*/
-/*		-webkit-appearance: button;*/
-/*		-webkit-writing-mode: horizontal-tb !important;*/
-/*		text-rendering: auto;*/
-/*		color: buttontext;*/
-/*		letter-spacing: normal;*/
-/*		word-spacing: normal;*/
-/*		text-transform: none;*/
-/*		text-indent: 0;*/
-/*		text-shadow: none;*/
-/*		display: inline-block;*/
-/*		text-align: center;*/
-/*		align-items: flex-start;*/
-/*		cursor: default;*/
-/*		background-color: buttonface;*/
-/*		box-sizing: border-box;*/
-/*		margin: 0;*/
-/*		font: 400 13.3333px Arial;*/
-/*		padding: 1px 6px;*/
-/*		border-width: 2px;*/
-/*		border-style: outset;*/
-/*		border-color: buttonface;*/
-/*		border-image: initial;*/
-/*	}*/
-/*	div.search {padding: 0 0;}*/
-
-/*	body.container {*/
-/*		margin: 0;*/
-/*		padding: 0;*/
-/*		background: #494A5F;*/
-/*		font-weight: 500;*/
-/*		font-family: "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;*/
-/*	}*/
-/*		form {*/
-/*            position: relative;*/
-/*            margin: 0 0 -6.2em 0 ;*/
-/*        }*/
-
-/*        input, button {*/
-/*            border: none;*/
-/*            outline: none;*/
-/*        }*/
-
-/*        input {*/
-/*            width: 100%;*/
-/*            height: 33px;*/
-/*            padding-left: 13px;*/
-/*        }*/
-
-/*        button {*/
-/*            height: 42px;*/
-/*            width: 42px;*/
-/*            cursor: pointer;*/
-/*            position: absolute;*/
-/*        }*/
-
-/*	::-webkit-input-placeholder { !* WebKit, Blink, Edge *!*/
-/*		color: rgba(198, 196, 196, 0.73);*/
-/*	}*/
-
-/*		.bar1 form {*/
-/*			width: 200px;*/
-/*			margin: 0 0 0 12em ;*/
-/*		}*/
-/*        .bar1 input {*/
-/*			border: 0;*/
-/*			padding: 5px 40px 5px 13px;*/
-/*			font-size: 14px;*/
-/*			border-bottom: solid 1px;*/
-/*            text-shadow: none;*/
-/*			border-radius: 6px;*/
-/*            background: #ffffff;*/
-/*            color: #343232;*/
-/*			outline: none;*/
-/*        }*/
-/*        .bar1 button {*/
-/*            top: 59px;*/
-/*            right: 0;*/
-/*            background: rgb(238, 106, 132);*/
-/*            border-radius: 0 5px 5px 0;*/
-/*			height: 33px;*/
-/*			width: 35px;*/
-/*			cursor: pointer;*/
-/*			position: absolute;*/
-/*			border: none;*/
-/*        }*/
-/*        .bar1 button:before {*/
-/*            content: "\f002";*/
-/*			font-family: FontAwesome, serif;*/
-/*            font-size: 16px;*/
-/*            color: #ffffff;*/
-/*        }*/
-
-/*		.bar3 form {*/
-/*			width: 400px;*/
-/*			margin: 3em 0 0 3.5em ;*/
-/*		}*/
-/*        .bar3 input {*/
-/*			border: 0;*/
-/*			padding: 5px 40px 5px 13px;*/
-/*			font-size: 14px;*/
-/*			border-bottom: solid 1px;*/
-/*            text-shadow: none;*/
-/*			border-radius: 6px;*/
-/*            background: #ffffff;*/
-/*            color: #343232;*/
-/*			outline: none;*/
-/*		}*/
-/*        .bar3 button {*/
-/*             top: 59px;*/
-/*            right: 0;*/
-/*            border-radius: 0 5px 5px 0;*/
-/*			height: 32px;*/
-/*			width: 32px;*/
-/*			cursor: pointer;*/
-/*			position: absolute;*/
-/*			border: none;*/
-/*			background: #ffffff;*/
-/*        }*/
-/*        .bar3 button:before {*/
-/*            content: "\f002";*/
-/*			font-family: FontAwesome, serif;*/
-/*            font-size: 16px;*/
-/*            color: rgb(238, 106, 132);*/
-/*        }*/
-
-/*		@media screen and (max-width: 1280px) {*/
-/*			.bar1 {*/
-/*				padding: 0;*/
-/*				font-size: 14px;*/
-/*			}*/
-/*		}*/
-
-/*		@media screen and (max-width: 980px) {*/
-
-/*			.bar1 {*/
-/*				padding: 0;*/
-/*				font-size: 14px;*/
-/*			}*/
-/*			.bar1 form {*/
-/*				width: 180px;*/
-/*				margin: 0 0 0 12em;*/
-/*			}*/
-/*		}*/
-
-/*		@media screen and (max-width: 736px) {*/
-
-/*			.bar1 {*/
-/*				padding: 0;*/
-/*				font-size: 14px;*/
-/*			}*/
-/*			.bar1 form {*/
-/*				width: 150px;*/
-/*				margin: 0 0 0 18em;*/
-/*			}*/
-/*			.bar1 input{*/
-/*				height: 80%;*/
-/*				width: 80%	;*/
-/*				padding: 5px 30px 5px 10px;*/
-/*				font-size: 8px;*/
-/*			}*/
-/*			.bar1 button {*/
-/*				top: 4em;*/
-/*				margin-top: 7px;*/
-/*				height: 15%;*/
-/*				width: 15%;*/
-/*			}*/
-/*		}*/
 
 /* Type */
 
 	body, input, select, textarea {
 		color: rgba(255, 255, 255, 1);
-		font-family: "Source Sans Pro", sans-serif;
+		font-family: HYZhengYuan-55W, "Source Sans Pro", sans-serif;
 		font-size: 14pt;
 		font-weight: 300;
 		line-height: 1.65;
@@ -706,7 +338,7 @@
 			color: #fff;
 			font-size: 5em;
 			font-weight: 400;
-			font-family: 'Passion One', cursive;
+			font-family: HYZhengYuan-75W, 'Passion One', cursive;
 			margin: 0;
 		}
 
@@ -1312,3 +944,35 @@
 			}
 
 		}
+@font-face {
+  font-family: HYZhengYuan-55W;
+  src: url("../fonts/HYZhengYuan-55W.ttf")
+}
+@font-face {
+  font-family: HYZhengYuan-75W;
+  src: url("../fonts/HYZhengYuan-75W.ttf")
+}
+@font-face {
+  font-family: HYZhengYuan-85W;
+  src: url("../fonts/HYZhengYuan-85W.ttf")
+}
+@font-face {
+  font-family: HYZhengYuan-95S;
+  src: url("../fonts/HYZhengYuan-95S.otf")
+}
+
+@font-face {
+  font-family: gilroy-black-6;
+  src: url("../fonts/gilroy-black-6.otf")
+}
+
+@font-face {
+  font-family: gilroy-bold-4;
+  src: url("../fonts/gilroy-bold-4.otf")
+}
+
+@font-face {
+  font-family: gilroy-blackitalic-7;
+  src: url("../fonts/gilroy-blackitalic-7.otf")
+}
+

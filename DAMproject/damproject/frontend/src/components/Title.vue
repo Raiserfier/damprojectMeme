@@ -21,8 +21,7 @@
     padding-left: 16%;
     /*cursor: pointer;*/
     text-decoration: none;
-    /*font-family: Serif, serif;*/
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: HYZhengYuan-75W, sans-serif;
     font-size: 35px;
     font-weight: 300;
     margin: 0;

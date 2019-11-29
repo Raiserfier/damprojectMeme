@@ -5,7 +5,7 @@
     <!--TOP10 GRID -->
     <div>
       <div>
-        <h2 class="Titleeeee" style="padding:0px 0px 2% 12.5%">
+        <h2 class="Titleeeee" style="padding:2% 0px 2% 12.5%">
           {{'流行表情包Top'+pop_num}}</h2>
       </div>
       <div align="center">
@@ -16,8 +16,8 @@
             <router-link :to="'/details/'+img.id+'/hot'">
               <div class="BKW label_Toppp" @mouseenter="imgScale($event)" @mouseleave="imgScale_la($event)"><!-- labels链接 -->
                 <div class="label_Top">
-                  <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
-                  <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag+' '}}</router-link>
+                  <router-link :to="'/category/'+img.classification+'/hot'" style="font-family: HYZhengYuan-85W,serif;">{{'#'+img.classification}}</router-link>
+                  <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'" style="font-family: HYZhengYuan-85W,serif;">{{'#'+tag+' '}}</router-link>
                 </div>
               </div>
             </router-link>
@@ -53,7 +53,7 @@
                 </ul>
               </div>
               <div class="labels"><!-- labels链接 -->
-                <ul :style="{top:imgheight-185+'px'}" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
+                <ul style="top: 210px;left: 10px;" @mouseout="leaveul_la($event)" @mouseover="enterul_la($event)"
                     class="KSVul">
                     <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
                     <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag}}</router-link>
@@ -352,7 +352,7 @@
     cursor: pointer;
     text-decoration: none;
     /*font-family: Serif, serif;*/
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: HYZhengYuan-75W, sans-serif;
     font-size: 35px;
     font-weight: 300;
     margin: 0;
@@ -524,11 +524,11 @@
     position: relative;
     width: 100%;
     z-index: 10;
-    margin-top: -40px;
+    margin-top: -45px;
   }
 
   .BKW::before {
-    height: 330px;
+    height: 335px;
     border-radius: 4px;
     margin-left: 0;
     width: 100%;
@@ -549,7 +549,7 @@
   }
 
   .BKW::after {
-    height: 330px;
+    height: 335px;
     border-radius: 4px;
     margin-left: 0;
     width: 100%;
@@ -568,7 +568,6 @@
     margin-left: 20px;
     font-weight: 600;
     text-align: left;
-    font-family: nexablack, sans-serif;
     -webkit-font-smoothing: antialiased;
     font-size: 20px;
     color: rgb(255, 255, 255);
