@@ -103,8 +103,6 @@ def like_image(request):
         email = request.POST.get("email")
         # print(email)
         image_id = request.POST.get("id")
-        # print(image_id)
-        # email = request.POST.get("email")
         state = request.POST.get("state")
         image = Image.objects.get(id=image_id)
         user = User.objects.get(email=email)
