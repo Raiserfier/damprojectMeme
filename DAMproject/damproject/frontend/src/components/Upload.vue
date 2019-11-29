@@ -56,7 +56,7 @@
           <!--          </div>-->
           <div class="buttonGroup">
             <button type="button" class="Button_mask choosen" style="border-radius: 5px 0 0 5px" @click="noMask($event)">无印良品</button>
-            <button type="button" class="Button_mask unchoosen" style="border-radius: 0 5px 5px 0;margin-left: -3px;" @click="Mask($event)">添加水印</button>
+            <button type="button" class="Button_mask unchoosen" style="border-radius: 0 5px 5px 0;margin-left: -6px;" @click="Mask($event)">添加水印</button>
           </div>
           <div class="buttonGroup">
             <button type="button" class="Button_mask choosen" style="border-radius: 5px 0 0 5px" @click="user_public($event)">同步到广场</button>
