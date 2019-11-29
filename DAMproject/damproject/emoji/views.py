@@ -70,6 +70,7 @@ def create_user(request):
         if userinfo:
             return HttpResponse("Exist")
         else:
+            print(userinfo)
             User.objects.create(username=username, email=email, password=password)
             return HttpResponse("SUCCESS")
     except:

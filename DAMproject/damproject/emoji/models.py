@@ -3,11 +3,11 @@ from django.db import models
 
 class User(models.Model):
     username = models.CharField(max_length=20)
-    portrait = models.CharField(default='', max_length=5000000)
-    email = models.EmailField(max_length=40, default='')
+    portrait = models.CharField(default='', max_length=5000000, null=True)
+    email = models.EmailField(max_length=40, default='', null=True)
     password = models.CharField(max_length=20)
-    like_images = models.TextField(default='')
-    profile = models.CharField(default='', max_length=500)
+    like_images = models.TextField(default='', null=True)
+    profile = models.CharField(default='', max_length=500, null=True)
     private = models.IntegerField(default=0)
     manager = models.IntegerField(default=0)
 
