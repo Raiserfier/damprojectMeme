@@ -185,15 +185,12 @@
             load() {
                 this.$api.post('/get_user_info', {email: this.$store.state.user_id}).then(response => {
                     if (response.data !== 'Not received') {
-                        // console.log(response.data);
                         this.username = response.data.username;
                         this.profile = response.data.profile;
                         this.portrait = response.data.portrait;
                         this.isPrivate = response.data.private;
-                        console.log(this.isPrivate)
                     }
                 }), (response) => {
-                    //console.log("error");
                     this.$message.error('用户信息获取失败');
                 }
             },
@@ -203,7 +200,6 @@
                     let that = this;
                     reader.readAsDataURL(e.target.files[0]);
                     reader.onload = function (e) {
-                        // console.log(this.result);
                         let image = new Image(); //新建一个img标签（还没嵌入DOM节点)
                         image.src = this.result;
                         image.onload = function () {
@@ -225,12 +221,10 @@
                             canvas.height = imageHeight;
                             context.drawImage(image, 0, 0, imageWidth, imageHeight);
                             data = canvas.toDataURL('image/jpeg'); // 输出压缩后的base64
-                            // console.log(data);
                             that.portrait = data;
                         }
                     }
                 }
-                // this.user_info_update();
             },
             user_info_update() {
                 console.log(this.$store.state.user_id, this.username, this.profile, this.portrait);
@@ -250,11 +244,8 @@
                 }), (response) => {
                     this.$message.error('更改个人信息失败');
                 }
-                // this.$router.replace({path: '/settings'});
-                // this.load();
             },
             password_modi() {
-                console.log()
                 if (this.password_new !== this.password_confirm) {
                     this.$message.warning('两次输入的新密码不同，请重新确认');
                     this.password_new = '';
@@ -277,10 +268,6 @@
                         this.$message.error('密码更改失败');
                     }
                 }
-                // this.password_new = '';
-                // this.password_old = '';
-                // this.password_confirm = '';
-                // this.load();
             },
         }
     }
