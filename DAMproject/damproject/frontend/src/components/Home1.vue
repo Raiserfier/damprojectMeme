@@ -74,7 +74,7 @@
     </section>
 
     <!-- Footer -->
-    <div style="margin-top: 2000px;">
+    <div style="margin-top: 2800px;">
       <footer id="footer">
         <p>&copy; 2019. Group 2. All rights reserved.</p>
       </footer>
