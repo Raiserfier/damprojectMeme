@@ -41,9 +41,10 @@ def upload_img(request):
                 tagobj = Tag.objects.get(content=tag)  # 再取一遍为了让数据库添加default项目
                 imgobj = Image.objects.get(id=img.id)
                 Image2tag.objects.create(image=imgobj, tag=tagobj)
+            print("hello")
             if state == "true":
                 add_watermark(img.id, user.username)
-            return HttpResponse("SUCCESS")
+            return HttpResponse('SUCCESS')
         else:
             return HttpResponse("不是POST")
     except:
@@ -79,7 +80,7 @@ def create_user(request):
         password = request.POST.get("password")
         userinfo = User.objects.filter(email=email)
         if userinfo:
-            return HttpResponse("Exist")
+            return HttpResponse("EXIST")
         else:
             User.objects.create(username=username, email=email, password=password)
             return HttpResponse("SUCCESS")
