@@ -255,19 +255,8 @@
                 console.log('共' + this.img_num + '张图片');
                 // console.log(this.up_img);
             },
-            //选择类别（这里是自动绑定的）
-            choose_cate(e) {
-                console.log("选中了", this.cate);
-            },
             upload() {
-                // console.log(this.labelarr);
-                // console.log(this.isMask);
-                // let tags = '';
-                // for (let i = 0; i < this.labelarr.length; i++) {
-                //     tags += '#' + this.labelarr[i];
-                // }
                 for (let i = 0; i < this.up_img.length; i++) {
-                    console.log(this.isMask);
                     this.$api.post('/upload_image', {
                         img: this.up_img[i],
                         email: this.$store.state.user_id,
@@ -276,7 +265,6 @@
                         state: this.isMask,
                         private:this.isPrivate,
                     }).then(response => {
-                        //console.log(response.data);
                         if (response.data === 'SUCCESS') {
                             this.$message.success('上传成功！');
                             //跳转到个人上传页
@@ -285,7 +273,6 @@
                             this.$message.error('上传图片失败！');
                         }
                     }), (response) => {
-                        //console.log("error");
                         this.$message.warning('上传失败！');
                     }
                 }
