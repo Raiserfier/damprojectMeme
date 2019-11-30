@@ -16,7 +16,7 @@
         <button type="button" class="Button_mask_upd unchoosen_upd" style="border-radius: 5px 0 0 5px"
                 @click="By_heat($event)">按热度
         </button>
-        <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -3px;"
+        <button type="button" class="Button_mask_upd choosen_upd" style="border-radius: 0 5px 5px 0;margin-left: -6px;"
                 @click="By_time($event)">按时间
         </button>
         <button v-if="this.$store.state.manager && this.$route.params.type==='channel'" type="button"
@@ -56,8 +56,8 @@
                   :style="{top:img.height-40+'px', left:10+'px'}"><!-- labels链接 -->
                 <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
                 <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag+' '}}</router-link>
-                <!--                <div>{{img.thumbs + '@' + img.likes}}</div>-->
-                <!--                <div>{{img.upload_time}}</div>-->
+                <div>{{img.thumbs + '@' + img.likes}}</div>
+                <div>{{img.upload_time}}</div>
               </ul>
             </div>
             <div class="imgHover" :style="{height:img.height+'px'}">
@@ -488,16 +488,20 @@
 
     function sortByHeat(array) {
         return array.sort(function (a, b) {
-            var x = parseInt(a['likes']) + parseInt(a['thumbs']);
-            var y = parseInt(b['likes']) + parseInt(b['thumbs']);
-            return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+            let x = parseInt(a['likes']) + parseInt(a['thumbs']);
+            let y = parseInt(b['likes']) + parseInt(b['thumbs']);
+            // console.log(x);
+            // console.log(y);
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
         })
     }
 
     function sortByTime(array) {
         return array.sort(function (a, b) {
-            var x = a['upload_time'];
-            var y = b['upload_time'];
+            let x = a['upload_time'];
+            let y = b['upload_time'];
+            // console.log(x);
+            // console.log(y);
             return ((x < y) ? -1 : ((x > y) ? 1 : 0));
         })
     }
