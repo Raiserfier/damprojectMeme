@@ -7,6 +7,7 @@
 # 第2章 图像素材
 
 ## 2.1 图像的基本概念
+
 ### 常见图像格式
 
 <table>
@@ -196,7 +197,7 @@ CCD的结构就象一排排输送带上并排放满了小桶，光线就象雨�
 
 - **索引图像**： 为了节省表示图像RGB信息的空间用调色板存储彩色信息（RGB值），数据区只存储当前象素的色彩在调色板中的位置，这样就省了很多字节。调色板是颜色的索引，多用于8位图像，即可表示256种颜色。如下图，图像仅仅使用了16种颜色，右图是该图像的调色板：
 
-   <div STYLE="page-break-after: always;"></div> 
+  <div STYLE="page-break-after: always;"></div> 
 
   <img src="https://images0.cnblogs.com/blog/442754/201501/212106376109403.png" style="zoom:80%;" />
 
@@ -211,6 +212,7 @@ CCD的结构就象一排排输送带上并排放满了小桶，光线就象雨�
 ### 可见光谱
 
 <center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/EM_spectrum.svg/1920px-EM_spectrum.svg.png" alt="img" style="zoom: 50%;" /></center> 
+
 ### 人眼结构
 
 两种视觉细胞：视杆细胞（rods）和视锥细胞（cones），Rods 数量多于 cones，所以人眼对光线敏感度＞对颜色敏感度。
@@ -255,7 +257,6 @@ RGB为加色模型，CMYK为减色模型。
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_fKZEs.thumb.700_0.png" style="zoom:50%;" />
 
  <div STYLE="page-break-after: always;"></div> 
-
 
 <img src="https://c-ssl.duitang.com/uploads/item/201911/25/20191125173324_RGk5R.thumb.700_0.png" style="zoom:50%;" />
 
@@ -469,7 +470,9 @@ HDR文件是一种特殊图形文件格式，它的每一个像素除了普通�
 
 <center> <img src="https://img-blog.csdnimg.cn/20190604172903779.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d1anV4S2tvb2xlcnRlcg==,size_16,color_FFFFFF,t_70"/> </center>
 <center> <font  color=gray >HDRI图像示例 </font> </center>
+
 ### HDR的存储编码格式
+
 HDRI（High-Dynamic Range Image）就是记录采用了HDR技术的图象数据文件。常用的HDRI文件有OpenEXR、Radiance RGBE、FloatTIFF三种格式。
 
 HDR：对应的编码方式主要是 RGBE/ XYZE：
@@ -483,6 +486,7 @@ HDR对以往的运算方法做了以下二方面的重大改进：
 - **图象数据采用浮点数据。HDR真正的巨大变革来自于浮点数据的引入。**我们可以采用浮点方式来处理和存放亮度数据，抛弃不准确的整数数据；同时计算机在引入浮点数据来存储象素的各个参数并且在运算的全过程都使用浮点数据，这样就可以有效的提高据的精确度。  
 
 #### HDR格式
+
 编码方式为RGBE，即通过ldr的rgb值，配合一个该组值对应的exponent来还原最初的HDR颜色信息。在一个32bits的RGBE中，通常是R8G8B8E8的占位方式。假设场景中的原始scene-referred的颜色为RsGsBs，那么将其向RGBE的映射操作如下式所示：
 
 $$
@@ -494,16 +498,20 @@ G = \lfloor \frac{256G_s}{2^{E-128}} \rfloor
 
 B = \lfloor \frac{256B_s}{2^{E-128}} \rfloor
 $$
+
 <center> <font  color=gray >对于由RsGsBs到RGB的还原对上述计算进行逆操作即可 </font> </center>
+
 XYZE与RGBE类似，只不过其存储与编码的是XYZ空间中的颜色值，而不是RGB空间。  
 由于XYZ空间中不需要存储负值（RGB与XYZ颜色空间的区别），因而使用上述only positive的方法来存储的话使用XYZE会比RGBE得到更大的色域，因为不会存储无效值。
 
 ####  TIFF格式
+
 基本的TIFF存储格式比较简单，直接使用3个32bits的RGB通道来存储原始的信息，因而永远是scene-referred的。但是这种方式太过于简单，占用空间太大并且无法进行有效的数据压缩（压缩算法对于3个float的数值压缩比不高），因而就有了基于其的改进方法，LogLuv24、LogLuv32。  
 
 LogLuv的方法是将一个颜色值转化为luminace（Y）及其对应的u、v值来存储，即Luv空间。*Luv空间* 是RGB与XYZ之后的另外一个颜色空间，其与XYZ、RGB均可以进行相互转换，其空间内的颜色值具有的特点是可以直接通过Luv之间的欧氏距离而得到两个颜色之间的差异程度，因而在图像处理与识别中很有用。注意，这里的原始scene-referred空间为XYZ，因而在存储与解析时就涉及到XZY-Luv之间的转换。  
+
  - **LogLuv24：一个颜色值用24bits进行存储，其中的bit分割为：L10、C14。**  
- 其中的 *L10* 即中将Luminace值（即XYZ空间中的Y值）转化为一个log函数映射的10bits浮点数进行存储；*C14* 为uv中的u值通过14bits进行保存的一个浮点数。这里由于只存储了uv中的一个值，因而另外v值需要通过一个uv查询表获得，这样就需要在LogLuv24的存储与解码时均需要使用这样的一个uv对应表来协助完成。  
+   其中的 *L10* 即中将Luminace值（即XYZ空间中的Y值）转化为一个log函数映射的10bits浮点数进行存储；*C14* 为uv中的u值通过14bits进行保存的一个浮点数。这里由于只存储了uv中的一个值，因而另外v值需要通过一个uv查询表获得，这样就需要在LogLuv24的存储与解码时均需要使用这样的一个uv对应表来协助完成。  
 
 $$
 L_{10} = \lfloor 64(\log_2 Y_s + 12) \rfloor  
@@ -512,7 +520,8 @@ Y_s = 2^{\frac{L_{10}}{64} - 12}
 $$
 
  - **LogLuv32：一个颜色值通过32bits进行存储，其中的bit分配为：s1、L15、u8、v8。**   
-其中的 *s1* 为符号位，用来标识Luminace值的正负情况（当然，由XYZ空间转换过来的一定为正）；*L15* 为15个bit位的L值 ；*u8* 、*v8* 分别为表示uv值的两个byte，这里就不再需要查uv表了。  
+   其中的 *s1* 为符号位，用来标识Luminace值的正负情况（当然，由XYZ空间转换过来的一定为正）；*L15* 为15个bit位的L值 ；*u8* 、*v8* 分别为表示uv值的两个byte，这里就不再需要查uv表了。  
+
 $$
 L_{15} = \lfloor 256(\log_2 Y_s + 64) \rfloor  
 
@@ -520,6 +529,7 @@ Y_s = 2^{\frac{L_{15}}{256} - 64}
 $$
 
 ####  EXR格式
+
 Exr格式是由 **ILM**（Industrial Light & Magic，工业光魔）给出的HDR存储格式，现基本上已经成为影视产业中HDR应用的一个标准格式。关于exr格式的HDR编解码，现在有开源的的OpenExr可以用，其中还包含了对exr格式的压缩等操作，各种使用exr的引擎或renderer（比如unity、blender、pbrt）中使用的都是它。  
 
 常见的OpenEXR文件是  **FP16**（16bit Float Point，也被称为half Float Point） 数据图像文件，每个通道的数据类型是FP16，一共四个通道64bpp，每个通道1个bit位用来标志“指数”，5个bit用来存放指数的值，10个bit存放色度坐标的尾数，其动态范围从 $ 6.14 × 10 ^ -5 $到 $ 6.41 × 10 ^ 4 $ 。 
@@ -529,15 +539,23 @@ Exr格式是由 **ILM**（Industrial Light & Magic，工业光魔）给出的HDR
 根据实际的计算结果：在正规化的情况下OpenEXR可以提供和人眼基本相同的动态范围，最暗到最亮是 $ 0.00006103515625×(6.14 × 10 ^ -5) $ 到 $ 65504×(6.41 × 10 ^ 4) $ ，动态范围是9.03；非正规化条件下，OpenEXR可以提供从最暗到最亮的数值从 $ 0.000000059604644775390625×(5.96 × 10 ^ -8 ) $ 到 $ 65504×(6.41 × 10 ^ 4) $，化为动态范围表示就是12。
 
 ### HDR应用场景
+
 室内拍摄时，画面中包括室较暗的场景和室外十分明亮的景物HDR可以使室内场景和室外景物在张照片中都得到很好地展现。总之，只要是那些画面相对稳定而又存在较大明暗反差的场景，都以用HDR的手法来拍摄并通过HDR后期处理来合成。 
+
 #### 光摄影
+
 由于风光摄影常面对大光比画面，很适合HDR技术。 
+
 #### 花草等静态摄影 
+
 这类题材于色彩变化和光影丰富，同时又相静止，利于前期拍摄。 
+
 #### 日落日出和夜景
+
 此类题材画面中天空和面景物明暗反差很大，数码相机的态范围满足不了如此大的动态范围，是HDR最适合的应用题材。尤其是拍夜景，HDR可以很好地展现一般夜景无法记录下的天空微弱光线与地面源所产生的对比效果。 
 
 ### 色调映射
+
 在查看高动态范围图像时会遇到一个问题，CRT、LCD、打印机以及其它图像显示方法只能显示有限动态范围的图像，如果简单的将真实世界的整个亮度域线性压缩到照片所能表现的亮度域内，则会在明暗两端同时丢失很多细节，这显然不是所希望的效果。因此需要通过色调映射将高动态范围图像“转换”成可以查看的图像，根据场景的当前亮度，**将HDR映射到LDR上**，并保证图像细节不丢失，不失真。 
 
 整个Tone Mapping的过程就是首先要根据当前的场景推算出场景的平均亮度，根据这个平均亮度选取一个合适的亮度域，再将整个场景映射到这个亮度域得到正确的结果。其中最重要的几个参数： 
@@ -571,11 +589,13 @@ $$
 
 
 ### 计算摄像学
+
 计算摄像学（Computational Photography）是一门将计算机视觉、数字信号处理、图形学等深度交叉的新兴学科。旨在结合计算、数字传感器、光学系统和智能光照等技术，从成像机理上来改进传统相机，并将硬件设计与软件计算能力有机结合，突破经典成像模型和数字相机的局限性，增强或者扩展传统数字相机的数据采集能力，全方位地捕捉真实世界的场景信息。
 
 
 <center> <img src="http://a4.qpic.cn/psb?/5157a201-e71f-485a-b7fd-e6f0e9e07562/.KXP6bhVKA6YKUnpMgZV.bgh6mIwrrvaIfBbhW1N1ZQ!/c/dL8AAAAAAAAA&ek=1&kp=1&pt=0&bo=DQIjAQ0CIwERADc!&tl=1&tm=1573484400&sce=0-12-12&rf=0-18"/> </center>
 <center> <font  color=gray >计算摄像学的各个维度 </font> </center>
+
 笼统来说，拓展了传统数码摄影中的某个或多个因素的维度来成像的方法，就是计算摄影学。总结来看，成像包含空间、时间、视角和深度、以及光谱等多个维度。 
 
 HDR就是计算摄像学中的一种办法，拓展的是传统成像中的光圈大小。
@@ -595,6 +615,7 @@ HDR就是计算摄像学中的一种办法，拓展的是传统成像中的光�
 
 <center> <img src="https://upload-images.jianshu.io/upload_images/4412858-596a504c11f0561b.gif?imageMogr2/auto-orient/strip|imageView2/2/format/webp"/> </center>
 <center> <font  color=gray >第一张火遍互联网的gif</font> </center>
+
 #### 格式详解
 
 GIF文件由一系列数据块组成。前两个块是固定长度和固定格式。后面的是可变长度，但可以自我描述。它们由一个标识块类型的字节，一个有效载荷长度字节，一个有效载荷组成。
@@ -617,7 +638,7 @@ GIF文件由一系列数据块组成。前两个块是固定长度和固定格�
 2. **Logical Screen Descriptor 逻辑屏幕描述符**
 
    该块告诉解码器此图像将占用多少空间。
-   
+
    <center> <img src="http://giflib.sourceforge.net/whatsinagif/logical_screen_desc_block.gif"/> </center>
 
 
@@ -630,7 +651,7 @@ GIF文件由一系列数据块组成。前两个块是固定长度和固定格�
 4. **Graphic Control Extension 图形控件扩展**
 
    图形控件扩展块用于指定透明度设置和控制动画。
-   
+
    <center> <img src="http://giflib.sourceforge.net/whatsinagif/graphic_control_ext.gif"/> </center>
 
 
@@ -679,11 +700,11 @@ GIF文件由一系列数据块组成。前两个块是固定长度和固定格�
 10. **Comment Extension 注释扩展**
 
     可以将ASCII文本嵌入到GIF文件中，并且有时用于包含图像描述，图像信用或其他人类可读的元数据，例如图像捕获的GPS位置。
-    
+
     <img src="http://giflib.sourceforge.net/whatsinagif/comment_ext.gif" />
+
     
-    
-    
+
     第一个字节是扩展介绍者21。下一个字节始终是注释标签FE。数据子块用于注释。最后一个字节 00代表注释到达末尾。
 
 11. **Trailer 尾部**
@@ -718,6 +739,7 @@ GIF文件由一系列数据块组成。前两个块是固定长度和固定格�
 
   <center><img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" style="zoom: 50%;" /></center>
   <center> <font  color=gray >PNG的代表图片</font> </center>
+
 #### 格式详解
 
 PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG图像仅由块组成。
@@ -741,15 +763,17 @@ PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG�
 
 
   <center><img src="http://www.libpng.org/pub/png/book/figs/png.0802.png"  /></center>
+
   这种文件由PNG签名和只有三种块类型组成：图像头块IHDR、图像数据块IDAT、以及图像结尾部分IEND
 
   -  IHDR是PNG图像中的第一个块，包括有关图像类型的所有详细信息：高度和宽度，像素深度，压缩和过滤方法，隔行扫描方法，是否具有alpha（透明）通道，以及它是真彩色，灰度还是彩色映射（调色板）图像。
-  - IDAT包含图像的所有压缩像素数据。在大多数图像中，压缩数据会分成多个IDAT块以提高鲁棒性。块的CRC位于末尾，遇到大IDAT的流时应用程序可以迫使用户等待整个块到达。
-  - IEND不包含任何数据，仅表示图像中没有更多块，可以检查PNG文件是否完整以及内部是否一致。
+  -  IDAT包含图像的所有压缩像素数据。在大多数图像中，压缩数据会分成多个IDAT块以提高鲁棒性。块的CRC位于末尾，遇到大IDAT的流时应用程序可以迫使用户等待整个块到达。
+  -  IEND不包含任何数据，仅表示图像中没有更多块，可以检查PNG文件是否完整以及内部是否一致。
 
   以上类型足以构建带或不带alpha通道的真彩色和灰度PNG文件，但如果要创建羁于调色板的图像需要如下结构：
 
   <center><img src="http://www.libpng.org/pub/png/book/figs/png.0803.png"  /></center>
+
   PLTE，调色板块。PLTE仅包含一系列红色，绿色和蓝色值，其中0表示黑色，255表示全强度。
 
   以上被提及的块也被成为关键快，在PNG的发展过程中出现了很多辅助块帮助实现更多功能。
@@ -824,10 +848,12 @@ PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG�
 
 
   <center><img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Adam7_passes.gif"  /></center>
+
   下图将从左到右依次显示GIF，正常PNG，带插值的PNG和具有稀疏显示的PNG的隔行显示的比较。
 
 
   <center><img src="http://www.libpng.org/pub/png/book/figs/png.0104.png"  /></center>
+
 - **无损压缩**
 
   PNG的压缩是最好的压缩方法之一，不会丢失图像数据，也无需支付专利或其他许可费用
@@ -840,6 +866,7 @@ PNG图像的基本构建块是块。除了文件中的前8个字节之外，PNG�
 
 
 <center><img src="https://www.logaster.com/blog/wp-content/uploads/2015/01/0e87b13effcf0e693c30ffcc9e23af1b-another-copy.jpg" style="zoom:80%;" /></center>
+
 #### 格式详解
 
 JPEG的文件结构整体如下图所示：
@@ -856,7 +883,7 @@ PEG文件大体上可以分成两个部分：标记码和压缩数据。如图�
 - SOI，Start of Image，图像开始，固定值0xFFD8
 
 - APP0，Application，应用程序保留标记0，固定值0xFFE0
-  
+
   | 信息               | 长度              | 值                                    |
   | ------------------ | ----------------- | ------------------------------------- |
   | 数据长度           | 2字节             | ①~⑨9个字段的总长度                    |
@@ -868,23 +895,23 @@ PEG文件大体上可以分成两个部分：标记码和压缩数据。如图�
   | 缩略图水平像素数目 | 1字节             | 取值范围未知                          |
   | 缩略图垂直像素数目 | 1字节             | 取值范围未知                          |
   | 缩略图RGB位图      | 长度可能是3的倍数 | 缩略图RGB位图数据                     |
-  
+
 - APPn，Application，应用程序保留标记n，其中n=1～15（任选），固定值0xFFE1~0xFFF
-  
+
   | 信息     | 长度           | 值                 |
   | -------- | -------------- | ------------------ |
   | 数据长度 | 2字节          | ①~②2个字段的总长度 |
   | 详细信息 | 数据长度-2字节 | 内容不定           |
-  
+
 - DQT，Define Quantization Table，定义量化表，固定值0xFFDB
-  
+
   | 信息     | 长度           | 值                       |
   | -------- | -------------- | ------------------------ |
   | 数据长度 | 2字节          | 字段①和多个字段②的总长度 |
   | 量化表   | 数据长度-2字节 |                          |
-  
+
 - SOF0，Start of Frame，帧图像开始，固定值0xFFC0
-  
+
   | 信息         | 长度                            | 值                                |
   | ------------ | ------------------------------- | --------------------------------- |
   | 数据长度     | 2字节                           | ①~⑥六个字段的总长度               |
@@ -893,23 +920,23 @@ PEG文件大体上可以分成两个部分：标记码和压缩数据。如图�
   | 图像宽度     | 2字节                           | 图像宽度（单位：像素）            |
   | 颜色分量数   | 1字节                           | 1：灰度图；3：YCrCb或YIQ；4：CMYK |
   | 颜色分量信息 | 颜色分量数×3字节（通常为9字节） |                                   |
-  
+
 - DHT，Difine Huffman Table，定义哈夫曼表，固定值0xFFC4
-  
+
   | 信息     | 长度           | 值                       |
   | -------- | -------------- | ------------------------ |
   | 数据长度 | 2字节          | 字段①和多个字段②的总长度 |
   | 哈夫曼表 | 数据长度-2字节 |                          |
-  
+
 - DRI，Define Restart Interval，定义差分编码累计复位的间隔，固定值0xFFDD
-  
+
   | 信息                        | 长度  | 值                                                           |
   | --------------------------- | ----- | ------------------------------------------------------------ |
   | 数据长度                    | 2字节 | 固定值0x0004，①~②两个字段的总长度                            |
   | MCU块的单元中的重新开始间隔 | 2字节 | 设其值为n，则表示每n个MCU块就有一个RSTn标记。第一个标记是RST0，第二个是RST1等，RST7后再从RST0重复。 |
-  
+
 - SOS，Start of Scan，扫描开始，固定值0xFFDA
-  
+
   | 信息              | 长度  | 值                                                           |
   | ----------------- | ----- | ------------------------------------------------------------ |
   | 数据长度          | 2字节 | ①~④两个字段的总长度                                          |
@@ -921,7 +948,7 @@ PEG文件大体上可以分成两个部分：标记码和压缩数据。如图�
   | 谱选择开始        | 1字节 | 固定值0x00                                                   |
   | 谱选择结束        | 1字节 | 固定值0x3F                                                   |
   | 谱选择            | 1字节 | 在基本JPEG中总为00                                           |
-  
+
 - EOI，End of Image，图像结束，固定值0xFFD9
 
 #### 特征
@@ -957,6 +984,7 @@ TIFF图像是靠指针连接来组织数据的，一般来说由四部分组成�
 
 
   <center><img src="http://www.cppblog.com/images/cppblog_com/windcsn/361/r_tiffile.jpg" style="zoom:80%;" /></center>
+
 #### 特征
 
 - **色彩空间**
@@ -1006,15 +1034,30 @@ TIFF图像是靠指针连接来组织数据的，一般来说由四部分组成�
 
 ## 2.6 小结
 
-### 图像储存的重要概念
+### 图像存储的重要概念
 
-- 分辨率
-- 编码率
-  - 1bbp, 2bbp, ...
-  - 编码模式
-- 色彩表示
-  - 设备依赖（device dependent）的颜色空间：RGB，CMY，HSV
-  - 无设备依赖（device independent）的颜色空间：CIE XYZ，CIE Lab，CIE YUV
+- 矩阵：数字图像的表示
+- 像素：数字图像的基本元素
+- 分辨率：图像中存储的信息量
+- 图像类型
+  - 二值图像
+  - 灰度图像
+  - 索引图像
+  - 真彩色RGB图像
+- 色彩空间
+  - 设备依赖：RGB，CMY，HSV
+  - 无设备依赖：CIE XYZ，CIE Lab，CIE YUV
+- 常见图像格式
+  - 普通类型：GIF, JPEG, PNG, TIFF, TGA
+  - 原始数据：RAW, DNG
+  - 平台特殊格式：BMP, PICT, PPM
+  - 矢量格式：WMF
+- HDR图像
+  - 编码格式：HDR、TIFF、EXR
+  - 应用场景：光摄影、静物摄影、日出日落、夜景
+- 图像压缩
+  - 无损压缩：RLC编码、LZW编码、VLC编码、字典编码、算术编码
+  - 有损压缩：DCT变换、DWT变换、Karhune-Loeve变换
 
 ### 图像格式转换工具
 
