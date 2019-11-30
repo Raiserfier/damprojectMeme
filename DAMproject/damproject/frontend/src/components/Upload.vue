@@ -112,10 +112,12 @@
                 cate: '动物',
                 options: [
                     {name: '动物', id: '动物'},
+                    {name: '节日', id: '节日'},
                     {name: '食物', id: '食物'},
-                    {name: '动画', id: '动画'},
-                    {name: '游戏', id: '游戏'},
-                    {name: '人物', id: '人物'}
+                    {name: '动作', id: '动作'},
+                    {name: '表情', id: '表情'},
+                    {name: '卡通', id: '卡通'},
+                    {name: '沙雕', id: '沙雕'}
                 ],
                 currentval: '',
                 labelarr: ["动物", "食物"],
