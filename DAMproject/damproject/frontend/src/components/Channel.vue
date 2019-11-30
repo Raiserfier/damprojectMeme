@@ -58,7 +58,8 @@
              if (this.$route.params.id !== undefined) {
                 this.$api.post('/get_user_channel', {email: this.$route.params.id}).then(response => {
                     console.log(response.data);
-                    if (response.data !== 'no such user') {
+                    if (response.data !== "ERRPOR") {
+                      console.log(response.date);
                         this.username = response.data.username;
                         this.portrait = response.data.portrait;
                     } else {
