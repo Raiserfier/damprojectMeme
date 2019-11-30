@@ -299,15 +299,7 @@
                         this.count += response.data.length;
                         this.last += response.data.length;
 
-                        //加载图片
-                        for (let i = 0; i < this.each_time; i++) {
-                            this.last--;
-                            this.imgArr.push(this.imgList[this.last]);
-                            if (this.last === 0) {
-                                break;
-                            }
-                        }
-                        this.calculationWidth();
+                        this.init();
                     } else {
                         console.log('error get_img?')
                     }
@@ -332,15 +324,7 @@
                         this.count += response.data.length;
                         this.last += response.data.length;
 
-                        //加载图片
-                        for (let i = 0; i < this.each_time; i++) {
-                            if (this.last === 0) {
-                                break;
-                            }
-                            this.last--;
-                            this.imgArr.push(this.imgList[this.last]);
-                        }
-                        this.calculationWidth();
+                        this.init();
                     } else {
                         console.log('error get_user?')
                     }
@@ -348,6 +332,23 @@
                     //console.log("error get_user");
                     this.$message.error('图片获取失败');
                 }
+            },
+            init(){
+                //！！！！！排序
+                if (this.$route.params.rank === 'new') {
+                    sortByTime(this.imgList);
+                }else{
+                    sortByHeat(this.imgList);
+                }
+                //加载图片
+                for (let i = 0; i < this.each_time; i++) {
+                    if (this.last === 0) {
+                        break;
+                    }
+                    this.last--;
+                    this.imgArr.push(this.imgList[this.last]);
+                }
+                this.calculationWidth();
             },
             //用户推荐
             get_recommend(id) {
@@ -361,15 +362,7 @@
                         this.count += response.data.length;
                         this.last += response.data.length;
 
-                        //加载图片
-                        for (let i = 0; i < this.each_time; i++) {
-                            if (this.last === 0) {
-                                break;
-                            }
-                            this.last--;
-                            this.imgArr.push(this.imgList[this.last]);
-                        }
-                        this.calculationWidth();
+                        this.init();
                     } else {
                         this.$message.warnings('图片获取失败');
                     }
@@ -386,15 +379,7 @@
                         this.count += response.data.length;
                         this.last += response.data.length;
 
-                        //加载图片
-                        for (let i = 0; i < this.each_time; i++) {
-                            if (this.last === 0) {
-                                break;
-                            }
-                            this.last--;
-                            this.imgArr.push(this.imgList[this.last]);
-                        }
-                        this.calculationWidth();
+                        this.init();
                     } else {
                         this.$message.warnings('图片获取失败');
                     }
@@ -415,13 +400,6 @@
                 for (let i = 0; i < this.waterfallDeviationHeight.length; i++) {
                     this.waterfallDeviationHeight[i] = 0;
                 }
-                //！！！！！排序
-                if (this.$route.params.rank === 'hot') {
-                    sortByHeat(this.imgArr);
-                } else if (this.$route.params.rank === 'new') {
-                    sortByTime(this.imgArr);
-                }
-                sortByHeat(this.imgArr);
                 this.preloading();
             },
             //按图片流格式预处理获得图片位置
