@@ -138,8 +138,6 @@
                 this.$store.state.user_name = "Tester";
                 // this.$router.replace({ path: '' });
                 this.my_id = "99";
-                console.log(this.$store.state.login);
-                console.log(this.$store.state.user_id);
             },
             jump() {
                 console.log("jump");
@@ -157,7 +155,6 @@
                 this.$parent.$children.$forceUpdate()
             },
             search(e) {
-                // console.log(this.$store.state.login)
                 this.keyw = e.target.previousElementSibling.firstElementChild.value.trim();
                 if (this.keyw == '') this.keyw = 'all'
                 e.target.previousElementSibling.firstElementChild.value = '';
@@ -167,14 +164,12 @@
             //从后端获取类别
             get_categories() {
                 this.$api.post('/get_categories').then(response => {
-                    //console.log(response.data);
                     let op = [];
                     for (let i = 0; i < response.data.length; i++) {
                         op.push(response.data.cat);//cat是类别数组，每个元素里有id和name两个值
                     }
                     this.categories = op;
                 }), (response) => {
-                    //console.log("error");
                     this.$message.error('类别获取失败！');
                 }
             }
