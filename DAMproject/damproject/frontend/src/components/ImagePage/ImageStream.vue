@@ -56,8 +56,8 @@
                   :style="{top:img.height-40+'px', left:10+'px'}"><!-- labels链接 -->
                 <router-link :to="'/category/'+img.classification+'/hot'">{{'#'+img.classification}}</router-link>
                 <router-link v-for="tag in JSON.parse(img.tags)" :to="'/search/'+tag+'/hot'">{{'#'+tag+' '}}</router-link>
-                <div>{{img.thumbs + '@' + img.likes}}</div>
-                <div>{{img.upload_time}}</div>
+<!--                <div>{{img.thumbs + '@' + img.likes}}</div>-->
+<!--                <div>{{img.upload_time}}</div>-->
               </ul>
             </div>
             <div class="imgHover" :style="{height:img.height+'px'}">
