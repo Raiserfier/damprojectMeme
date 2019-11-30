@@ -10,8 +10,8 @@
         <div class="info_window">
           <div class="Uploader">
             <div class="Userpic_window">
-              <a class="User_pic" :src="portrait" @click="to_owner_channel"
-                 :style="{'background-image':'url'+'(\'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3900046848,1834418761&fm=26&gp=0.jpg\')'}"></a>
+              <a class="User_pic" @click="to_owner_channel"
+                 :style="{'background-image': 'url'+'('+ portrait +')'}"></a>
               <h2 class="User_name" @click="to_owner_channel">{{name}}</h2>
               <h5 style="font-size: 10px;padding-top: 10px;color: gray;">上传于：{{up_time}}</h5>
             </div>
@@ -21,14 +21,6 @@
               </p>
             </div>
           </div>
-          <!--          <div class="info_line"><i class="icon fa-clock-o"></i><span>{{up_time}}</span></div>-->
-          <!--          <div class="info_line"><i class="icon fa-heart"></i><span>{{favorites}}</span></div>-->
-          <!--          <div class="info_line"><i class="icon fa-star"></i><span>{{collects}}</span></div>-->
-          <!--          <div class="info_line"><i class="icon fa-star"></i><span>-->
-          <!--            <li @click="report">-->
-          <!--              <p>举报</p>-->
-          <!--            </li>-->
-          <!--          </span></div>-->
           <div><a href="#" class="hvr-sweep-to-right button11" :class="{Liked_b:isLike}" @click="thumb_click($event)"><i
             class="icon fa-thumbs-up"></i>{{favorites}}</a></div>
           <div><a href="#" class="hvr-sweep-to-right button11" :class="{Collected_b:isCollect}"
@@ -345,6 +337,7 @@
   }
 
   .User_pic {
+    cursor: pointer;
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
