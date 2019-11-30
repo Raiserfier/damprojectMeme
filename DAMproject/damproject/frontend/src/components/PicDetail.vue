@@ -125,12 +125,9 @@
                     const regex = new RegExp('^data:([^/]+/([^;]+));base64');
                     const b64Data = this.img.replace(regex, '$1,$2').split(',');
                     const contentType = b64Data[0];
-                    // 解码
                     const raw = window.atob(b64Data[2]);
                     const rawLength = raw.length;
-                    //const fileName = `文件名.${b64Data[1]}`;
                     let uInt8Array = new Uint8Array(rawLength);
-                    console.log("hello");
                     for (let i = 0; i < rawLength; ++i)
                         uInt8Array[i] = raw.charCodeAt(i);
                     const blob = new Blob([uInt8Array], {type: contentType});

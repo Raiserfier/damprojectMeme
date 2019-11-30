@@ -374,14 +374,11 @@
                         this.$message.warnings('图片获取失败');
                     }
                 }), (response) => {
-                    //console.log("error");
                     this.$message.error('图片获取失败');
                 }
             },
             //图片详情页推荐
             get_details_recommend(pid, id) {
-                console.log("details recommend");
-                console.log(pid, id);
                 this.$api.post('/detail_recommend', {id: pid, number: 5, email: id}).then(response => {
                     console.log(response.data);
                     if (response.data !== 'Not received') {
@@ -402,7 +399,6 @@
                         this.$message.warnings('图片获取失败');
                     }
                 }), (response) => {
-                    //console.log("error");
                     this.$message.error('图片获取失败');
                 }
             },
