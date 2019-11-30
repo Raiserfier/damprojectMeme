@@ -206,7 +206,7 @@ def add_watermark(image_id, username):
                 image_type = 'jpg'
             else:
                 return HttpResponse("Unresolved image type")
-            pic_path = './emoji/images/' + str(image_id) + '.' + image_type
+            pic_path = './emoji/images/' + "convert" + '.' + image_type
             with open(pic_path, 'wb') as f:
                 f.write(base64.b64decode(image_url.split(',')[1]))
             image_origin = PImage.open(pic_path)
